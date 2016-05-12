@@ -1,0 +1,19 @@
+
+// Configure and load up Font Awesome.
+$fa-font-path: "../font";
+@import "../../thirdparty/font-awesome/scss/font-awesome.scss";
+
+// Pad the top of the body so that the navbar doesn't overlap it.
+body {
+  padding-top: 80px;
+}
+
+.filter-name-edit {
+  padding-bottom: 1em;
+}
+
+.queue-pager {
+  margin: 0px;
+}
+
+@import "scss/draggables";

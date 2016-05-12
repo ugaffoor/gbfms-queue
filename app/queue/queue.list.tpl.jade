@@ -1,0 +1,35 @@
+.row
+  .col-xs-12.col-sm-4
+    .list-group
+      a.list-group-item(data-ng-if="!vm.loading",data-ui-sref="queue.by.details.summary({itemId: item.id})",data-ng-repeat="item in vm.items")
+        h5.list-group-item-heading {{item.label}}
+        p.list-group-item-text
+          .row
+            .col-xs-6
+              span.fa.fa-fw.fa-user
+              | {{queue.friendlyAssignedName(item)}}
+            .col-xs-6
+              span.fa.fa-fw.fa-users
+              | {{queue.friendlyAssignedGroup(item)}}
+          .row
+            .col-xs-6
+              span.fa.fa-fw.fa-calendar
+              span(data-time-ago="queue.friendlyDueDate(item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(item))}")
+            .col-xs-6
+              span.fa.fa-fw.fa-flag
+              | {{queue.friendlyStatus(item)}}
+          .row
+            .col-xs-12
+              | {{queue.friendlyDetails(item)}}
+      .list-group-item(data-ng-if="vm.items.length < 1") There are no items in this queue.
+      .list-group-item(data-ng-if="vm.hasMorePages()")
+        ul.pager.queue-pager
+          li
+            a(data-ng-if="vm.prevPageTokens.length > 0",data-ng-click="vm.prevPage()") Previous
+          li
+            a(data-ng-if="vm.nextPageToken",data-ng-click="vm.nextPage()") Next
+  .col-xs-12.col-sm-8
+    div(data-ui-view="")
+      .panel.panel-default
+        .panel-body
+          | Please select an item from the list.
