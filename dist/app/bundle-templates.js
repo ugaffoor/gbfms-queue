@@ -233,12 +233,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('queue/queue.logs.tpl.html',
-    '\n' +
-    '<h1>Logs!!</h1>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.new.item.tpl.html',
     '\n' +
     '<div class="row">\n' +

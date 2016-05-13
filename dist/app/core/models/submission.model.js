@@ -9,13 +9,9 @@
   /* @ngInject */
   function Submission($log, CoreAPI) {
     $log.info('{Model} Defining "Submission" model.');
-
-    var validTimelines = ['closedAt', 'createdAt', 'submittedAt', 'updatedAt'];
-
     var factory = {
       search: search,
-      build: build,
-      timelines: validTimelines
+      build: build
     };
     return factory;
 
@@ -194,40 +190,22 @@
       /******************************************************************************
        * SORTING METHODS
        *****************************************************************************/
-      self.timeline = function(timeline) {
-        validateOuter('Timeline cannot be nested.');
-        if(!_.some(validTimelines, timeline)) {
-          throw new Error('Invalid timeline "'+timeline+'" specified.');
-        }
+
+      var validTimelines = ['closedAt', 'createdAt', 'submittedAt', 'updatedAt'];
+      self.sortBy = function(timeline) {
+        validateOuter('Sorting cannot be nested.');
         // Check to see that timeline is in valid timelines.
         self.searchMeta.timeline = timeline;
         return self;
       };
 
-      self.sort = function(direction) {
+      self.sortDirection = function(direction) {
         validateOuter('Sorting cannot be nested.');
         if(direction !== 'ASC' || direction !== 'DESC') {
           throw new Error('Invalid sort direction: ' + direction);
         }
 
         self.searchMeta.direction = direction;
-        return self;
-      };
-
-      self.range = function(startDate, endDate) {
-        validateOuter('Timeline date range cannot be nested.');
-        self.searchMeta.start = startDate;
-        self.searchMeta.end = endDate;
-        return self;
-      };
-
-      self.beginRange = function(startDate) {
-        self.searchMeta.start = startDate;
-        return self;
-      };
-
-      self.endRange = function(endDate) {
-        self.searchMeta.end = endDate;
         return self;
       };
 

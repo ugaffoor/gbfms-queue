@@ -38,14 +38,14 @@
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/kapp.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
