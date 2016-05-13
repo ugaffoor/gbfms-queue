@@ -26,5 +26,24 @@
         }
       }
     });
+
+    $stateProvider.state('unauthenticated', {
+      abstract: true,
+
+      resolve: {
+        kappSlug: ["ConfigStore", function(ConfigStore) {
+          return ConfigStore.get('kappSlug');
+        }],
+        //currentKapp: function(KappModel, kappSlug) {
+        //  return KappModel.build().one(kappSlug).get({include:'details,attributes'});
+        //}
+      },
+
+      views: {
+        '': {
+          template: '<div data-ui-view=""></div>',
+        }
+      }
+    });
   }
 })();

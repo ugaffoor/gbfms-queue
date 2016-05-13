@@ -15,9 +15,12 @@
     'kd.bundle.angular.queue',
     'kd.bundle.angular.queue.setup'
   ]).run(["$rootScope", "$state", function($rootScope, $state) {
-    $rootScope.$on('$stateChangeError', function() {
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+      if(error.status != 401) {
+        $state.go('error.system');
+      }
       console.log('failed to change state', arguments);
-      $state.go('error.system');
+      //
     });
   //
   //  $rootScope.$on('$stateChangeSuccess', function() {

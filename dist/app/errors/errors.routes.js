@@ -9,7 +9,7 @@
   /* @ngInject */
   function routes($stateProvider) {
     $stateProvider.state('error', {
-      parent: 'app',
+      parent: 'unauthenticated',
       abstract: true,
       url: '/error',
       templateUrl: 'errors/error.layout.tpl.html'

@@ -318,6 +318,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('core/authentication/login.modal.tpl.html',
     '\n' +
     '<form name="loginModalForm" data-ng-submit="vm.submit()" class="form-horizontal">\n' +
@@ -345,22 +361,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</form>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
-    '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {

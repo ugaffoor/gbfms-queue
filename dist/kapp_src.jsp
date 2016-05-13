@@ -4,6 +4,10 @@
 <html ng-app="kd.bundle.angular">
   <head>
     <title>Request CE</title>
+
+    <!-- Specify content width scale for mobile devices and let the magic begin -->
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="${bundle.location}/dist/vendors/vendors.css">
     <!-- endinject -->
@@ -38,14 +42,14 @@
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/kapp.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
@@ -67,12 +71,12 @@
     <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.utils.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
