@@ -6,7 +6,7 @@ module.exports = {
   APP_DESTINATION: './dist/app',
   MODULE_NAME: 'kd.bundle.angular',
 
-  INDEX_FILE: './kapp_src.jsp',
+  INDEX_FILE: './kapp.jsp',
 
   JADE_SRC: [
     './app/**/*.jade'
