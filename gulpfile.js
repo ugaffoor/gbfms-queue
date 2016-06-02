@@ -40,7 +40,7 @@ gulp.task('index', ['vendors', 'styles', 'templates', 'scripts'], function() {
         starttag: '<!-- inject:{{ext}} -->'
       }
     ))
-    .pipe(gulp.dest(Config.DESTINATION))
+    .pipe(gulp.dest(Config.INDEX_DESTINATION))
     .pipe(plugins.livereload());
 });
 

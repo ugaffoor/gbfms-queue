@@ -1,12 +1,13 @@
 module.exports = {
   DESTINATION: './dist',
+  INDEX_DESTINATION: './',
   VENDOR_DESTINATION: './dist/vendors',
   TEMP: './.tmp',
   CSS_DESTINATION: './dist/css',
   APP_DESTINATION: './dist/app',
   MODULE_NAME: 'kd.bundle.angular',
 
-  INDEX_FILE: './kapp.jsp',
+  INDEX_FILE: './app/kapp.jsp',
 
   JADE_SRC: [
     './app/**/*.jade'
