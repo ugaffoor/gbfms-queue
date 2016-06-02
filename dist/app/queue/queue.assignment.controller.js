@@ -44,11 +44,7 @@
     }
 
     function getNameFromMember(member) {
-      if(member.values['Objet 1 Type'] === 'User') {
-        return member.values['Object 1 Id'];
-      } else {
-        return member.values['Object 2 Id'];
-      }
+      return member.values['Username'];
     }
 
     function startMidGroupAssignment(groupIndex) {
@@ -66,13 +62,11 @@
       item.values['Assigned Individual'] = '';
       item.values['Assigned Individual Display Name'] = '';
       if(_.isEmpty(parent)) {
-        parent = 'root';
         item.values['Assigned Group'] = '';
       } else {
-        item.values['Assigned Group'] = parent;
+        item.values['Assigned Group'] = AssignmentService.withoutRoot(parent);
         populateAssignedGroups();
       }
-
       queue.loading = true;
       vm.state.assigningGroups = true;
       vm.state.showMembersButton = false;
@@ -82,7 +76,7 @@
         function(groups) {
           queue.loading = false;
           vm.groupsToAssign = _.filter(groups, function(group) {
-            return group.values['Status'] === 'Active';
+            return group.values['Status'] === 'active';
           });
 
           if(groups.length < 1) {
@@ -101,6 +95,10 @@
       if(_.isEmpty(item.values['Assigned Group'])) {
         return;
       }
+
+      item.values['Assigned Individual'] = '';
+      item.values['Assigned Individual Display Name'] = '';
+
       vm.memberId = '';
       vm.memberName = '';
       vm.membersToAssign = [];
@@ -168,9 +166,6 @@
 
     function checkMemberAssignment() {
       var parent = item.values['Assigned Group'];
-      if(_.isEmpty(parent)) {
-        parent = 'root';
-      }
       AssignmentService.getGroups(helperKapp, parent).then(
         function(groups) {
           if(groups.length < 1) {

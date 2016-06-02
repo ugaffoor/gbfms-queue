@@ -124,16 +124,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
     '  <div class="container">\n' +
     '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="queue.by({filterName: \'__default__\'})" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
     '    </div>\n' +
     '    <div id="navbar" class="navbar-collapse collapse">\n' +
     '      <ul class="nav navbar-nav">\n' +
-    '        <li data-ng-class="{\'active\': layout.isParentActive(\'queue\')}"><a data-ui-sref="queue.by({filterName: \'__default__\'})">Queue</a></li>\n' +
-    '        <li data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}"><a data-ui-sref="catalog">Catalog</a></li>\n' +
-    '        <li data-ng-if="layout.isSpaceAdmin()" data-ng-class="{\'active\': layout.isParentActive(\'setup\')}"><a data-ui-sref="setup">Queue Setup</a></li>\n' +
+    '        <li data-ng-if="layout.isSetupVisible()" data-ng-class="{\'active\': layout.isParentActive(\'setup\')}"><a data-ui-sref="setup">Queue Setup {{layout.isSetupVisible()}}</a></li>\n' +
     '      </ul>\n' +
     '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-fw fa-th"></i></a>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-th"></i><i class="visible-xs">Kapps</i></a>\n' +
     '          <ul class="dropdown-menu">\n' +
     '            <li data-ng-repeat="kapp in layout.kapps"><a href="{{layout.kappUrl(kapp)}}">{{kapp.name}}</a></li>\n' +
     '          </ul>\n' +
@@ -162,7 +160,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div data-ng-if="vm.canAssignGroup() &amp;&amp; vm.groups.length &gt; 0" class="list-group-item"><a data-ng-click="vm.startMidGroupAssignment(vm.groups.length)" class="btn btn-default btn-block">Continue Group Assignment</a></div>\n' +
     '      <div data-ng-if="vm.state.assigningGroups || vm.state.assigningMembers" class="list-group-item">\n' +
     '        <div class="list-group">\n' +
-    '          <div data-ng-repeat="group in vm.groupsToAssign" class="list-group-item"><span class="fa fa-fw fa-users"></span>{{group.values[\'Group\']}}<a data-ng-click="vm.startGroupAssignment(group.values[\'Group\'])" class="btn btn-sm btn-default pull-right">Choose</a></div>\n' +
+    '          <div data-ng-repeat="group in vm.groupsToAssign" class="list-group-item"><span class="fa fa-fw fa-users"></span>{{group.values[\'Display Name\']}}<a data-ng-click="vm.startGroupAssignment(group.values[\'Name\'])" class="btn btn-sm btn-default pull-right">Choose</a></div>\n' +
     '          <div data-ng-repeat="member in vm.membersToAssign" class="list-group-item">\n' +
     '            <ng-letter-avatar data="{{vm.getNameFromMember(member)}}" height="14px" width="14px" shape="round" fontsize="12"></ng-letter-avatar>{{vm.getNameFromMember(member)}}<a data-ng-click="vm.selectMember(member)" class="btn btn-sm btn-default pull-right">Choose</a>\n' +
     '          </div>\n' +
@@ -508,7 +506,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="row">\n' +
     '        <div class="col-xs-12">\n' +
     '          <div class="form-group">\n' +
-    '            <label class="control-label">Helper Kapp</label>\n' +
+    '            <label class="control-label">Admin Kapp</label>\n' +
     '            <select data-ng-model="vm.helperKappAttribute.values[0]" data-ng-options="kapp.slug as kapp.name for kapp in vm.kapps" class="form-control"></select>\n' +
     '          </div>\n' +
     '        </div>\n' +

@@ -20,7 +20,6 @@
         $state.go('error.system');
       }
       console.log('failed to change state', arguments);
-      //
     });
   //
   //  $rootScope.$on('$stateChangeSuccess', function() {
