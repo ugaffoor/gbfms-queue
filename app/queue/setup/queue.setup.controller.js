@@ -14,7 +14,8 @@
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Details Value', allowsMutliple: false },
       { name: 'Helper Kapp Slug', allowsMutliple: false },
-      { name: 'Queue Default Group', allowsMutliple: false}
+      { name: 'Queue Default Group', allowsMutliple: false },
+      { name: 'Queue Setup Visible', allowsMultiple: false}
     ];
 
     vm.currentKapp = currentKapp;
@@ -22,6 +23,7 @@
     vm.readyToEdit = true;
 
     vm.queueNameAttribute = {};
+    vm.queueSetupVisibleAttribute = {};
     vm.queueTypeAttribute = {};
     vm.queueDetailsAttribute = {};
     vm.queueFilterAttribute = {};
@@ -48,14 +50,15 @@
         vm.queueFilterAttribute.values.splice(index, 1);
       },
       doDefaults: function() {
+        vm.queueSetupVisibleAttribute.values[0] = true;
         vm.queueNameAttribute.values[0] = 'Todo List';
         vm.queueTypeAttribute.values[0] = 'Todo Item';
         vm.queueDetailsAttribute.values[0] = 'Task';
-        vm.helperKappAttribute.values[0] = 'helper';
+        vm.helperKappAttribute.values[0] = 'admin';
 
         vm.queueFilterAttribute.values = [
-          { name: 'All', query: 'values[Status]="Open"' },
-          { name: 'Pending', query: 'values[Status]="Pending"' },
+          //{ name: 'All', query: 'values[Status]="Open"' },
+          //{ name: 'Pending', query: 'values[Status]="Pending"' },
         ];
         vm.setup.shouldCreateForm = true;
         vm.setup.initialForm.name = 'Todo Item';
@@ -415,6 +418,11 @@
       if(_.isEmpty(vm.queueNameAttribute)) {
         vm.queueNameAttribute = { name: 'Queue Name', values: [''] };
         vm.currentKapp.attributes.push(vm.queueNameAttribute);
+      }
+      vm.queueSetupVisibleAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Setup Visible'});
+      if(_.isEmpty(vm.queueSetupVisibleAttribute)) {
+        vm.queueSetupVisibleAttribute = { name: 'Queue Setup Visible', values: [true] };
+        vm.currentKapp.attributes.push(vm.queueSetupVisibleAttribute);
       }
       vm.queueTypeAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Type'});
       if(_.isEmpty(vm.queueTypeAttribute)) {

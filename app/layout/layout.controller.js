@@ -13,8 +13,15 @@
     layout.currentUser = currentUser;
     layout.kappIcon = kappIcon;
     layout.isSpaceAdmin = isSpaceAdmin;
+    layout.isSetupVisible = isSetupVisible;
     layout.isParentActive = isParentActive;
     layout.kappUrl = kappUrl;
+
+    function isSetupVisible() {
+      var visibleAttribute = _.find(currentKapp.attributes, {name: 'Queue Setup Visible'});
+      var isVisible = (visibleAttribute ? visibleAttribute.values[0] : 'true');
+      return isVisible === 'true';
+    }
 
     function isSpaceAdmin() {
       return layout.currentUser.spaceAdmin;
