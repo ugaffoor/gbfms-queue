@@ -19,8 +19,8 @@
         .list-group
           .list-group-item(data-ng-repeat="group in vm.groupsToAssign")
             span.fa.fa-fw.fa-users
-            | {{group.values['Group']}}
-            a.btn.btn-sm.btn-default.pull-right(data-ng-click="vm.startGroupAssignment(group.values['Group'])") Choose
+            | {{group.values['Display Name']}}
+            a.btn.btn-sm.btn-default.pull-right(data-ng-click="vm.startGroupAssignment(group.values['Name'])") Choose
           .list-group-item(data-ng-repeat="member in vm.membersToAssign")
             ng-letter-avatar(data="{{vm.getNameFromMember(member)}}" height="14px" width="14px" shape="round" fontsize="12")
             | {{vm.getNameFromMember(member)}}

@@ -13,9 +13,34 @@
 
       // Helpers
       getGroups: getGroups,
-      getMembers: getMembers
+      getMembers: getMembers,
+      withoutRoot: withoutRoot
     };
+
+    var ROOT_GROUP = 'Fulfillment';
+
     return service;
+
+
+
+    function withoutRoot(group) {
+      if(_.startsWith(group, ROOT_GROUP + '::')) {
+        return group.slice(ROOT_GROUP.length + 2);
+      }
+    }
+
+    function withRoot(group) {
+      var groupWithRoot = group;
+      if(!_.startsWith(group, ROOT_GROUP)) {
+        if(_.isEmpty(group)) {
+          groupWithRoot = ROOT_GROUP;
+        } else {
+          groupWithRoot = ROOT_GROUP + '::' + group;
+        }
+      }
+
+      return groupWithRoot;
+    }
 
     // var helperSubmissionsBase = $window.KD.base + '/' + kappSlug + '/' + form.slug;
 
@@ -27,15 +52,8 @@
       getMembers(helper, currentGroup).then(
         function(members) {
           var association = _.find(members, function(member) {
-            if(member.values['Object 1 Type'] === 'Group' &&
-               member.values['Object 1 Id'] === currentGroup &&
-               member.values['Object 2 Type'] === 'User' &&
-               member.values['Object 2 Id'] === currentUser) {
-              return true;
-            } else if(member.values['Object 1 Type'] === 'User' &&
-               member.values['Object 1 Id'] === currentUser &&
-               member.values['Object 2 Type'] === 'Group' &&
-               member.values['Object 2 Id'] === currentGroup) {
+            if(member.values['Group Id'] === withRoot(currentGroup) &&
+               member.values['Username'] === currentUser) {
               return true;
             }
             return false;
@@ -76,9 +94,7 @@
     }
 
     function getGroups(helper, parent) {
-      if(typeof parent === 'undefined') {
-        parent = 'root';
-      }
+      parent = withRoot(parent);
 
       return Submission.search(helper, 'group')
         .eq('values[Parent]', parent)
@@ -93,21 +109,10 @@
      */
 
     function getMembers(helper, group) {
-      if(typeof parent === 'undefined') {
-        parent = 'root';
-      }
+      group = withRoot(group);
 
-      return Submission.search(helper, 'association')
-        .or()
-          .and()
-            .eq('values[Object 1 Type]', 'Group')
-            .eq('values[Object 1 Id]', group)
-            .end()
-          .and()
-            .eq('values[Object 2 Type]', 'Group')
-            .eq('values[Object 2 Id]', group)
-            .end()
-          .end()
+      return Submission.search(helper, 'group-membership')
+        .eq('values[Group Id]', group)
         .coreState('Draft')
         .include('values')
         .execute();
