@@ -50,7 +50,7 @@
         vm.queueFilterAttribute.values.splice(index, 1);
       },
       doDefaults: function() {
-        vm.queueSetupVisibleAttribute.values[0] = true;
+        vm.queueSetupVisibleAttribute.values[0] = 'true';
         vm.queueNameAttribute.values[0] = 'Todo List';
         vm.queueTypeAttribute.values[0] = 'Todo Item';
         vm.queueDetailsAttribute.values[0] = 'Task';
@@ -423,6 +423,8 @@
       if(_.isEmpty(vm.queueSetupVisibleAttribute)) {
         vm.queueSetupVisibleAttribute = { name: 'Queue Setup Visible', values: ['true'] };
         vm.currentKapp.attributes.push(vm.queueSetupVisibleAttribute);
+      } else {
+        vm.queueSetupVisibleAttribute.values[0] = ''+vm.queueSetupVisibleAttribute.values[0];
       }
       vm.queueTypeAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Type'});
       if(_.isEmpty(vm.queueTypeAttribute)) {
