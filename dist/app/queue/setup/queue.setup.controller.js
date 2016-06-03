@@ -422,7 +422,7 @@
       }
       vm.queueSetupVisibleAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Setup Visible'});
       if(_.isEmpty(vm.queueSetupVisibleAttribute)) {
-        vm.queueSetupVisibleAttribute = { name: 'Queue Setup Visible', values: [true] };
+        vm.queueSetupVisibleAttribute = { name: 'Queue Setup Visible', values: ['true'] };
         vm.currentKapp.attributes.push(vm.queueSetupVisibleAttribute);
       }
       vm.queueTypeAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Type'});
