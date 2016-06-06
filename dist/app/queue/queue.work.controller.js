@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  QueueWorkController.$inject = ["item", "helperKapp", "$window", "$scope", "$state", "$timeout", "AssignmentService", "Toast"];
+  QueueWorkController.$inject = ["item", "$window", "$scope", "$state", "$timeout", "AssignmentService", "Toast"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueWorkController', QueueWorkController);
 
   /* @ngInject */
-  function QueueWorkController(item, helperKapp, $window, $scope, $state, $timeout, AssignmentService, Toast) {
+  function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Toast) {
     var vm = this;
     vm.item = item;
 

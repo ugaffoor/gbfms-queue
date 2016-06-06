@@ -8,7 +8,7 @@
   /* @ngInject */
   function routes($stateProvider) {
     $stateProvider.state('setup', {
-      parent: 'default',
+      parent: 'protected',
       url: '/setup',
 
       views: {

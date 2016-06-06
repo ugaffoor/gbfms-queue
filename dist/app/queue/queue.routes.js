@@ -9,43 +9,34 @@
   /* @ngInject */
   function routes($stateProvider) {
     $stateProvider.state('queue', {
-      parent: 'default',
+      parent: 'protected',
       url: '/queue',
 
       resolve: {
-        configResolver: ["currentUser", "currentKapp", "$state", function(currentUser, currentKapp, $state) {
-          return function(attributeKey) {
-            var attribute = _.find(currentKapp.attributes, {name:attributeKey});
-            if(_.isEmpty(attribute)) {
-              if(currentUser.spaceAdmin) {
-                $state.go('setup');
-              } else {
-                $state.go('error.setup');
-              }
-            } else {
-              return attribute;
-            }
-          };
-        }],
-        queueName: ["configResolver", function(configResolver) {
-          var queueNameAttribute = configResolver('Queue Name');
+        queueName: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueNameAttribute = kappConfigResolver('Queue Name');
           return queueNameAttribute.values[0];
         }],
-        queueType: ["configResolver", function(configResolver) {
-          var queueTypeAttribute = configResolver('Queue Type');
+        queueType: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueTypeAttribute = kappConfigResolver('Queue Type');
           return queueTypeAttribute.values[0];
         }],
-        queueDetailsValue: ["configResolver", function(configResolver) {
-          var queueDetailsAttribute = configResolver('Queue Details Value');
+        queueSetupVisible: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueSetupVisibleAttribute = kappConfigResolver('Queue Setup Visible');
+          return queueSetupVisibleAttribute.values[0];
+        }],
+        queueDetailsValue: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueDetailsAttribute = kappConfigResolver('Queue Details Value');
           return queueDetailsAttribute.values[0];
         }],
-        helperKapp: ["configResolver", function(configResolver) {
-          var helperKappAttribute = configResolver('Helper Kapp Slug');
-          return (helperKappAttribute !== undefined ? helperKappAttribute.values[0] : 'helper');
+        adminKapp: ["spaceConfigResolver", "AssignmentService", function(spaceConfigResolver, AssignmentService) {
+          var adminKapp = spaceConfigResolver('Admin Kapp Slug');
+          AssignmentService.setAdminKapp(adminKapp.values[0]);
+          return adminKapp.values[0];
         }],
-        filters: ["currentKapp", function(currentKapp) {
+        filters: ["kappConfigResolver", function(kappConfigResolver) {
           // Fetch the attribute
-          var queueFilterAttribute = _.find(currentKapp.attributes, {name:'Queue Filters'});
+          var queueFilterAttribute = kappConfigResolver('Queue Filters');
           // If it's not defined we want it to work as if there are no filters.
           if(typeof queueFilterAttribute === 'undefined') {
             queueFilterAttribute = {
@@ -60,6 +51,7 @@
             }
             return filter;
           });
+
           return queueFilterAttribute.values;
         }]
       },
@@ -76,7 +68,7 @@
       url: '/filter/{filterName}',
       views: {
         '': {
-          controller: 'QueueListController as vm',
+          controller: 'QueueListController as list',
           templateUrl: 'queue/queue.list.tpl.html',
           resolve: {
             filterName: ["$stateParams", "filters", function($stateParams, filters) {

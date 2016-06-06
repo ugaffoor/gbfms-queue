@@ -1,0 +1,17 @@
+.setup-tab
+  .row
+    .col-xs-12
+      .panel.panel-primary
+        .panel-heading
+          h3.panel-title Generate Base Form
+        .panel-body
+          .row
+            .col-xs-8
+              .form-group
+                label.control-label Form Name
+                input.form-control(type="text",data-ng-model="vm.form.name")
+              .form-group
+                label.control-label Form Slug
+                input.form-control(type="text",data-ng-model="vm.form.slug",data-ng-change="vm.shouldSlugify=false")
+            .col-xs-4
+              button.btn.btn-sm.btn-default Generate Form

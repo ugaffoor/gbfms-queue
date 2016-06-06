@@ -9,10 +9,11 @@
   /* @ngInject */
   function routes($stateProvider) {
     $stateProvider.state('error', {
-      parent: 'unauthenticated',
+      parent: 'public',
       abstract: true,
       url: '/error',
-      templateUrl: 'errors/error.layout.tpl.html'
+      //templateUrl: 'errors/error.layout.tpl.html'
+      template: '<div data-ui-view=""></div>'
     });
 
     $stateProvider.state('error.setup', {

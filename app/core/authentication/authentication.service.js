@@ -22,7 +22,7 @@
         deferred.resolve(self.currentUser);
       }
 
-      $http.get(ConfigStore.get('apiBasePath') + '/me').success(function(user) {
+      $http.get(ConfigStore.get('apiBaseUrl') + '/me').success(function(user) {
         if(typeof user.username === 'undefined') {
           deferred.reject();
         }

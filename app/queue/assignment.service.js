@@ -14,14 +14,14 @@
       // Helpers
       getGroups: getGroups,
       getMembers: getMembers,
-      withoutRoot: withoutRoot
+      withoutRoot: withoutRoot,
+      setAdminKapp: setAdminKapp
     };
 
+    var adminKapp = null;
     var ROOT_GROUP = 'Fulfillment';
 
     return service;
-
-
 
     function withoutRoot(group) {
       if(_.startsWith(group, ROOT_GROUP + '::')) {
@@ -42,14 +42,18 @@
       return groupWithRoot;
     }
 
+    function setAdminKapp(adminKappSlug) {
+      adminKapp = adminKappSlug;
+    }
+
     // var helperSubmissionsBase = $window.KD.base + '/' + kappSlug + '/' + form.slug;
 
-    function grabIt(helper, currentUser, currentGroup, item) {
+    function grabIt(currentUser, currentGroup, item) {
       var deferred = $q.defer();
 
       // First we need to determine if the current user is a member of the currently
       // assigned group in order for them to "grab it".
-      getMembers(helper, currentGroup).then(
+      getMembers(currentGroup).then(
         function(members) {
           var association = _.find(members, function(member) {
             if(member.values['Group Id'] === withRoot(currentGroup) &&
@@ -93,10 +97,10 @@
       return deferred.promise;
     }
 
-    function getGroups(helper, parent) {
+    function getGroups(parent) {
       parent = withRoot(parent);
 
-      return Submission.search(helper, 'group')
+      return Submission.search(adminKapp, 'group')
         .eq('values[Parent]', parent)
         .coreState('Draft')
         .include('values')
@@ -108,10 +112,10 @@
     coreState=Draft&include=values&q=(+(+values%5BObject+1+Type%5D+%3D+%22Group%22+AND+values%5BObject+1+Id%5D+%3D+%22US::IT%22)+OR+(+values%5BObject+2+Type%5D+%3D+%22Group%22+AND+values%5BObject+2+Id%5D+%3D+%22US::IT%22))
      */
 
-    function getMembers(helper, group) {
+    function getMembers(group) {
       group = withRoot(group);
 
-      return Submission.search(helper, 'group-membership')
+      return Submission.search(adminKapp, 'group-membership')
         .eq('values[Group Id]', group)
         .coreState('Draft')
         .include('values')

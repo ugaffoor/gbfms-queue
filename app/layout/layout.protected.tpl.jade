@@ -6,11 +6,11 @@ nav.navbar.navbar-default.navbar-fixed-top
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(data-ui-sref="queue.by({filterName: '__default__'})") {{layout.kapp.name}}
+      a.navbar-brand(data-ui-sref="queue.by({filterName: '__default__'})",data-ui-sref-opts="{reload:true}") {{layout.kapp.name}}
     div.navbar-collapse.collapse#navbar
       ul.nav.navbar-nav
         li(data-ng-if="layout.isSetupVisible()",data-ng-class="{'active': layout.isParentActive('setup')}")
-          a(data-ui-sref="setup") Queue Setup {{layout.isSetupVisible()}}
+          a(data-ui-sref="setup") Queue Setup
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")
@@ -21,4 +21,4 @@ nav.navbar.navbar-default.navbar-fixed-top
               a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}
 main
   div.container(data-ui-view="")
-      
+

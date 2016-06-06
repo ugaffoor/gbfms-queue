@@ -1,26 +1,39 @@
 (function() {
   'use strict';
 
-  QueueDetailController.$inject = ["helperKapp", "item", "AssignmentService", "Toast", "$state", "$scope"];
+  QueueDetailController.$inject = ["item", "AssignmentService", "Toast", "$state", "$scope"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueDetailController', QueueDetailController);
 
   /* @ngInject */
-  function QueueDetailController(helperKapp, item, AssignmentService, Toast, $state, $scope) {
+  function QueueDetailController(item, AssignmentService, Toast, $state, $scope) {
     var vm = this;
     vm.isMine = isMine;
     vm.grabIt = grabIt;
     vm.getAssignedIndividual = getAssignedIndividual;
 
+    var list = $scope.list;
     var layout = $scope.layout;
+
+    activate();
+
+    function activate() {
+      list.hideList();
+      list.activeItem = item.id;
+
+      //$scope.$on('$destroy', function() {
+      //  console.log('queue details destroyed');
+      //  list.activeItem = null;
+      //})
+    }
 
     function isMine() {
       return layout.currentUser.username === getAssignedIndividual(item);
     }
 
     function grabIt() {
-      AssignmentService.grabIt(helperKapp, layout.currentUser.username, item.values['Assigned Group'], item).then(
+      AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Group'], item).then(
         function() {
           Toast.success('Grabbed item.');
           $state.go('.', {}, {reload:true});

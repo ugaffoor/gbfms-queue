@@ -1,7 +1,7 @@
 .row
-  .col-xs-12.col-sm-4
+  .col-sm-12.col-md-4(data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }")
     .list-group
-      a.list-group-item(data-ng-if="!vm.loading",data-ui-sref="queue.by.details.summary({itemId: item.id})",data-ng-repeat="item in vm.items")
+      a.list-group-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)")
         h5.list-group-item-heading {{item.label}}
         p.list-group-item-text
           .row
@@ -21,14 +21,14 @@
           .row
             .col-xs-12
               | {{queue.friendlyDetails(item)}}
-      .list-group-item(data-ng-if="vm.items.length < 1") There are no items in this queue.
-      .list-group-item(data-ng-if="vm.hasMorePages()")
+      .list-group-item(data-ng-if="list.items.length < 1") There are no items in this queue.
+      .list-group-item(data-ng-if="list.hasMorePages()")
         ul.pager.queue-pager
           li
-            a(data-ng-if="vm.prevPageTokens.length > 0",data-ng-click="vm.prevPage()") Previous
+            a(data-ng-if="list.prevPageTokens.length > 0",data-ng-click="list.prevPage()") Previous
           li
-            a(data-ng-if="vm.nextPageToken",data-ng-click="vm.nextPage()") Next
-  .col-xs-12.col-sm-8
+            a(data-ng-if="list.nextPageToken",data-ng-click="list.nextPage()") Next
+  .col-sm-12.col-md-8
     div(data-ui-view="")
       .panel.panel-default
         .panel-body

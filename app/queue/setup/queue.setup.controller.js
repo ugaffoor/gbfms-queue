@@ -5,7 +5,7 @@
     .controller('QueueSetupController', QueueSetupController);
 
   /* @ngInject */
-  function QueueSetupController(currentKapp, kapps, AttributeDefinition, Form, FormTypes, Toast, $uibModal, $q, $scope) {
+  function QueueSetupController(currentKapp, kapps, AttributeDefinition, SpaceModel, Form, FormTypes, Toast, Slugifier, $uibModal, $q, $scope) {
     var vm = this;
 
     var requiredAttributes = [
@@ -13,14 +13,13 @@
       { name: 'Queue Form Type', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Details Value', allowsMutliple: false },
-      { name: 'Helper Kapp Slug', allowsMutliple: false },
-      { name: 'Queue Default Group', allowsMutliple: false },
+      { name: 'Queue Group Base', allowsMutliple: false },
       { name: 'Queue Setup Visible', allowsMultiple: false}
     ];
 
     vm.currentKapp = currentKapp;
     vm.kapps = kapps;
-    vm.readyToEdit = true;
+    vm.readyToEdit = false;
 
     vm.queueNameAttribute = {};
     vm.queueSetupVisibleAttribute = {};
@@ -28,14 +27,19 @@
     vm.queueDetailsAttribute = {};
     vm.queueFilterAttribute = {};
     vm.queueDefaultGroup = {};
-    vm.helperKappAttribute = {};
+
+    vm.missingAttributes = [];
+    vm.missingAdminKapp = false;
+
+    vm.saveKapp = saveKapp;
+
+    vm.form = {
+      name: '',
+      slug: ''
+    };
+    vm.shouldSlugify = true;
 
     vm.setup = {
-      shouldCreateForm: false,
-      initialForm: {
-        name: '',
-        slug: ''
-      },
       addFilter: function() {
         var filterCriteria = {
           name: vm.setup.tmpFilterName,
@@ -54,7 +58,6 @@
         vm.queueNameAttribute.values[0] = 'Todo List';
         vm.queueTypeAttribute.values[0] = 'Todo Item';
         vm.queueDetailsAttribute.values[0] = 'Task';
-        vm.helperKappAttribute.values[0] = 'admin';
 
         vm.queueFilterAttribute.values = [
           //{ name: 'All', query: 'values[Status]="Open"' },
@@ -67,39 +70,7 @@
       isSetupValid: function() {
         return false;
       },
-      save: function() {
-        // Convert the filters to a string.
-        vm.queueFilterAttribute.values = _.map(vm.queueFilterAttribute.values, function(filter) {
-          return JSON.stringify(filter, function(key, value) { return (_.startsWith(key, '$$') ? undefined : value); });
-        });
 
-        // Validate that we have all the essential attribute definitions.
-        validateMissingAttributes().then(
-          function() {
-            saveKapp().then(
-              function() {
-                setupConfigurationObject();
-                addFormType().then(
-                  function() {
-                    createInitialForm().then(
-                      function() {
-                        Toast.success('Updated Kapp configuration.');
-                      },
-                      function() {
-                        Toast.error('Failed to update Kapp configuration!');
-                      }
-                    );
-                  },
-                  function() {
-                    Toast.error('Failed to update Kapp configuration!');
-                  }
-                );
-              }
-            );
-          }
-        );
-
-      },
 
       editFilter: function(filter) {
         var instance = $uibModal.open({
@@ -125,12 +96,167 @@
     activate();
 
     function activate() {
-      setupConfigurationObject();
-      // validateMissingAttributes();
+      preflightCheck();
+
+      resetForm();
+
+      // Watch the form name field and if slug hasn't been manually modified, set the slug to the new value.
+      $scope.$watch('vm.form.name', function(name) {
+        if(vm.shouldSlugify) {
+          vm.form.slug = name.toLowerCase() || '';
+        }
+      });
+
+      // Watch the form slug field and if slug has been modified, slugify it.
+      $scope.$watch('vm.form.slug', function(slug) {
+        vm.form.slug = Slugifier.slugify(slug);
+      });
+    }
+
+    function resetForm() {
+      vm.form.slug = '';
+      vm.form.name = '';
+    }
+
+    function preflightCheck() {
+      checkForAdminKapp().then(
+        function() {
+          getMissingAttributeDefinitions().then(
+            function(missingAttributes) {
+              // Save the missing attributes.
+              vm.missingAttributes = missingAttributes;
+
+              _handleMissingAttributeDefinitions().then(
+                function(ready) {
+                  // What next?
+                  if(ready) {
+                    vm.readyToEdit = true;
+                    setupConfigurationObject();
+                  }
+                },
+                function() {
+                  return $q.reject();
+                }
+              )
+
+            },
+            function() {
+              Toast.error('Failed to determine setup status!')
+            }
+          )
+        },
+        // If the admin kapp check fails.
+        function() {
+          vm.missingAdminKapp = true;
+        }
+      );
+
+
+    }
+
+    function checkForAdminKapp() {
+      var deferred = $q.defer();
+      SpaceModel.current().get({include: 'attributes'}).then(
+        function(space) {
+          if(!_.some(space.attributes, {name:'Admin Kapp Slug'})) {
+            deferred.reject();
+          }
+          deferred.resolve();
+        },
+        function() {
+          deferred.reject();
+        }
+      );
+      return deferred.promise;
+    }
+
+    function getMissingAttributeDefinitions() {
+      var deferred = $q.defer();
+
+      AttributeDefinition.build('Kapp', vm.currentKapp.slug).getList().then(
+        function(attributeDefinitions) {
+          // Next we'll go through all of the required attributes and make sure
+          // that we create an attribute definition for each of the missing ones.
+          var definitionsToCreate = [];
+          _.each(requiredAttributes, function(definition) {
+            if(!_.some(attributeDefinitions, {name:definition.name})) {
+              definitionsToCreate.push({name: definition.name, created: false, definition: definition});
+            }
+          });
+          deferred.resolve(definitionsToCreate);
+        },
+        function() {
+          deferred.reject();
+        }
+      );
+
+      return deferred.promise;
+    }
+
+    function _handleMissingAttributeDefinitions() {
+      var deferred = $q.defer();
+
+      // If there were any missing attributes...
+      if(vm.missingAttributes.length > 0) {
+        var promises = _.map(vm.missingAttributes, function(attributeDefinition) {
+          return createAttributeDefinition(attributeDefinition)
+        });
+        $q.all(promises).then(
+          function() {
+            Toast.success('Created all missing attribute definitions.');
+            deferred.resolve(true);
+          },
+          function() {
+            Toast.error('Failed to create missing attribute definitions.');
+            deferred.reject();
+          }
+        )
+      } else {
+        deferred.resolve(true);
+      }
+
+      return deferred.promise;
+    }
+
+    function createAttributeDefinition(attributeDefinition) {
+      var deferred = $q.defer();
+
+      //if(attributeDefinitions.length > 0) {
+      //  var newDefinition = attributeDefinitions.pop();
+      AttributeDefinition
+        .build('Kapp', vm.currentKapp.slug)
+        .post(attributeDefinition.definition)
+        .then(
+        function(result) {
+          attributeDefinition.created = true;
+          deferred.resolve(result);
+        }, function(error) {
+          Toast.error('Failed to create required attribute definition "'+definition+'".');
+          deferred.reject(error);
+        }
+      );
+      return deferred.promise;
     }
 
     function saveKapp() {
-      return vm.currentKapp.put();
+      // Convert the filters to a string.
+      vm.queueFilterAttribute.values = _.map(vm.queueFilterAttribute.values, function(filter) {
+        return JSON.stringify(filter, function(key, value) { return (_.startsWith(key, '$$') ? undefined : value); });
+      });
+
+      vm.currentKapp.put().then(
+        function() {
+          setupConfigurationObject();
+          addFormType().then(
+            function() {
+              Toast.success('Updated Kapp configuration.');
+            },
+            function() {
+              Toast.error('Failed to update Kapp configuration!');
+            }
+          );
+        }
+      );
     }
 
     function createInitialForm() {
@@ -368,7 +494,7 @@
                   "slug": vm.setup.initialForm.slug,
                   "status": "New",
                   "submissionLabelExpression": "${form('name')}",
-                  "type": vm.queueTypeAttribute.values[0],
+                  "type": vm.queueTypeAttribute.values[0]
                 }
               ).then(
                 function() {
@@ -436,10 +562,10 @@
         vm.queueDetailsAttribute = { name: 'Queue Details Value', values: [''] };
         vm.currentKapp.attributes.push(vm.queueDetailsAttribute);
       }
-      vm.queueDefaultGroup = _.find(vm.currentKapp.attributes, {name: 'Queue Default Group'});
-      if(_.isEmpty(vm.queueDefaultGroup)) {
-        vm.queueDefaultGroup = { name: 'Queue Default Group', values: []};
-        vm.currentKapp.attributes.push(vm.queueDefaultGroup);
+      vm.queueGroupBase = _.find(vm.currentKapp.attributes, {name: 'Queue Group Base'});
+      if(_.isEmpty(vm.queueGroupBase)) {
+        vm.queueGroupBase = { name: 'Queue Group Base', values: []};
+        vm.currentKapp.attributes.push(vm.queueGroupBase);
       }
       vm.queueFilterAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Filters'});
       if(_.isEmpty(vm.queueFilterAttribute)) {
@@ -453,70 +579,65 @@
           return filter;
         });
       }
-      vm.helperKappAttribute = _.find(vm.currentKapp.attributes, {name: 'Helper Kapp Slug'});
-      if(_.isEmpty(vm.helperKappAttribute)) {
-        vm.helperKappAttribute = { name: 'Helper Kapp Slug', values: [''] };
-        vm.currentKapp.attributes.push(vm.helperKappAttribute);
-      }
     }
 
-    function validateMissingAttributes() {
-      var deferred = $q.defer();
-      var attributes = vm.currentKapp.attributes;
-      // Retrieve all attribute definitions for the kapp.
-      AttributeDefinition.build('Kapp', vm.currentKapp.slug).getList().then(
-        function(attributeDefinitions) {
-          // Next we'll go through all of the required attributes and make sure
-          // that we create an attribute definition for each of the missing ones.
-          var definitionsToCreate = [];
-          _.each(requiredAttributes, function(definition) {
-            if(!_.some(attributeDefinitions, {name:definition.name})) {
-              definitionsToCreate.push(definition);
-            }
-          });
-          createMissingAttributeDefinitions(definitionsToCreate).then(
-            function() {
-              deferred.resolve();
-            });
-        },
-        function() {
-          deferred.reject();
-        }
-      );
+    //function validateMissingAttributes() {
+    //  var deferred = $q.defer();
+    //  var attributes = vm.currentKapp.attributes;
+    //  // Retrieve all attribute definitions for the kapp.
+    //  AttributeDefinition.build('Kapp', vm.currentKapp.slug).getList().then(
+    //    function(attributeDefinitions) {
+    //      // Next we'll go through all of the required attributes and make sure
+    //      // that we create an attribute definition for each of the missing ones.
+    //      var definitionsToCreate = [];
+    //      _.each(requiredAttributes, function(definition) {
+    //        if(!_.some(attributeDefinitions, {name:definition.name})) {
+    //          definitionsToCreate.push(definition);
+    //        }
+    //      });
+    //      createMissingAttributeDefinitions(definitionsToCreate).then(
+    //        function() {
+    //          deferred.resolve();
+    //        });
+    //    },
+    //    function() {
+    //      deferred.reject();
+    //    }
+    //  );
+    //
+    //  return deferred.promise;
+    //}
 
-      return deferred.promise;
-    }
-
-    function createMissingAttributeDefinitions(attributeDefinitions) {
-      var deferred = $q.defer();
-      if(attributeDefinitions.length > 0) {
-        var newDefinition = attributeDefinitions.pop();
-        AttributeDefinition
-          .build('Kapp', vm.currentKapp.slug)
-          .post(newDefinition)
-          .then(
-            function(result) {
-              // If there are remaining attribute definitions then recursively call
-              // this create function.
-              if(attributeDefinitions.length > 0) {
-                // Only resolve our promise once the chain resolves.
-                createMissingAttributeDefinitions(attributeDefinitions).then(
-                  function() {
-                    deferred.resolve();
-                  }
-                );
-              } else {
-                // Resolve the last promise in the chain.
-                deferred.resolve();
-              }
-            }, function(error) {
-              Toast.error('Failed to create required attribute definition "'+definition+'".');
-            }
-          );
-      } else {
-        deferred.resolve();
-      }
-      return deferred.promise;
-    }
+    //function createMissingAttributeDefinitions(attributeDefinitions) {
+    //  var deferred = $q.defer();
+    //  if(attributeDefinitions.length > 0) {
+    //    var newDefinition = attributeDefinitions.pop();
+    //    AttributeDefinition
+    //      .build('Kapp', vm.currentKapp.slug)
+    //      .post(newDefinition)
+    //      .then(
+    //        function(result) {
+    //          // If there are remaining attribute definitions then recursively call
+    //          // this create function.
+    //          if(attributeDefinitions.length > 0) {
+    //            // Only resolve our promise once the chain resolves.
+    //            createMissingAttributeDefinitions(attributeDefinitions).then(
+    //              function() {
+    //                deferred.resolve();
+    //              }
+    //            );
+    //          } else {
+    //            // Resolve the last promise in the chain.
+    //            deferred.resolve();
+    //          }
+    //        }, function(error) {
+    //          Toast.error('Failed to create required attribute definition "'+definition+'".');
+    //        }
+    //      );
+    //  } else {
+    //    deferred.resolve();
+    //  }
+    //  return deferred.promise;
+    //}
   }
 }());

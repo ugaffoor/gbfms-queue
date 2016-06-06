@@ -6,7 +6,7 @@
     .controller('QueueAssignmentController', QueueAssignmentController);
 
   /* @ngInject */
-  function QueueAssignmentController(item, helperKapp, $state, $scope, AssignmentService, Toast) {
+  function QueueAssignmentController(item, $state, $scope, AssignmentService, Toast) {
     var vm = this;
     vm.groups = [];
     vm.memberId = '';
@@ -71,7 +71,7 @@
       vm.state.showMembersButton = false;
       vm.state.showGroupsButton = false;
 
-      AssignmentService.getGroups(helperKapp, parent).then(
+      AssignmentService.getGroups(parent).then(
         function(groups) {
           queue.loading = false;
           vm.groupsToAssign = _.filter(groups, function(group) {
@@ -103,7 +103,7 @@
       vm.membersToAssign = [];
       vm.state.assigningMembers = true;
       vm.state.showMembersButton = false;
-      AssignmentService.getMembers(helperKapp, item.values['Assigned Group']).then(
+      AssignmentService.getMembers(item.values['Assigned Group']).then(
         function(members) {
           vm.membersToAssign = members;
         },
@@ -165,7 +165,7 @@
 
     function checkMemberAssignment() {
       var parent = item.values['Assigned Group'];
-      AssignmentService.getGroups(helperKapp, parent).then(
+      AssignmentService.getGroups(parent).then(
         function(groups) {
           if(groups.length < 1) {
             vm.state.showMembersButton = _.isEmpty(vm.memberId);

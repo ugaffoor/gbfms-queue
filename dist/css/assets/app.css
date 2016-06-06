@@ -2110,3 +2110,6 @@ ul[dnd-list] li {
   display: block;
   padding: 10px 15px;
   margin-bottom: -1px; }
+
+.setup-tab {
+  margin-top: 1em; }

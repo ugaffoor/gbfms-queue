@@ -17,16 +17,17 @@
     <app:headContent/>
   </head>
   <body>
-    <div data-ui-view=""></div>
+    <div data-comment="top level view" data-ui-view=""></div>
 
     <script>
       window.KD = window.KD || {};
       window.KD.context = '${pageContext.request.contextPath}';
       window.KD.space = '${space.slug}';
-      window.KD.kapp = '${kapp.slug}';
+      window.KD.kappSlug = '${kapp.slug}';
+      window.KD.kappName = '${kapp.name}';
       window.KD.base = KD.context + '/' + KD.space;
 
-      window.KD.formsBase = window.KD.base + '/' + window.KD.kapp;
+      window.KD.formsBase = window.KD.base + '/' + window.KD.kappSlug;
       window.KD.api = window.KD.base + '/app/api/v1';
       window.KD.bundleLocation = '${bundle.location}';
     </script>
@@ -37,6 +38,6 @@
     <!-- inject:js -->
     <!-- endinject -->
 
-    <%--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>--%>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
   </body>
 </html>

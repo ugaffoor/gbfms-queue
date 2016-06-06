@@ -16,6 +16,7 @@
     'kd.bundle.angular.queue.setup'
   ]).run(["$rootScope", "$state", function($rootScope, $state) {
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+      console.log(error)
       if(error.status != 401) {
         $state.go('error.system');
       }

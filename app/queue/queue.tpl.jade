@@ -7,6 +7,6 @@
   .col-xs-12
     ul.nav.nav-pills.hidden-xs
       li(data-ng-repeat="filter in queue.filters",data-ng-class="{'active': queue.filterName === filter.name}")
-        a(href="",data-ui-sref="queue.by({filterName: filter.name})") {{filter.name}}
+        a(href="",data-ui-sref="queue.by({filterName: filter.name})", data-ui-sref-opts="{reload:true}") {{filter.name}}
     select.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
 div(data-ui-view="")

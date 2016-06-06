@@ -6,7 +6,7 @@
     .controller('QueueWorkController', QueueWorkController);
 
   /* @ngInject */
-  function QueueWorkController(item, helperKapp, $window, $scope, $state, $timeout, AssignmentService, Toast) {
+  function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Toast) {
     var vm = this;
     vm.item = item;
 

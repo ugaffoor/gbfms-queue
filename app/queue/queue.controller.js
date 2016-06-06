@@ -23,7 +23,7 @@
     queue.isOverdue = isOverdue;
 
     function changeFilter() {
-      $state.go('queue.by', {filterName:queue.filterName});
+      $state.go('queue.by', {filterName:queue.filterName}, {reload:true});
     }
 
     function friendlyDetails(item) {
