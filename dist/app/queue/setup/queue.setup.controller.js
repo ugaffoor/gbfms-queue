@@ -8,7 +8,6 @@
   /* @ngInject */
   function QueueSetupController(currentKapp, kapps, AttributeDefinition, SpaceModel, Form, FormTypes, Toast, Slugifier, $uibModal, $q, $scope) {
     var vm = this;
-
     var requiredAttributes = [
       { name:'Queue Name', allowsMutliple: false },
       { name: 'Queue Form Type', allowsMutliple: false },
@@ -33,6 +32,7 @@
     vm.missingAdminKapp = false;
 
     vm.saveKapp = saveKapp;
+    vm.generateForm = generateForm;
 
     vm.form = {
       name: '',
@@ -260,258 +260,30 @@
       );
     }
 
-    function createInitialForm() {
-      var deferred = $q.defer();
-      if(vm.setup.shouldCreateForm) {
-        // Check the forms to make sure it doesn't already exist.
-        Form.build(vm.currentKapp.slug).getList().then(
-          function(forms) {
-            if(_.some(forms, {slug: vm.setup.initialForm.slug})) {
-              deferred.resolve();
-            } else {
-              Form.build(vm.currentKapp.slug).post(
-                {
-                  "anonymous": false,
-                  "attributes": [],
-                  "bridgedResources": [],
-                  "categorizations": [],
-                  "customHeadContent": null,
-                  "description": "",
-                  "name": vm.setup.initialForm.name,
-                  "notes": null,
-                  "pages": [
-                    {
-                      "advanceCondition": null,
-                      "displayCondition": null,
-                      "displayPage": null,
-                      "elements": [
-                        {
-                          "type": "section",
-                          "renderType": null,
-                          "name": "Assignment Information",
-                          "title": "",
-                          "visible": false,
-                          "omitWhenHidden": false,
-                          "renderAttributes": {},
-                          "elements": [
-                            {
-                              "type": "field",
-                              "name": "Assigned Individual",
-                              "label": "Assigned Individual",
-                              "key": "f3",
-                              "defaultValue": null,
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": false,
-                              "requiredMessage": null,
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "text",
-                              "rows": 1
-                            },
-                            {
-                              "type": "field",
-                              "name": "Assigned Individual Display Name",
-                              "label": "Assigned Individual Display Name",
-                              "key": "f4",
-                              "defaultValue": null,
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": false,
-                              "requiredMessage": null,
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "text",
-                              "rows": 1
-                            },
-                            {
-                              "type": "field",
-                              "name": "Assigned Group",
-                              "label": "Assigned Group",
-                              "key": "f6",
-                              "defaultValue": (_.isEmpty(vm.queueDefaultGroup.values[0]) ? null : vm.queueDefaultGroup.values[0]),
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": false,
-                              "requiredMessage": null,
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "text",
-                              "rows": 1
-                            }
-                          ]
-                        },
-                        {
-                          "type": "section",
-                          "renderType": null,
-                          "name": "Status Information",
-                          "title": "Status Information",
-                          "visible": true,
-                          "omitWhenHidden": null,
-                          "renderAttributes": {},
-                          "elements": [
-                            {
-                              "type": "field",
-                              "name": "Due Date",
-                              "label": "Due Date",
-                              "key": "f5",
-                              "defaultValue": null,
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": false,
-                              "requiredMessage": null,
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "date"
-                            },
-                            {
-                              "type": "field",
-                              "name": "Status",
-                              "label": "Status",
-                              "key": "f2",
-                              "defaultValue": "Open",
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": true,
-                              "requiredMessage": "A valid status must be set.",
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "dropdown",
-                              "choicesResourceName": null,
-                              "choicesRunIf": null,
-                              "choices": [
-                                {
-                                  "label": "Open",
-                                  "value": "Open"
-                                },
-                                {
-                                  "label": "Pending",
-                                  "value": "Pending"
-                                },
-                                {
-                                  "label": "In Progress",
-                                  "value": "In Progress"
-                                },
-                                {
-                                  "label": "Complete",
-                                  "value": "Complete"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "section",
-                          "renderType": null,
-                          "name": "Item Details",
-                          "title": "Item Details",
-                          "visible": true,
-                          "omitWhenHidden": null,
-                          "renderAttributes": {},
-                          "elements": [
-                            {
-                              "type": "field",
-                              "name": "Task",
-                              "label": "Task",
-                              "key": "f1",
-                              "defaultValue": null,
-                              "defaultResourceName": null,
-                              "visible": true,
-                              "enabled": true,
-                              "required": false,
-                              "requiredMessage": null,
-                              "omitWhenHidden": null,
-                              "pattern": null,
-                              "constraints": [],
-                              "events": [],
-                              "renderAttributes": {},
-                              "dataType": "string",
-                              "renderType": "text",
-                              "rows": 1
-                            }
-                          ]
-                        },
-                        {
-                          "type": "button",
-                          "label": "Save",
-                          "name": "Save",
-                          "visible": true,
-                          "enabled": true,
-                          "renderType": "save",
-                          "renderAttributes": {}
-                        },
-                        {
-                          "type": "button",
-                          "label": "Complete",
-                          "name": "Complete",
-                          "visible": true,
-                          "enabled": true,
-                          "renderType": "submit-page",
-                          "renderAttributes": {}
-                        }
-                      ],
-                      "events": [],
-                      "name": "Page One",
-                      "renderType": "submittable",
-                      "type": "page"
-                    },
-                    {
-                      "advanceCondition": null,
-                      "displayCondition": null,
-                      "displayPage": null,
-                      "elements": [],
-                      "events": [],
-                      "name": "Confirmation",
-                      "renderType": "confirmation",
-                      "type": "page"
-                    }
-                  ],
-                  "securityPolicies": [],
-                  "slug": vm.setup.initialForm.slug,
-                  "status": "New",
-                  "submissionLabelExpression": "${form('name')}",
-                  "type": vm.queueTypeAttribute.values[0]
-                }
-              ).then(
-                function() {
-                  deferred.resolve();
-                },
-                function() {
-                  deferred.reject();
-                }
-              );
-            }
+    function generateForm() {
+      // Check the forms to make sure it doesn't already exist.
+      Form.build(vm.currentKapp.slug).getList().then(
+        function(forms) {
+          if(_.some(forms, {slug: vm.form.slug})) {
+            Toast.error('Form "'+vm.form.slug+'" already exists!')
+          } else {
+            Form.build(vm.currentKapp.slug).post(
+              generateFormTemplate()
+            ).then(
+              function() {
+                Toast.success('Generated new form!');
+                resetForm();
+              },
+              function() {
+                Toast.error('Failed to create form!');
+              }
+            );
           }
-        );
-      } else {
-        deferred.resolve();
-      }
-      return deferred.promise;
+        },
+        function() {
+          Toast.error('Failed to verify form uniqueness.')
+        }
+      );
     }
 
     function addFormType() {
@@ -640,5 +412,235 @@
     //  }
     //  return deferred.promise;
     //}
+
+    function generateFormTemplate() {
+      return {
+        "anonymous": false,
+        "attributes": [],
+        "bridgedResources": [],
+        "categorizations": [],
+        "customHeadContent": null,
+        "description": "",
+        "name": vm.form.name,
+        "notes": null,
+        "pages": [
+        {
+          "advanceCondition": null,
+          "displayCondition": null,
+          "displayPage": null,
+          "elements": [
+            {
+              "type": "section",
+              "renderType": null,
+              "name": "Assignment Information",
+              "title": "",
+              "visible": false,
+              "omitWhenHidden": false,
+              "renderAttributes": {},
+              "elements": [
+                {
+                  "type": "field",
+                  "name": "Assigned Individual",
+                  "label": "Assigned Individual",
+                  "key": "f3",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                },
+                {
+                  "type": "field",
+                  "name": "Assigned Individual Display Name",
+                  "label": "Assigned Individual Display Name",
+                  "key": "f4",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                },
+                {
+                  "type": "field",
+                  "name": "Assigned Group",
+                  "label": "Assigned Group",
+                  "key": "f6",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "renderType": null,
+              "name": "Status Information",
+              "title": "Status Information",
+              "visible": true,
+              "omitWhenHidden": null,
+              "renderAttributes": {},
+              "elements": [
+                {
+                  "type": "field",
+                  "name": "Due Date",
+                  "label": "Due Date",
+                  "key": "f5",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "date"
+                },
+                {
+                  "type": "field",
+                  "name": "Status",
+                  "label": "Status",
+                  "key": "f2",
+                  "defaultValue": "Open",
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": true,
+                  "requiredMessage": "A valid status must be set.",
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "dropdown",
+                  "choicesResourceName": null,
+                  "choicesRunIf": null,
+                  "choices": [
+                    {
+                      "label": "Open",
+                      "value": "Open"
+                    },
+                    {
+                      "label": "Pending",
+                      "value": "Pending"
+                    },
+                    {
+                      "label": "In Progress",
+                      "value": "In Progress"
+                    },
+                    {
+                      "label": "Complete",
+                      "value": "Complete"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "renderType": null,
+              "name": "Item Details",
+              "title": "Item Details",
+              "visible": true,
+              "omitWhenHidden": null,
+              "renderAttributes": {},
+              "elements": [
+                {
+                  "type": "field",
+                  "name": "Task",
+                  "label": "Task",
+                  "key": "f1",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [],
+                  "events": [],
+                  "renderAttributes": {},
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "label": "Save",
+              "name": "Save",
+              "visible": true,
+              "enabled": true,
+              "renderType": "save",
+              "renderAttributes": {}
+            },
+            {
+              "type": "button",
+              "label": "Complete",
+              "name": "Complete",
+              "visible": true,
+              "enabled": true,
+              "renderType": "submit-page",
+              "renderAttributes": {}
+            }
+          ],
+          "events": [],
+          "name": "Page One",
+          "renderType": "submittable",
+          "type": "page"
+        },
+        {
+          "advanceCondition": null,
+          "displayCondition": null,
+          "displayPage": null,
+          "elements": [],
+          "events": [],
+          "name": "Confirmation",
+          "renderType": "confirmation",
+          "type": "page"
+        }
+      ],
+        "securityPolicies": [],
+        "slug": vm.form.slug,
+        "status": "New",
+        "submissionLabelExpression": "${form('name')}",
+        "type": vm.queueTypeAttribute.values[0]
+      };
+    }
   }
 }());

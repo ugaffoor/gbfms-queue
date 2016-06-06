@@ -14,4 +14,4 @@
                 label.control-label Form Slug
                 input.form-control(type="text",data-ng-model="vm.form.slug",data-ng-change="vm.shouldSlugify=false")
             .col-xs-4
-              button.btn.btn-sm.btn-default Generate Form
+              button.btn.btn-sm.btn-default(data-ng-click="vm.generateForm()") Generate Form

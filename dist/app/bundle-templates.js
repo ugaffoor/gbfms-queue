@@ -539,7 +539,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '              </div>\n' +
     '            </div>\n' +
     '            <div class="col-xs-4">\n' +
-    '              <button class="btn btn-sm btn-default">Generate Form</button>\n' +
+    '              <button data-ng-click="vm.generateForm()" class="btn btn-sm btn-default">Generate Form</button>\n' +
     '            </div>\n' +
     '          </div>\n' +
     '        </div>\n' +
