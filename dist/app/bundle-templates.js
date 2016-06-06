@@ -219,7 +219,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.detail.tpl.html',
     '\n' +
-    '<div data-ng-class="{\'hidden-xs\': !list.shouldHideList(), \'hidden-sm\': !list.shouldHideList() }" class="queue-details"><a href="" data-ng-click="list.showList()" class="visible-sm"><span class="fa fa-fw fa-arrow-left"></span>Back to Queue</a>\n' +
+    '<div class="queue-details"><a href="" data-ng-click="list.showList()" class="visible-sm visible-xs"><span class="fa fa-fw fa-arrow-left"></span>Back to Queue</a>\n' +
     '  <div class="panel panel-default">\n' +
     '    <div class="panel-heading">\n' +
     '      <ul class="nav nav-tabs">\n' +
@@ -266,7 +266,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '  <div class="col-sm-12 col-md-8">\n' +
-    '    <div data-ui-view="">\n' +
+    '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': !list.shouldHideList(), \'hidden-sm\': !list.shouldHideList() }">\n' +
     '      <div class="panel panel-default">\n' +
     '        <div class="panel-body">Please select an item from the list.</div>\n' +
     '      </div>\n' +

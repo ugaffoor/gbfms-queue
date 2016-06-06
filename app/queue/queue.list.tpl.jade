@@ -29,7 +29,7 @@
           li
             a(data-ng-if="list.nextPageToken",data-ng-click="list.nextPage()") Next
   .col-sm-12.col-md-8
-    div(data-ui-view="")
+    div(data-ui-view="" data-ng-class="{'hidden-xs': !list.shouldHideList(), 'hidden-sm': !list.shouldHideList() }")
       .panel.panel-default
         .panel-body
           | Please select an item from the list.
