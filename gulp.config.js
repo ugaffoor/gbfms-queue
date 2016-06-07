@@ -27,6 +27,10 @@ module.exports = {
     '!./app/**/_*.scss'
   ],
 
+  SASS_ALL_SRC: [
+    './app/**/*.scss'
+  ],
+
   FONTS_SRC: [
     './thirdparty/font-awesome/fonts/*.{ttf,woff,woff2,eof,svg}'
   ],

@@ -70,10 +70,10 @@ gulp.task('watch', ['index'], function () {
   //     plugins.livereload.changed(evt);
   //   }
   // });
-  gulp.watch('./kapp_src.jsp', ['index']);
+  gulp.watch('./app/kapp.jsp', ['index']);
   gulp.watch(Config.JADE_SRC, ['index']);
   gulp.watch(Config.TEMPLATE_SRC, ['index']);
-  gulp.watch(Config.SASS_SRC, ['index']);
+  gulp.watch(Config.SASS_ALL_SRC, ['index']);
   gulp.watch(Config.APP_SRC, ['index']);
   // gulp.watch(['./src/app/**/*.scss'], ['csslint']).on('change', function (evt) {
   //   if (evt.type !== 'changed') {
@@ -91,7 +91,7 @@ gulp.task('jade', function() {
       pretty: true
     }))
     .pipe(gulp.dest(Config.TEMP))
-    .pipe(plugins.livereload());
+    //.pipe(plugins.livereload());
 });
 
 gulp.task('templates', ['jade'], function() {
@@ -103,7 +103,7 @@ gulp.task('templates', ['jade'], function() {
     }))
     .pipe(plugins.concat('bundle-templates.js'))
     .pipe(gulp.dest(Config.APP_DESTINATION))
-    .pipe(plugins.livereload());
+    //.pipe(plugins.livereload());
 });
 
 gulp.task('styles', ['fonts'], function () {
