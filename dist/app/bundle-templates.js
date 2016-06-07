@@ -241,21 +241,23 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="row">\n' +
     '  <div data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
-    '    <div class="list-group"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" class="list-group-item">\n' +
-    '        <h5 class="list-group-item-heading">{{item.label}}</h5>\n' +
-    '        <p class="list-group-item-text">\n' +
+    '    <div class="row">\n' +
+    '      <div data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" class="col-xs-12">\n' +
+    '        <div data-ng-class="{\'active-item\':list.isActiveItem(item)}">\n' +
+    '          <h5>{{item.label}}</h5>\n' +
     '          <div class="row">\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
+    '            <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(item)}}</div>\n' +
     '            <div class="col-xs-6"><span class="fa fa-fw fa-users"></span>{{queue.friendlyAssignedGroup(item)}}</div>\n' +
     '          </div>\n' +
     '          <div class="row">\n' +
     '            <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span><span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(item)}}</div>\n' +
+    '            <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
     '          </div>\n' +
     '          <div class="row">\n' +
     '            <div class="col-xs-12">{{queue.friendlyDetails(item)}}</div>\n' +
     '          </div>\n' +
-    '        </p></a>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
     '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
     '        <ul class="pager queue-pager">\n' +
@@ -530,6 +532,17 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="row">\n' +
     '            <div class="col-xs-8">\n' +
     '              <div class="form-group">\n' +
+    '                <label class="control-label">Select Form Template</label>\n' +
+    '                <select data-ng-options="form as form.name for form in vm.formGeneratorTemplates" data-ng-model="vm.formTemplate" class="form-control"></select><span class="help-block">{{vm.formTemplate.description || \'\'}}</span>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
+    '            <div class="col-xs-4">\n' +
+    '              <button data-ng-click="vm.generateForm()" class="btn btn-sm btn-default">Generate Form</button>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-8">\n' +
+    '              <div class="form-group">\n' +
     '                <label class="control-label">Form Name</label>\n' +
     '                <input type="text" data-ng-model="vm.form.name" class="form-control"/>\n' +
     '              </div>\n' +
@@ -537,9 +550,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '                <label class="control-label">Form Slug</label>\n' +
     '                <input type="text" data-ng-model="vm.form.slug" data-ng-change="vm.shouldSlugify=false" class="form-control"/>\n' +
     '              </div>\n' +
-    '            </div>\n' +
-    '            <div class="col-xs-4">\n' +
-    '              <button data-ng-click="vm.generateForm()" class="btn btn-sm btn-default">Generate Form</button>\n' +
     '            </div>\n' +
     '          </div>\n' +
     '        </div>\n' +

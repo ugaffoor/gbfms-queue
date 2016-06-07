@@ -1,5 +1,5 @@
 {
-  "name": "request-ce-angular-bundle",
+  "name": "request-ce-bundle-queue",
   "version": "1.0.0",
   "description": "",
   "main": "gulp.config.js",
@@ -31,6 +31,6 @@
     "postinstall": "./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Kinetic Data",
+  "license": "Proprietary"
 }
