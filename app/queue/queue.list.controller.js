@@ -50,10 +50,10 @@
     }
 
     function selectItem(item) {
-    //,data-ui-sref="queue.by.details.summary({itemId: item.id})"
       if(isActiveItem(item)) {
         list.hideList();
       } else {
+        list.activeItem = item.id;
         $state.go('queue.by.details.summary', {itemId: item.id});
       }
     }

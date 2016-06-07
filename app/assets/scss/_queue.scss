@@ -1,3 +1,8 @@
 .setup-tab {
   margin-top: 1em;
 }
+
+.active-item {
+  border-right: 0.03em dotted darkblue;
+  background-color: #F0F0F0;
+}
