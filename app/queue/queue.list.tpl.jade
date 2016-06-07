@@ -1,26 +1,25 @@
 .row
   .col-sm-12.col-md-4(data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }")
-    .row
-      .col-xs-12(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)")
-        div(data-ng-class="{'active-item':list.isActiveItem(item)}")
-          h5 {{item.label}}
-          .row
-            .col-xs-6
-              span.fa.fa-fw.fa-flag
-              | {{queue.friendlyStatus(item)}}
-            .col-xs-6
-              span.fa.fa-fw.fa-users
-              | {{queue.friendlyAssignedGroup(item)}}
-          .row
-            .col-xs-6
-              span.fa.fa-fw.fa-calendar
-              span(data-time-ago="queue.friendlyDueDate(item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(item))}")
-            .col-xs-6
-              span.fa.fa-fw.fa-user
-              | {{queue.friendlyAssignedName(item)}}
-          .row
-            .col-xs-12
-              | {{queue.friendlyDetails(item)}}
+    .list-group
+      a.list-group-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)",data-ng-class="{'active-item':list.isActiveItem(item)}")
+        h5 {{item.label}}
+        .row
+          .col-xs-6
+            span.fa.fa-fw.fa-flag
+            | {{queue.friendlyStatus(item)}}
+          .col-xs-6
+            span.fa.fa-fw.fa-users
+            | {{queue.friendlyAssignedGroup(item)}}
+        .row
+          .col-xs-6
+            span.fa.fa-fw.fa-calendar
+            span(data-time-ago="queue.friendlyDueDate(item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(item))}")
+          .col-xs-6
+            span.fa.fa-fw.fa-user
+            | {{queue.friendlyAssignedName(item)}}
+        .row
+          .col-xs-12
+            | {{queue.friendlyDetails(item)}}
       .list-group-item(data-ng-if="list.items.length < 1") There are no items in this queue.
       .list-group-item(data-ng-if="list.hasMorePages()")
         ul.pager.queue-pager

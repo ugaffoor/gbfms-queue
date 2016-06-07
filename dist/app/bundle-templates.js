@@ -65,60 +65,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.layout.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '      span.sr-only Toggle navigation\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
-    '    </div>\n' +
-    '    <!--div.navbar-collapse.collapse#navbar\n' +
-    '    ul.nav.navbar-nav\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
-    '        a(data-ui-sref="queue.by({filterName: \'__default__\'})") Queue\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
-    '        a(data-ui-sref="catalog") Catalog\n' +
-    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
-    '        a(data-ui-sref="setup") Queue Setup\n' +
-    '    ul.nav.navbar-nav.navbar-right\n' +
-    '      li.dropdown\n' +
-    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
-    '          i.fa.fa-fw.fa-th\n' +
-    '        ul.dropdown-menu\n' +
-    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
-    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
-    '    -->\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.setup.tpl.html',
-    '\n' +
-    '<h1>Kapp Configuration</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.system.tpl.html',
-    '\n' +
-    '<h1>System Error</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('layout/layout.default.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -189,6 +135,60 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.layout.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '      span.sr-only Toggle navigation\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
+    '    </div>\n' +
+    '    <!--div.navbar-collapse.collapse#navbar\n' +
+    '    ul.nav.navbar-nav\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
+    '        a(data-ui-sref="queue.by({filterName: \'__default__\'})") Queue\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
+    '        a(data-ui-sref="catalog") Catalog\n' +
+    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
+    '        a(data-ui-sref="setup") Queue Setup\n' +
+    '    ul.nav.navbar-nav.navbar-right\n' +
+    '      li.dropdown\n' +
+    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
+    '          i.fa.fa-fw.fa-th\n' +
+    '        ul.dropdown-menu\n' +
+    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
+    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
+    '    -->\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.setup.tpl.html',
+    '\n' +
+    '<h1>Kapp Configuration</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.system.tpl.html',
+    '\n' +
+    '<h1>System Error</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.assignment.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -241,23 +241,19 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="row">\n' +
     '  <div data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
-    '    <div class="row">\n' +
-    '      <div data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" class="col-xs-12">\n' +
-    '        <div data-ng-class="{\'active-item\':list.isActiveItem(item)}">\n' +
-    '          <h5>{{item.label}}</h5>\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(item)}}</div>\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-users"></span>{{queue.friendlyAssignedGroup(item)}}</div>\n' +
-    '          </div>\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span><span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
-    '            <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
-    '          </div>\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-12">{{queue.friendlyDetails(item)}}</div>\n' +
-    '          </div>\n' +
+    '    <div class="list-group"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item">\n' +
+    '        <h5>{{item.label}}</h5>\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(item)}}</div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-users"></span>{{queue.friendlyAssignedGroup(item)}}</div>\n' +
     '        </div>\n' +
-    '      </div>\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span><span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
+    '        </div>\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-12">{{queue.friendlyDetails(item)}}</div>\n' +
+    '        </div></a>\n' +
     '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
     '        <ul class="pager queue-pager">\n' +
