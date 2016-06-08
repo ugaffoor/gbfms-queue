@@ -14,37 +14,78 @@
       // Helpers
       getGroups: getGroups,
       getMembers: getMembers,
+      getAssignedGroups: getAssignedGroups,
+      isGroupLeaf: isGroupLeaf,
       withoutRoot: withoutRoot,
-      setAdminKapp: setAdminKapp
+      withRoot: withRoot,
+      setAdminKapp: setAdminKapp,
+      setAssignmentBase: setAssignmentBase
     };
 
     var adminKapp = null;
-    var ROOT_GROUP = 'Fulfillment';
+    var rootGroup = null;
 
     return service;
 
+    function setAdminKapp(adminKappSlug) {
+      adminKapp = adminKappSlug;
+    }
+
+    function setAssignmentBase(assignmentBaseGroup) {
+      rootGroup = assignmentBaseGroup;
+    }
+
     function withoutRoot(group) {
-      if(_.startsWith(group, ROOT_GROUP + '::')) {
-        return group.slice(ROOT_GROUP.length + 2);
+      if(_.startsWith(group, rootGroup + '::')) {
+        return group.slice(rootGroup.length + 2);
+      } else {
+        return group;
       }
     }
 
     function withRoot(group) {
       var groupWithRoot = group;
-      if(!_.startsWith(group, ROOT_GROUP)) {
+      if(!_.startsWith(group, rootGroup)) {
         if(_.isEmpty(group)) {
-          groupWithRoot = ROOT_GROUP;
+          groupWithRoot = rootGroup;
         } else {
-          groupWithRoot = ROOT_GROUP + '::' + group;
+          groupWithRoot = rootGroup + '::' + group;
         }
       }
 
       return groupWithRoot;
     }
 
-    function setAdminKapp(adminKappSlug) {
-      adminKapp = adminKappSlug;
+    function getAssignedGroups(item) {
+      var group = withoutRoot(item.values['Assigned Group']);
+      var groups = [];
+      if(!_.isEmpty(group)) {
+        groups = group.split('::');
+      }
+
+      return groups;
     }
+
+    function isGroupLeaf(item) {
+      var deferred = $q.defer();
+      getGroups(withRoot(item.values['Assigned Group'])).then(
+        function(groups) {
+          if(groups.length < 1) {
+            //vm.state.showMembersButton = _.isEmpty(vm.memberId);
+            deferred.resolve(true);
+          } else {
+            deferred.resolve(false);
+          }
+        }, function() {
+          deferred.reject();
+        }
+      );
+
+      return deferred.promise;
+    }
+
+
+
 
     // var helperSubmissionsBase = $window.KD.base + '/' + kappSlug + '/' + form.slug;
 

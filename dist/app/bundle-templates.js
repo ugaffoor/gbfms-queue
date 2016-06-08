@@ -1,124 +1,4 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.layout.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '      span.sr-only Toggle navigation\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
-    '    </div>\n' +
-    '    <!--div.navbar-collapse.collapse#navbar\n' +
-    '    ul.nav.navbar-nav\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
-    '        a(data-ui-sref="queue.by({filterName: \'__default__\'})") Queue\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
-    '        a(data-ui-sref="catalog") Catalog\n' +
-    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
-    '        a(data-ui-sref="setup") Queue Setup\n' +
-    '    ul.nav.navbar-nav.navbar-right\n' +
-    '      li.dropdown\n' +
-    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
-    '          i.fa.fa-fw.fa-th\n' +
-    '        ul.dropdown-menu\n' +
-    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
-    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
-    '    -->\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.setup.tpl.html',
-    '\n' +
-    '<h1>Kapp Configuration</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.system.tpl.html',
-    '\n' +
-    '<h1>System Error</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/catalog.card.tpl.html',
-    '\n' +
-    '<div class="panel panel-primary">\n' +
-    '  <div class="panel-heading">\n' +
-    '    <h4 class="panel-title"><a href="" data-ui-sref="catalog.form({formSlug: form.slug})" class="btn btn-sm btn-primary">View</a>&nbsp;{{form.name}}</h4>\n' +
-    '  </div>\n' +
-    '  <div class="panel-body">\n' +
-    '    <p>{{form.description || \'This is a \' + form.type + \' form.\'}}</p>\n' +
-    '  </div>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/catalog.tpl.html',
-    '\n' +
-    '<div class="container">\n' +
-    '  <div data-ng-if="!vm.isChildActive()" class="row">\n' +
-    '    <div data-ng-repeat="form in vm.forms" class="col-xs-s12 col-md-6">\n' +
-    '      <div data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '  <div class="row">\n' +
-    '    <div data-ng-if="vm.isChildActive()" class="col-xs-3">\n' +
-    '      <div data-ng-repeat="form in vm.forms" data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
-    '    </div>\n' +
-    '    <div class="col-xs-9">\n' +
-    '      <div data-ui-view=""></div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/foo.html',
-    '\n' +
-    '<h1>lksjdflksjflksjf</h1>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/form.tpl.html',
-    '\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-6"></div>\n' +
-    '</div>\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <div class="panel panel-primary">\n' +
-    '      <div class="panel-heading">\n' +
-    '        <div class="row">\n' +
-    '          <div class="col-xs-8">\n' +
-    '            <h4 class="panel-title">{{vm.form.name}}</h4>\n' +
-    '          </div>\n' +
-    '          <div class="col-xs-4">\n' +
-    '            <div class="btn-group pull-right"><a data-ui-sref="catalog" class="btn btn-sm btn-primary">Back</a><a data-ui-sref="catalog.form({formSlug: vm.form.slug})" data-ui-sref-opts="{reload:true}" class="btn btn-sm btn-primary">Restart</a></div>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '      <div class="panel-body">\n' +
-    '        <div id="formContainer"></div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('layout/layout.default.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -194,6 +74,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="row">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h4>Assignment</h4>\n' +
+    '    <p>{{vm.groups}}</p>\n' +
     '    <div class="list-group">\n' +
     '      <div data-ng-repeat="group in vm.groups" class="list-group-item"><span class="fa fa-fw fa-users"></span>{{group}}<a data-ng-click="vm.startMidGroupAssignment($index)" class="btn btn-sm btn-default pull-right">Reassign</a></div>\n' +
     '      <div data-ng-if="vm.memberId" class="list-group-item">\n' +
@@ -252,7 +133,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-12">{{queue.friendlyDetails(item)}}</div>\n' +
+    '          <div class="col-xs-12">{{queue.friendlySummary(item)}}</div>\n' +
     '        </div></a>\n' +
     '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -366,82 +247,122 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/authentication/login.modal.tpl.html',
+  $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
-    '<form name="loginModalForm" data-ng-submit="vm.submit()" class="form-horizontal">\n' +
-    '  <div class="modal-content">\n' +
-    '    <div class="modal-header">\n' +
-    '      <h4 class="modal-title">Login</h4>\n' +
-    '    </div>\n' +
-    '    <div class="modal-body">\n' +
-    '      <div class="row">\n' +
-    '        <div class="col-xs-offset-1 col-xs-10">\n' +
-    '          <div ng-if="vm.hasError" class="alert alert-danger">{{vm.errorMsg}}</div>\n' +
-    '          <div class="form-group">\n' +
-    '            <label for="_username" class="control-label">Username</label>\n' +
-    '            <input id="_username" type="text" name="_username" data-ng-model="_username" class="form-control"/>\n' +
-    '          </div>\n' +
-    '          <div class="form-group">\n' +
-    '            <label for="_password" class="control-label">Password</label>\n' +
-    '            <input id="_password" type="password" name="_password" data-ng-model="_password" class="form-control"/>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="modal-footer">\n' +
-    '      <button type="submit" class="btn btn-default">Login</button>\n' +
-    '    </div>\n' +
+    '<div class="panel panel-primary">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h4 class="panel-title"><a href="" data-ui-sref="catalog.form({formSlug: form.slug})" class="btn btn-sm btn-primary">View</a>&nbsp;{{form.name}}</h4>\n' +
     '  </div>\n' +
-    '</form>');
+    '  <div class="panel-body">\n' +
+    '    <p>{{form.description || \'This is a \' + form.type + \' form.\'}}</p>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/authentication/login.tpl.html',
+  $templateCache.put('catalog/catalog.tpl.html',
     '\n' +
-    '<section id="login-content">\n' +
-    '  <div class="container-fluid">\n' +
-    '    <div class="row">\n' +
-    '      <div class="col-xs-12">\n' +
-    '        <div id="login-box">\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-12">\n' +
-    '              <div id="login-box-inner">\n' +
-    '                <h2>Sign In</h2>\n' +
-    '                <div data-ng-if="vm.hasError" class="alert alert-danger">{{vm.errorMsg}}</div>\n' +
-    '                <form name="loginForm" data-ng-submit="vm.submit()" novalidate="">\n' +
-    '                  <div class="form-group">\n' +
-    '                    <label for="_username" class="control-label">Username</label>\n' +
-    '                    <input id="_username" type="text" name="_username" data-ng-model="vm._username" required="" class="form-control"/>\n' +
-    '                  </div>\n' +
-    '                  <div class="form-group">\n' +
-    '                    <label for="_password" class="control-label">Password</label>\n' +
-    '                    <input id="_password" type="password" name="_password" data-ng-model="vm._password" required="" class="form-control"/>\n' +
-    '                  </div>\n' +
-    '                  <button type="submit" data-ng-disabled="vm.disabled" class="btn btn-default">Sign In</button>\n' +
-    '                </form>\n' +
-    '              </div>\n' +
-    '            </div>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
+    '<div class="container">\n' +
+    '  <div data-ng-if="!vm.isChildActive()" class="row">\n' +
+    '    <div data-ng-repeat="form in vm.forms" class="col-xs-s12 col-md-6">\n' +
+    '      <div data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '</section>');
+    '  <div class="row">\n' +
+    '    <div data-ng-if="vm.isChildActive()" class="col-xs-3">\n' +
+    '      <div data-ng-repeat="form in vm.forms" data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
+    '    </div>\n' +
+    '    <div class="col-xs-9">\n' +
+    '      <div data-ui-view=""></div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
+  $templateCache.put('catalog/foo.html',
     '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
+    '<h1>lksjdflksjflksjf</h1>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('catalog/form.tpl.html',
+    '\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-6"></div>\n' +
+    '</div>\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <div class="panel panel-primary">\n' +
+    '      <div class="panel-heading">\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-8">\n' +
+    '            <h4 class="panel-title">{{vm.form.name}}</h4>\n' +
+    '          </div>\n' +
+    '          <div class="col-xs-4">\n' +
+    '            <div class="btn-group pull-right"><a data-ui-sref="catalog" class="btn btn-sm btn-primary">Back</a><a data-ui-sref="catalog.form({formSlug: vm.form.slug})" data-ui-sref-opts="{reload:true}" class="btn btn-sm btn-primary">Restart</a></div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="panel-body">\n' +
+    '        <div id="formContainer"></div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.layout.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '      span.sr-only Toggle navigation\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
+    '    </div>\n' +
+    '    <!--div.navbar-collapse.collapse#navbar\n' +
+    '    ul.nav.navbar-nav\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
+    '        a(data-ui-sref="queue.by({filterName: \'__default__\'})") Queue\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
+    '        a(data-ui-sref="catalog") Catalog\n' +
+    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
+    '        a(data-ui-sref="setup") Queue Setup\n' +
+    '    ul.nav.navbar-nav.navbar-right\n' +
+    '      li.dropdown\n' +
+    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
+    '          i.fa.fa-fw.fa-th\n' +
+    '        ul.dropdown-menu\n' +
+    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
+    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
+    '    -->\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.setup.tpl.html',
+    '\n' +
+    '<h1>Kapp Configuration</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.system.tpl.html',
+    '\n' +
+    '<h1>System Error</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
 }]);
 
@@ -474,6 +395,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="form-group">\n' +
     '        <label class="control-label">Group Hierarchy Base</label>\n' +
     '        <input type="text" data-ng-model="vm.queueGroupBase.values[0]" placeholder="The base group used as the root of assignment." class="form-control"/>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '  <div class="row">\n' +
+    '    <div class="col-xs-6">\n' +
+    '      <div class="form-group">\n' +
+    '        <label class="control-label">Queue Summary Value</label>\n' +
+    '        <input type="text" data-ng-model="vm.queueSummaryAttribute.values[0]" placeholder="The name of the value to display in the summary in the list." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -697,6 +626,86 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </uib-tabset>\n' +
     '    </div>\n' +
     '    <!--div {{vm.currentKapp}}-->\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/authentication/login.modal.tpl.html',
+    '\n' +
+    '<form name="loginModalForm" data-ng-submit="vm.submit()" class="form-horizontal">\n' +
+    '  <div class="modal-content">\n' +
+    '    <div class="modal-header">\n' +
+    '      <h4 class="modal-title">Login</h4>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '      <div class="row">\n' +
+    '        <div class="col-xs-offset-1 col-xs-10">\n' +
+    '          <div ng-if="vm.hasError" class="alert alert-danger">{{vm.errorMsg}}</div>\n' +
+    '          <div class="form-group">\n' +
+    '            <label for="_username" class="control-label">Username</label>\n' +
+    '            <input id="_username" type="text" name="_username" data-ng-model="_username" class="form-control"/>\n' +
+    '          </div>\n' +
+    '          <div class="form-group">\n' +
+    '            <label for="_password" class="control-label">Password</label>\n' +
+    '            <input id="_password" type="password" name="_password" data-ng-model="_password" class="form-control"/>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="modal-footer">\n' +
+    '      <button type="submit" class="btn btn-default">Login</button>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</form>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/authentication/login.tpl.html',
+    '\n' +
+    '<section id="login-content">\n' +
+    '  <div class="container-fluid">\n' +
+    '    <div class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <div id="login-box">\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-12">\n' +
+    '              <div id="login-box-inner">\n' +
+    '                <h2>Sign In</h2>\n' +
+    '                <div data-ng-if="vm.hasError" class="alert alert-danger">{{vm.errorMsg}}</div>\n' +
+    '                <form name="loginForm" data-ng-submit="vm.submit()" novalidate="">\n' +
+    '                  <div class="form-group">\n' +
+    '                    <label for="_username" class="control-label">Username</label>\n' +
+    '                    <input id="_username" type="text" name="_username" data-ng-model="vm._username" required="" class="form-control"/>\n' +
+    '                  </div>\n' +
+    '                  <div class="form-group">\n' +
+    '                    <label for="_password" class="control-label">Password</label>\n' +
+    '                    <input id="_password" type="password" name="_password" data-ng-model="vm._password" required="" class="form-control"/>\n' +
+    '                  </div>\n' +
+    '                  <button type="submit" data-ng-disabled="vm.disabled" class="btn btn-default">Sign In</button>\n' +
+    '                </form>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</section>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>');
 }]);

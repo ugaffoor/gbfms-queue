@@ -13,6 +13,7 @@
       { name: 'Queue Form Type', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Details Value', allowsMutliple: false },
+      { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
       { name: 'Queue Setup Visible', allowsMultiple: false}
     ];
@@ -137,18 +138,16 @@
                     setupConfigurationObject();
                     populateDefaultTemplates().then(
                       function() {
-                        console.log('populated default, now get a list of templates')
                         Form.build(vm.currentKapp.slug).getList().then(
                           function(forms) {
                             vm.formGeneratorTemplates = _.filter(forms, {type:'Template'});
-                            console.log('got form templates, ready to rock')
                           },
                           function() {
-                            console.log('failed to get form templates. boo hoo.')
+                            Toast.error('Failed to retrieve existing form when creating default templates.');
                           }
                         )
                       }, function() {
-                        console.log('failed to create default...')
+                        Toast.error('Creating default forms failed!')
                       }
                     );
                   }
@@ -431,6 +430,11 @@
       if(_.isEmpty(vm.queueDetailsAttribute)) {
         vm.queueDetailsAttribute = { name: 'Queue Details Value', values: [''] };
         vm.currentKapp.attributes.push(vm.queueDetailsAttribute);
+      }
+      vm.queueSummaryAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Summary Value'});
+      if(_.isEmpty(vm.queueSummaryAttribute)) {
+        vm.queueSummaryAttribute = { name: 'Queue Summary Value', values: [''] };
+        vm.currentKapp.attributes.push(vm.queueSummaryAttribute);
       }
       vm.queueGroupBase = _.find(vm.currentKapp.attributes, {name: 'Queue Group Base'});
       if(_.isEmpty(vm.queueGroupBase)) {

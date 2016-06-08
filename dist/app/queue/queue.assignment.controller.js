@@ -136,6 +136,12 @@
 
       delete item.currentPage;
 
+      console.log('lkjfsafdsafasd ', vm.groups)
+
+      console.log('fixing assigned group', item.values['Assigned Group']);
+      item.values['Assigned Group'] = AssignmentService.withRoot(item.values['Assigned Group']);
+      console.log('fixing assigned group', item.values['Assigned Group']);
+
       item.put().then(
         function() {
           vm.groupsToAssign = [];
@@ -153,10 +159,7 @@
     }
 
     function populateAssignedGroups() {
-      var group = item.values['Assigned Group'];
-      if(!_.isEmpty(group)) {
-        vm.groups = group.split('::');
-      }
+      vm.groups = AssignmentService.getAssignedGroups(item);
     }
 
     function populateAssignedMember() {
@@ -165,10 +168,9 @@
     }
 
     function checkMemberAssignment() {
-      var parent = item.values['Assigned Group'];
-      AssignmentService.getGroups(parent).then(
-        function(groups) {
-          if(groups.length < 1) {
+      AssignmentService.isGroupLeaf(item).then(
+        function(isLeaf) {
+          if(isLeaf) {
             vm.state.showMembersButton = _.isEmpty(vm.memberId);
           } else {
             vm.state.showGroupsButton = true;

@@ -43,8 +43,6 @@
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/space.model.js"></script>
@@ -52,6 +50,8 @@
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
@@ -60,6 +60,7 @@
     <script src="${bundle.location}/dist/app/core/authentication/authentication.run.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.config.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.work.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.summary.controller.js"></script>
@@ -76,6 +77,10 @@
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
+    <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
+    <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
+    <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
+    <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
@@ -83,11 +88,6 @@
     <script src="${bundle.location}/dist/app/core/bundle.utils.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
-    <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
-    <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
-    <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
-    <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>
