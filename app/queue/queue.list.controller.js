@@ -72,7 +72,6 @@
 
     function nextPage() {
       list.loading = true;
-      var pageToken =
       ItemsService.filter(currentKapp.slug, currentUser, filter, queueType, list.nextPageToken).then(
         function(items) {
           list.loading = false;
