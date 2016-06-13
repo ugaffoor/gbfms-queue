@@ -93,6 +93,16 @@
             filter.qualifications = updatedFilter.qualifications;
           }
         );
+      },
+
+      moveFilter: function(filter, $index) {
+        vm.queueFilterAttribute.values.splice($index, 1);
+        var position = 0;
+        _.each(vm.queueFilterAttribute.values, function(sortFilter) {
+          sortFilter.order = position;
+          position++;
+        });
+        console.log(vm.queueFilterAttribute.values);
       }
     };
 

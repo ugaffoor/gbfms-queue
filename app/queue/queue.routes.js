@@ -60,6 +60,8 @@
             return filter;
           });
 
+          queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
+
           return queueFilterAttribute.values;
         }
       },

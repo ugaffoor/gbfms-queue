@@ -11,7 +11,7 @@
                         li.filter-item(
                         data-ng-repeat="filter in vm.queueFilterAttribute.values",
                         dnd-draggable="filter",
-                        dnd-moved="vm.queueFilterAttribute.values.splice($index, 1)",
+                        dnd-moved="vm.setup.moveFilter(filter, $index)",
                         dnd-effect-allowed="move"
                         )
                            | {{filter.name}}
