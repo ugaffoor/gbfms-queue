@@ -72,12 +72,12 @@
     <script src="${bundle.location}/dist/app/queue/queue.assignment.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/items.service.js"></script>
     <script src="${bundle.location}/dist/app/queue/assignment.service.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
