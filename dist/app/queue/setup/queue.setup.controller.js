@@ -47,29 +47,13 @@
       addFilter: function() {
         var filterCriteria = {
           name: vm.setup.tmpFilterName,
-          qualifications: []
+          qualifications: [],
+          order: vm.queueFilterAttribute.values.length
         };
 
         vm.queueFilterAttribute.values.push(filterCriteria);
         vm.setup.tmpFilterName = '';
         vm.setup.editFilter(filterCriteria);
-      },
-      removeFilter: function(index) {
-        vm.queueFilterAttribute.values.splice(index, 1);
-      },
-      doDefaults: function() {
-        vm.queueSetupVisibleAttribute.values[0] = 'true';
-        vm.queueNameAttribute.values[0] = 'Todo List';
-        vm.queueTypeAttribute.values[0] = 'Todo Item';
-        vm.queueDetailsAttribute.values[0] = 'Task';
-
-        vm.queueFilterAttribute.values = [
-          //{ name: 'All', query: 'values[Status]="Open"' },
-          //{ name: 'Pending', query: 'values[Status]="Pending"' },
-        ];
-        vm.setup.shouldCreateForm = true;
-        vm.setup.initialForm.name = 'Todo Item';
-        vm.setup.initialForm.slug = 'todo-item';
       },
       isSetupValid: function() {
         return false;
@@ -92,18 +76,21 @@
           function(updatedFilter) {
             filter.name = updatedFilter.name;
             filter.qualifications = updatedFilter.qualifications;
+            vm.setup.updateFilterOrder();
           }
         );
       },
 
-      moveFilter: function(filter, $index) {
-        vm.queueFilterAttribute.values.splice($index, 1);
+      removeFilter: function(index) {
+        vm.queueFilterAttribute.values.splice(index, 1);
+        vm.setup.updateFilterOrder();
+      },
+      updateFilterOrder: function() {
         var position = 0;
         _.each(vm.queueFilterAttribute.values, function(sortFilter) {
           sortFilter.order = position;
           position++;
         });
-        console.log(vm.queueFilterAttribute.values);
       }
     };
 
@@ -300,13 +287,6 @@
           deferred.reject();
         }
       );
-      //var promises = [];
-      //var templatesToCreate = [];
-      //
-      //_.each(TEMPLATE_SLUGS, function(templateSlug) {
-      //  promises.push(populateDefaultTemplate(templateSlug));
-      //});
-      //return $q.all(promises);
       return deferred.promise;
     }
 
@@ -316,11 +296,11 @@
         generateFormTemplate(templateSlug)
       ).then(
         function() {
-          console.log('generated new form template.')
+          // Generated the new form template. Resolve.
           deferred.resolve();
         },
         function() {
-          console.log('failed to generate form template.')
+          // Failed to generate the new form template. Reject!
           deferred.reject();
         }
       );

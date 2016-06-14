@@ -253,7 +253,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-12">{{queue.friendlySummary(item)}}</div>\n' +
+    '          <div class="col-xs-12">\n' +
+    '            <p class="well-details">{{queue.friendlySummary(item)}}</p>\n' +
+    '          </div>\n' +
     '        </div></a>\n' +
     '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -308,7 +310,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="well">{{queue.friendlyDetails(vm.item)}}</div>\n' +
+    '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -506,7 +508,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="row">\n' +
     '            <div class="col-xs-12">\n' +
     '              <ul dnd-list="vm.queueFilterAttribute.values">\n' +
-    '                <li data-ng-repeat="filter in vm.queueFilterAttribute.values" dnd-draggable="filter" dnd-moved="vm.setup.moveFilter(filter, $index)" dnd-effect-allowed="move" class="filter-item">{{filter.name}}\n' +
+    '                <li data-ng-repeat="filter in vm.queueFilterAttribute.values" dnd-draggable="filter" dnd-moved="vm.setup.removeFilter($index)" dnd-effect-allowed="move" class="filter-item">{{filter.name}}\n' +
     '                  <div class="filter-actions btn-group pull-right"><a href="" data-ng-click="vm.setup.editFilter(filter)" class="btn btn-xs btn-primary"><span class="fa fa-fw fa-pencil"></span></a><a href="" data-ng-click="vm.setup.removeFilter($index)" class="btn btn-xs btn-danger"><span class="fa fa-fw fa-minus"></span></a></div>\n' +
     '                </li>\n' +
     '                <li>\n' +

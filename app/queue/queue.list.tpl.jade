@@ -20,7 +20,7 @@
               | {{queue.friendlyAssignedName(item)}}
         .row
           .col-xs-12
-            | {{queue.friendlySummary(item)}}
+            p.well-details {{queue.friendlySummary(item)}}
       .list-group-item(data-ng-if="list.items.length < 1") There are no items in this queue.
       .list-group-item(data-ng-if="list.hasMorePages()")
         ul.pager.queue-pager

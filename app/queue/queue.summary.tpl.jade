@@ -18,7 +18,7 @@
         | {{queue.friendlyAssignedName(vm.item)}}
     .row
       .col-xs-12
-        .well {{queue.friendlyDetails(vm.item)}}
+        .well.well-details {{queue.friendlyDetails(vm.item)}}
 .row(data-ng-if="details.isMine()")
   .col-xs-6
     button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.work") Work It
