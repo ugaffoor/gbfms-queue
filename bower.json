@@ -26,11 +26,11 @@
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.5.0",
     "angular-bootstrap": "~1.2.4",
-    "bower-bootswatch-paper": "paper-less#*",
     "angular-sanitize": "~1.5.1",
     "toastr": "~2.1.2",
     "angular-animate": "~1.5.3",
     "angular-drag-and-drop-lists": "~1.4.0",
-    "moment": "~2.12.0"
+    "moment": "~2.12.0",
+    "bootstrap-sass": "^3.3.6"
   }
 }
