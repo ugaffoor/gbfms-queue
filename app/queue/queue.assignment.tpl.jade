@@ -1,17 +1,14 @@
 .row
   .col-xs-12
     h4 Assignment
-
-    p {{vm.groups}}
-    
     .list-group
       .list-group-item(data-ng-repeat="group in vm.groups")
         span.fa.fa-fw.fa-users
-        | {{group}}
+        | &nbsp;{{group}}
         a.btn.btn-sm.btn-default.pull-right(data-ng-click="vm.startMidGroupAssignment($index)") Reassign
       .list-group-item(data-ng-if="vm.memberId")
         ng-letter-avatar(data="{{vm.memberId}}" height="14px" width="14px" shape="round" fontsize="12")
-        | {{vm.memberId}}
+        | &nbsp;{{vm.memberId}}
         a.btn.btn-sm.btn-default.pull-right(data-ng-click="vm.startMemberAssignment()") Reassign
       .list-group-item(data-ng-if="vm.canAssignGroup() && vm.groups.length < 1")
         a.btn.btn-default.btn-block(data-ng-click="vm.startGroupAssignment()") Start Group Assignment
