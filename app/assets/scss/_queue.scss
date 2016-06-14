@@ -6,3 +6,10 @@
   border-right: 0.03em dotted darkblue;
   background-color: #F0F0F0;
 }
+
+.ellipsis {
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden; 
+}

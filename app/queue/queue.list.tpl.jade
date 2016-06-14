@@ -15,8 +15,9 @@
             span.fa.fa-fw.fa-calendar
             span(data-time-ago="queue.friendlyDueDate(item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(item))}")
           .col-xs-6
-            span.fa.fa-fw.fa-user
-            | {{queue.friendlyAssignedName(item)}}
+            .ellipsis
+              span.fa.fa-fw.fa-user
+              | {{queue.friendlyAssignedName(item)}}
         .row
           .col-xs-12
             | {{queue.friendlySummary(item)}}
