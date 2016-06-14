@@ -506,7 +506,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="row">\n' +
     '            <div class="col-xs-12">\n' +
     '              <ul dnd-list="vm.queueFilterAttribute.values">\n' +
-    '                <li data-ng-repeat="filter in vm.queueFilterAttribute.values" dnd-draggable="filter" dnd-moved="vm.setup.moveFilter(filter, $index)" dnd-effect-allowed="move" class="filter-item">{{filter.name}}\n' +
+    '                <li data-ng-repeat="filter in vm.queueFilterAttribute.values" dnd-draggable="filter" dnd-moved="vm.setup.removeFilter($index)" dnd-effect-allowed="move" class="filter-item">{{filter.name}}\n' +
     '                  <div class="filter-actions btn-group pull-right"><a href="" data-ng-click="vm.setup.editFilter(filter)" class="btn btn-xs btn-primary"><span class="fa fa-fw fa-pencil"></span></a><a href="" data-ng-click="vm.setup.removeFilter($index)" class="btn btn-xs btn-danger"><span class="fa fa-fw fa-minus"></span></a></div>\n' +
     '                </li>\n' +
     '                <li>\n' +
