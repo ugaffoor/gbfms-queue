@@ -28,7 +28,7 @@
           element.text('N/A');
         } else {
           var m = moment(scope.timeAgo);
-          element.text(m.fromNow());
+          element.text('Due ' + m.fromNow());
           element.attr('title', m.format('MMMM Do YYYY, h:mm:ss A'));
           element.attr('data-toggle', 'tooltip');
           $(element).tooltip();

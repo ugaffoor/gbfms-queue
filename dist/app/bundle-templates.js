@@ -65,6 +65,49 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="queue.by({filterName: \'__default__\'})" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav">\n' +
+    '        <li data-ng-if="layout.isSetupVisible()" data-ng-class="{\'active\': layout.isParentActive(\'setup\')}"><a data-ui-sref="setup">Queue Setup</a></li>\n' +
+    '      </ul>\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-th"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in layout.kapps"><a href="{{layout.kappUrl(kapp)}}">{{kapp.name}}</a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('errors/error.layout.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -119,86 +162,15 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.default.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="queue.by({filterName: \'__default__\'})" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav">\n' +
-    '        <li data-ng-if="layout.isSetupVisible()" data-ng-class="{\'active\': layout.isParentActive(\'setup\')}"><a data-ui-sref="setup">Queue Setup</a></li>\n' +
-    '      </ul>\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-th"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in layout.kapps"><a href="{{layout.kappUrl(kapp)}}">{{kapp.name}}</a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="queue.by({filterName: \'__default__\'})" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav">\n' +
-    '        <li data-ng-if="layout.isSetupVisible()" data-ng-class="{\'active\': layout.isParentActive(\'setup\')}"><a data-ui-sref="setup">Queue Setup</a></li>\n' +
-    '      </ul>\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-th"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in layout.kapps"><a href="{{layout.kappUrl(kapp)}}">{{kapp.name}}</a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.assignment.tpl.html',
     '\n' +
     '<div class="row">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h4>Assignment</h4>\n' +
-    '    <p>{{vm.groups}}</p>\n' +
     '    <div class="list-group">\n' +
-    '      <div data-ng-repeat="group in vm.groups" class="list-group-item"><span class="fa fa-fw fa-users"></span>{{group}}<a data-ng-click="vm.startMidGroupAssignment($index)" class="btn btn-sm btn-default pull-right">Reassign</a></div>\n' +
+    '      <div data-ng-repeat="group in vm.groups" class="list-group-item"><span class="fa fa-fw fa-users"></span>&nbsp;{{group}}<a data-ng-click="vm.startMidGroupAssignment($index)" class="btn btn-sm btn-default pull-right">Reassign</a></div>\n' +
     '      <div data-ng-if="vm.memberId" class="list-group-item">\n' +
-    '        <ng-letter-avatar data="{{vm.memberId}}" height="14px" width="14px" shape="round" fontsize="12"></ng-letter-avatar>{{vm.memberId}}<a data-ng-click="vm.startMemberAssignment()" class="btn btn-sm btn-default pull-right">Reassign</a>\n' +
+    '        <ng-letter-avatar data="{{vm.memberId}}" height="14px" width="14px" shape="round" fontsize="12"></ng-letter-avatar>&nbsp;{{vm.memberId}}<a data-ng-click="vm.startMemberAssignment()" class="btn btn-sm btn-default pull-right">Reassign</a>\n' +
     '      </div>\n' +
     '      <div data-ng-if="vm.canAssignGroup() &amp;&amp; vm.groups.length &lt; 1" class="list-group-item"><a data-ng-click="vm.startGroupAssignment()" class="btn btn-default btn-block">Start Group Assignment</a></div>\n' +
     '      <div data-ng-if="vm.canAssignGroup() &amp;&amp; vm.groups.length &gt; 0" class="list-group-item"><a data-ng-click="vm.startMidGroupAssignment(vm.groups.length)" class="btn btn-default btn-block">Continue Group Assignment</a></div>\n' +
@@ -245,12 +217,16 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="list-group"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item">\n' +
     '        <h5>{{item.label}}</h5>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(item)}}</div>\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-users"></span>{{queue.friendlyAssignedGroup(item)}}</div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(item)}}</div>\n' +
+    '          <div class="col-xs-6">\n' +
+    '            <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(item)}}</div>\n' +
+    '          </div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span><span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
+    '          <div class="col-xs-6">\n' +
+    '            <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(item)}}</div>\n' +
+    '          </div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
     '          <div class="col-xs-12">\n' +
@@ -301,12 +277,16 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>{{queue.friendlyStatus(vm.item)}}</div>\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-users"></span>{{queue.friendlyAssignedGroup(vm.item)}}</div>\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(vm.item)}}</div>\n' +
+    '      <div class="col-xs-6">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(vm.item)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span><span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(vm.item)}}</div>\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
+    '      <div class="col-xs-6">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(vm.item)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12">\n' +
@@ -364,6 +344,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +
     '    </div>\n' +
     '    <div id="workContainer"></div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -430,22 +426,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</section>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
-    '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {

@@ -5,17 +5,20 @@
     .row
       .col-xs-6
         span.fa.fa-fw.fa-flag
-        | {{queue.friendlyStatus(vm.item)}}
+        | &nbsp;{{queue.friendlyStatus(vm.item)}}
       .col-xs-6
-        span.fa.fa-fw.fa-users
-        | {{queue.friendlyAssignedGroup(vm.item)}}
+        .ellipsis
+          span.fa.fa-fw.fa-users
+          | &nbsp;{{queue.friendlyAssignedGroup(vm.item)}}
     .row
       .col-xs-6
         span.fa.fa-fw.fa-calendar
+        | &nbsp;
         span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}")
       .col-xs-6
-        span.fa.fa-fw.fa-user
-        | {{queue.friendlyAssignedName(vm.item)}}
+        .ellipsis
+          span.fa.fa-fw.fa-user
+          | &nbsp;{{queue.friendlyAssignedName(vm.item)}}
     .row
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}

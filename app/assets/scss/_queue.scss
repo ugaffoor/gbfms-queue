@@ -1,12 +1,22 @@
 .setup-tab {
   margin-top: 1em;
 }
+.nav-pills,
+.nav-tabs{
+  margin-bottom: 1em;
+}
 
 .active-item {
   border-right: 0.03em dotted darkblue;
   background-color: #F0F0F0;
 }
 
+.ellipsis {
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .well-details {
   white-space: pre-wrap;
 }
