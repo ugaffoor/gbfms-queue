@@ -253,7 +253,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="col-xs-6"><span class="fa fa-fw fa-user"></span>{{queue.friendlyAssignedName(item)}}</div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-12">{{queue.friendlySummary(item)}}</div>\n' +
+    '          <div class="col-xs-12">\n' +
+    '            <p class="well-details">{{queue.friendlySummary(item)}}</p>\n' +
+    '          </div>\n' +
     '        </div></a>\n' +
     '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -308,7 +310,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="well">{{queue.friendlyDetails(vm.item)}}</div>\n' +
+    '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
