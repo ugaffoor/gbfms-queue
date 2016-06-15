@@ -8,10 +8,10 @@ body{
 .setup-tab {
   margin-top: 1em;
 }
-.nav-pills,
-.nav-tabs{
-  margin-bottom: 1em;
-}
+// .nav-pills,
+// .nav-tabs{
+//   margin-bottom: 1em;
+// }
 
 .list-group-item:first-child,
 .list-group-item:last-child{
@@ -30,6 +30,9 @@ border-radius: 0;
 }
 .well-details {
   white-space: pre-wrap;
+}
+.list-group{
+  margin: 1em 0;
 }
 .back-queue{
   margin: 1em 0;
