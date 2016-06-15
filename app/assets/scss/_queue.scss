@@ -1,3 +1,10 @@
+html,
+body{
+  background-color: #f8f8f8;
+}
+.navbar-default{
+  background-color: #fff;
+}
 .setup-tab {
   margin-top: 1em;
 }
@@ -6,8 +13,12 @@
   margin-bottom: 1em;
 }
 
+.list-group-item:first-child,
+.list-group-item:last-child{
+border-radius: 0;
+}
 .active-item {
-  border-right: 0.03em dotted darkblue;
+  border-left: 2px solid #337ab7;
   background-color: #F0F0F0;
 }
 
@@ -19,4 +30,14 @@
 }
 .well-details {
   white-space: pre-wrap;
+}
+.back-queue{
+  margin: 1em 0;
+}
+.queue-details{
+  padding: 1em 2em;
+  background-color: #fff;
+}
+select, select.form-control{
+  padding-left: 1em;
 }
