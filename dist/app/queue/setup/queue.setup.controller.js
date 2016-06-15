@@ -13,6 +13,7 @@
       { name: 'Queue Form Type', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Details Value', allowsMutliple: false },
+      { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
       { name: 'Queue Setup Visible', allowsMultiple: false}
     ];
@@ -46,29 +47,13 @@
       addFilter: function() {
         var filterCriteria = {
           name: vm.setup.tmpFilterName,
-          qualifications: []
+          qualifications: [],
+          order: vm.queueFilterAttribute.values.length
         };
 
         vm.queueFilterAttribute.values.push(filterCriteria);
         vm.setup.tmpFilterName = '';
         vm.setup.editFilter(filterCriteria);
-      },
-      removeFilter: function(index) {
-        vm.queueFilterAttribute.values.splice(index, 1);
-      },
-      doDefaults: function() {
-        vm.queueSetupVisibleAttribute.values[0] = 'true';
-        vm.queueNameAttribute.values[0] = 'Todo List';
-        vm.queueTypeAttribute.values[0] = 'Todo Item';
-        vm.queueDetailsAttribute.values[0] = 'Task';
-
-        vm.queueFilterAttribute.values = [
-          //{ name: 'All', query: 'values[Status]="Open"' },
-          //{ name: 'Pending', query: 'values[Status]="Pending"' },
-        ];
-        vm.setup.shouldCreateForm = true;
-        vm.setup.initialForm.name = 'Todo Item';
-        vm.setup.initialForm.slug = 'todo-item';
       },
       isSetupValid: function() {
         return false;
@@ -91,8 +76,21 @@
           function(updatedFilter) {
             filter.name = updatedFilter.name;
             filter.qualifications = updatedFilter.qualifications;
+            vm.setup.updateFilterOrder();
           }
         );
+      },
+
+      removeFilter: function(index) {
+        vm.queueFilterAttribute.values.splice(index, 1);
+        vm.setup.updateFilterOrder();
+      },
+      updateFilterOrder: function() {
+        var position = 0;
+        _.each(vm.queueFilterAttribute.values, function(sortFilter) {
+          sortFilter.order = position;
+          position++;
+        });
       }
     };
 
@@ -137,18 +135,16 @@
                     setupConfigurationObject();
                     populateDefaultTemplates().then(
                       function() {
-                        console.log('populated default, now get a list of templates')
                         Form.build(vm.currentKapp.slug).getList().then(
                           function(forms) {
                             vm.formGeneratorTemplates = _.filter(forms, {type:'Template'});
-                            console.log('got form templates, ready to rock')
                           },
                           function() {
-                            console.log('failed to get form templates. boo hoo.')
+                            Toast.error('Failed to retrieve existing form when creating default templates.');
                           }
                         )
                       }, function() {
-                        console.log('failed to create default...')
+                        Toast.error('Creating default forms failed!')
                       }
                     );
                   }
@@ -291,13 +287,6 @@
           deferred.reject();
         }
       );
-      //var promises = [];
-      //var templatesToCreate = [];
-      //
-      //_.each(TEMPLATE_SLUGS, function(templateSlug) {
-      //  promises.push(populateDefaultTemplate(templateSlug));
-      //});
-      //return $q.all(promises);
       return deferred.promise;
     }
 
@@ -307,11 +296,11 @@
         generateFormTemplate(templateSlug)
       ).then(
         function() {
-          console.log('generated new form template.')
+          // Generated the new form template. Resolve.
           deferred.resolve();
         },
         function() {
-          console.log('failed to generate form template.')
+          // Failed to generate the new form template. Reject!
           deferred.reject();
         }
       );
@@ -431,6 +420,11 @@
       if(_.isEmpty(vm.queueDetailsAttribute)) {
         vm.queueDetailsAttribute = { name: 'Queue Details Value', values: [''] };
         vm.currentKapp.attributes.push(vm.queueDetailsAttribute);
+      }
+      vm.queueSummaryAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Summary Value'});
+      if(_.isEmpty(vm.queueSummaryAttribute)) {
+        vm.queueSummaryAttribute = { name: 'Queue Summary Value', values: [''] };
+        vm.currentKapp.attributes.push(vm.queueSummaryAttribute);
       }
       vm.queueGroupBase = _.find(vm.currentKapp.attributes, {name: 'Queue Group Base'});
       if(_.isEmpty(vm.queueGroupBase)) {

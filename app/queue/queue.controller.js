@@ -5,7 +5,7 @@
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, $rootScope, $state) {
+  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, $rootScope, $state) {
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
@@ -19,6 +19,8 @@
     queue.friendlyAssignedGroup = friendlyAssignedGroup;
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
+    queue.hasDetails = hasDetails;
+    queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
 
@@ -27,7 +29,15 @@
     }
 
     function friendlyDetails(item) {
-      return item.values[queueDetailsValue];
+      return item.values[queueDetailsValue] || '';
+    }
+
+    function hasDetails(item) {
+      return !_.isEmpty(item.values[queueDetailsValue]); 
+    }
+    
+    function friendlySummary(item) {
+      return item.values[queueSummaryValue] || '';
     }
 
     function friendlyAssignedName(item) {
@@ -47,7 +57,7 @@
       var friendlyName = 'Unassigned';
       var assignedGroup = item.values['Assigned Group'];
       if(!_.isEmpty(assignedGroup)) {
-        friendlyName = assignedGroup;
+        friendlyName = AssignmentService.withoutRoot(assignedGroup);
       }
 
       return friendlyName;

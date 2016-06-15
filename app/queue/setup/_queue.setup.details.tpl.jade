@@ -18,5 +18,10 @@
             label.control-label Group Hierarchy Base
             input.form-control(type="text",data-ng-model="vm.queueGroupBase.values[0]",placeholder="The base group used as the root of assignment.")
    .row
+      .col-xs-6
+         .form-group
+            label.control-label Queue Summary Value
+            input.form-control(type="text",data-ng-model="vm.queueSummaryAttribute.values[0]",placeholder="The name of the value to display in the summary in the list.")
+   .row
       .col-xs-offset-10.col-xs-2
          a.btn.btn-default.btn-block(href="",data-ng-click="vm.saveKapp()",data-ng-disabled="vm.setup.isSetupValid()") Save

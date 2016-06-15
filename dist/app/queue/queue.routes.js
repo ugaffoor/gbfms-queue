@@ -29,6 +29,15 @@
           var queueDetailsAttribute = kappConfigResolver('Queue Details Value');
           return queueDetailsAttribute.values[0];
         }],
+        queueSummaryValue: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueSummaryAttribute = kappConfigResolver('Queue Summary Value');
+          return queueSummaryAttribute.values[0];
+        }],
+        queueGroupBase: ["kappConfigResolver", "AssignmentService", function(kappConfigResolver, AssignmentService) {
+          var queueGroupBase = kappConfigResolver('Queue Group Base');
+          AssignmentService.setAssignmentBase(queueGroupBase.values[0]);
+          return queueGroupBase.values[0];
+        }],
         adminKapp: ["spaceConfigResolver", "AssignmentService", function(spaceConfigResolver, AssignmentService) {
           var adminKapp = spaceConfigResolver('Admin Kapp Slug');
           AssignmentService.setAdminKapp(adminKapp.values[0]);
@@ -51,6 +60,8 @@
             }
             return filter;
           });
+
+          queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
 
           return queueFilterAttribute.values;
         }]

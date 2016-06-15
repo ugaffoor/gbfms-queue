@@ -146,13 +146,7 @@ function appFiles() {
 
 function bowerFiles() {
   return gulp.src('./bower.json')
-      .pipe(plugins.mainBowerFiles({
-        overrides: {
-          bootstrap: {
-            main: ['dist/css/bootstrap.css', 'dist/js/bootstrap.js']
-          }
-        }
-      }));
+      .pipe(plugins.mainBowerFiles());
 }
 
 function templateFiles() {

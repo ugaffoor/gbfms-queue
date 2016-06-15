@@ -3,6 +3,11 @@
 <%@taglib prefix="bundle" uri="http://kineticdata.com/taglibs/bundle" %>
 <%-- <%@include file="bundle/router.jspf" %>  --%>
 <%-- <bundle:layout page="layouts/form.jsp"> --%>
+<%
+    request.setAttribute("json", new com.kineticdata.bundles.JsonHelper());
+    request.setAttribute("text", new com.kineticdata.bundles.TextHelper());
+    request.setAttribute("time", new com.kineticdata.bundles.TimeHelper());
+%>
 <script>
   // Initialize Bootstrappy field overrides.
   bundle.config.fields = {
@@ -51,17 +56,13 @@
     $('[data-element-type="button"]').addClass('btn btn-default');
   };
 </script>
-    <bundle:variable name="head">
-        <title>${text.escape(form.name)}</title>
-    </bundle:variable>
     <section class="page" data-page="${page.name}">
-        <div class="page-header">
+<!--         <div class="page-header">
             <h1>${text.escape(form.name)}</h1>
-        </div>
+        </div> -->
         <c:if test="${param.review != null && pages.size() > 1}">
             <c:import url="partials/review.jsp" charEncoding="UTF-8"></c:import>
         </c:if>
-        <div class="errors"></div>
         <app:bodyContent/>
     </section>
 <%-- </bundle:layout> --%>
