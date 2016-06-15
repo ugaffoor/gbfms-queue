@@ -65,8 +65,11 @@ body {
   margin: 1em 0; }
 
 .queue-details {
-  padding: 1em 2em;
+  padding: 1em;
   background-color: #fff; }
+  .queue-details .nav-pills,
+  .queue-details .nav-tabs {
+    margin-bottom: 1em; }
 
 select, select.form-control {
   padding-left: 1em; }

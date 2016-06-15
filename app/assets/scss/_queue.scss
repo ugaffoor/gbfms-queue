@@ -8,10 +8,6 @@ body{
 .setup-tab {
   margin-top: 1em;
 }
-// .nav-pills,
-// .nav-tabs{
-//   margin-bottom: 1em;
-// }
 
 .list-group-item:first-child,
 .list-group-item:last-child{
@@ -38,8 +34,12 @@ border-radius: 0;
   margin: 1em 0;
 }
 .queue-details{
-  padding: 1em 2em;
+  padding: 1em;
   background-color: #fff;
+  .nav-pills,
+  .nav-tabs{
+    margin-bottom: 1em;
+  }
 }
 select, select.form-control{
   padding-left: 1em;

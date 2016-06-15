@@ -19,6 +19,7 @@
     queue.friendlyAssignedGroup = friendlyAssignedGroup;
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
+    queue.hasDetails = hasDetails;
     queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
@@ -31,6 +32,10 @@
       return item.values[queueDetailsValue] || '';
     }
 
+    function hasDetails(item) {
+      return !_.isEmpty(item.values[queueDetailsValue]); 
+    }
+    
     function friendlySummary(item) {
       return item.values[queueSummaryValue] || '';
     }

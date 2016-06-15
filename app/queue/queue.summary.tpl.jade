@@ -19,7 +19,7 @@
         .ellipsis
           span.fa.fa-fw.fa-user
           | &nbsp;{{queue.friendlyAssignedName(vm.item)}}
-    .row(data-ng-if="queue.friendlyDetails()")
+    .row(data-ng-if="queue.hasDetails(item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
 .row(data-ng-if="details.isMine()")
