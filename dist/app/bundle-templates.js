@@ -282,7 +282,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div data-ng-if="queue.hasDetails(item)" class="row">\n' +
+    '    <div data-ng-if="queue.hasDetails(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
