@@ -11,5 +11,10 @@ body {
   margin: 0px;
 }
 
+
+.kapp-name {
+  padding-left: 4px;
+}
+
 @import "scss/draggables";
 @import "scss/queue";

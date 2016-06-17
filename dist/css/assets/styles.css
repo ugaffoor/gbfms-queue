@@ -7,6 +7,9 @@ body {
 .queue-pager {
   margin: 0px; }
 
+.kapp-name {
+  padding-left: 4px; }
+
 ul[dnd-list], ul[dnd-list] > li {
   position: relative; }
 
