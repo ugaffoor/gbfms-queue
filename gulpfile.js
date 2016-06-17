@@ -146,7 +146,7 @@ function appFiles() {
 
 function bowerFiles() {
   return gulp.src('./bower.json')
-      .pipe(plugins.mainBowerFiles());
+      .pipe(plugins.mainBowerFiles({}));
 }
 
 function templateFiles() {
