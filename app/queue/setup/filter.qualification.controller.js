@@ -8,9 +8,17 @@
   /* @ngInject */
   function FilterQualificationController(filter, $scope) {
     var vm = this;
+    var filterFields = [
+      'Assigned Individual',
+      'Assigned Individual Display Name',
+      'Assigned Group',
+      'Assigned Group Display Name',
+      'Deferral Token',
+      'Due',
+      'Status'
+    ];
     vm.filter = filter;
     vm.tmpQualification = {};
-
     vm.resetTempQualification = resetTempQualification;
     vm.addQualification = addQualification;
     vm.removeQualification = removeQualification;
@@ -39,6 +47,13 @@
     }
 
     function activate() {
+      // Populate the "available filter values". These are the fields we know we can filter on for sure, since they're
+      // expected to be on all queue item forms.h
+      vm.filterableValues = _.map(filterFields, function(field) {
+        return 'values['+field+']';
+      });
+      vm.filterableValues.push('coreState');
+
       resetTempQualification();
 
       if(!(vm.filter.qualifications instanceof Array)) {

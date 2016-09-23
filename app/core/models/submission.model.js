@@ -75,7 +75,7 @@
         return doCompileQueryString(self.query, '', true);
       };
 
-      var doCompileQueryString = function(queryContext, queryString, and) {
+      function doCompileQueryString(queryContext, queryString, and) {
         and = !!and;
         for(var i=0; i<queryContext.length;i++) {
           var op = queryContext[i];
