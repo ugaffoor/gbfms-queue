@@ -13,6 +13,7 @@
 
       // Helpers
       getGroups: getGroups,
+      getAllGroups: getAllGroups,
       getMembers: getMembers,
       getAssignedGroups: getAssignedGroups,
       isGroupLeaf: isGroupLeaf,
@@ -38,6 +39,8 @@
     function withoutRoot(group) {
       if(_.startsWith(group, rootGroup + '::')) {
         return group.slice(rootGroup.length + 2);
+      } else if(group === rootGroup) {
+        return '';
       } else {
         return group;
       }
@@ -136,6 +139,13 @@
 
 
       return deferred.promise;
+    }
+
+    function getAllGroups() {
+      return Submission.search(adminKapp, 'group')
+        .eq('values[Status]', 'active')
+        .include('values')
+        .execute();
     }
 
     function getGroups(parent) {

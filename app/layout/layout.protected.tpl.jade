@@ -1,4 +1,4 @@
-nav.navbar.navbar-default.navbar-fixed-top
+//-nav.navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
       button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")
@@ -14,7 +14,7 @@ nav.navbar.navbar-default.navbar-fixed-top
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")
-            i.hidden-xs.fa.fa-fw.fa-th
+            i.hidden-xs.fa.fa-fw.fa-ellipsis-h
             i.visible-xs Kapps
           ul.dropdown-menu
             li(data-ng-repeat="kapp in layout.kapps")
@@ -24,13 +24,14 @@ nav.navbar.navbar-default.navbar-fixed-top
             li.divider(data-ng-if="layout.isSpaceAdmin()")
             li
               a(data-ng-if="layout.isSetupVisible() && layout.isSpaceAdmin()",href="",data-ui-sref="setup")
+    header.adminLinks = adminLinks;
                 span.fa.fa-fw.fa-wrench
                 span Queue Setup
             li
               a(data-ng-if="layout.isSpaceAdmin()",href="{{layout.managementUrl()}}",target="_blank")
                 span.fa.fa-fw.fa-dashboard
                 span Management Console
-
+kinetic-header(kapp="layout.kapp",admin-links="layout.adminLinks")
 main
   div.container(data-ui-view="")
 

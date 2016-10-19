@@ -44,15 +44,16 @@
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/models/user.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/space.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/kapp.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
@@ -64,6 +65,7 @@
     <script src="${bundle.location}/dist/app/queue/queue.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.work.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.summary.controller.js"></script>
+    <script src="${bundle.location}/dist/app/queue/queue.subtask.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.new.item.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.list.controller.js"></script>
@@ -76,13 +78,17 @@
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
+    <script src="${bundle.location}/dist/app/core/md5.js"></script>
+    <script src="${bundle.location}/dist/app/core/kinetic.header.js"></script>
+    <script src="${bundle.location}/dist/app/core/gravatar.js"></script>
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.utils.js"></script>
+    <script src="${bundle.location}/dist/app/core/bundle.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
@@ -94,6 +100,7 @@
     <script src="${bundle.location}/dist/app/app.constants.js"></script>
     <script src="${bundle.location}/dist/app/app.config.js"></script>
     <!-- endinject -->
+
 
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
   </body>

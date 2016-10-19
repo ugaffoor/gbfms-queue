@@ -1,36 +1,58 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title {{vm.item.label}}
+    h5.panel-title Summary: {{vm.item.label}}
+      span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.isLoading")
   .panel-body
     .row
       .col-xs-6
         span.fa.fa-fw.fa-flag
         | &nbsp;{{queue.friendlyStatus(vm.item)}}
       .col-xs-6
-        .ellipsis
+        .ellipsis(data-ng-if="!vm.isAssigningGroup")
           span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedGroup(vm.item)}}
+          | &nbsp;
+          a(href="",data-ng-click="vm.startGroupAssignment()") {{queue.friendlyAssignedGroup(vm.item)}}
+        .selection(data-ng-if="vm.isAssigningGroup")
+          a(href="",data-ng-click="vm.stopGroupAssignment()") Cancel
+          input.form-control#group-selector(
+            type="text",ng-model="selected",
+            uib-typeahead="group.label for group in vm.allGroups | filter:$viewValue | limitTo:8",
+            typeahead-min-length="0",
+            typeahead-editable="false",
+            typeahead-on-select="vm.groupSelected($item)",
+            data-ng-disabled="vm.isLoading")
     .row
       .col-xs-6
         span.fa.fa-fw.fa-calendar
         | &nbsp;
         span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}")
       .col-xs-6
-        .ellipsis
+        .ellipsis(data-ng-if="!vm.isAssigningMember")
           span.fa.fa-fw.fa-user
-          | &nbsp;{{queue.friendlyAssignedName(vm.item)}}
+          | &nbsp;
+          a(href="",data-ng-click="vm.startMemberAssignment()") {{queue.friendlyAssignedName(vm.item)}}
+        .selection(data-ng-if="vm.isAssigningMember")
+          a(href="",data-ng-click="vm.stopMemberAssignment()") Cancel
+          input.form-control#member-selector(
+            type="text",
+            data-ng-model="selected",
+            uib-typeahead="member for member in vm.membersForGroup | filter: $viewValue | limitTo:8",
+            typeahead-min-length="0",
+            typeahead-editable="false",
+            typeahead-on-select="vm.memberSelected($item)",
+            data-ng-disabled="vm.isLoading")
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
 .row(data-ng-if="details.isMine()")
+  div(data-ng-class="{'col-xs-6': details.isOpen(), 'col-xs-12': !details.isOpen()}")
+    button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.work")
+      div(data-ng-if="!details.isOpen()") Review It
+      div(data-ng-if="details.isOpen()") Work It
   .col-xs-6
-    button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.work") Work It
-  .col-xs-6
-    button.btn.btn-warning.btn-block(data-ui-sref="queue.by.details.assignment") Reassign It
+    button.btn.btn-warning.btn-block(data-ng-if="details.isOpen()",data-ui-sref="queue.by.details.task") Add Task
 .row(data-ng-if="!details.isMine()")
-  .col-xs-6
-    button.btn.btn-primary.btn-block(data-ng-click="details.grabIt()") Grab It
-  .col-xs-6
-    button.btn.btn-warning.btn-block(data-ui-sref="queue.by.details.assignment") Assign It
+  .col-xs-12
+    button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
   
     

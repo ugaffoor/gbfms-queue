@@ -114,7 +114,7 @@
       views: {
         '': {
           controller: 'QueueDetailController as details',
-          templateUrl: 'queue/queue.detail.tpl.html',
+          templateUrl: 'queue/queue.detail.tpl.html'
         }
       }
     });
@@ -125,7 +125,7 @@
       views: {
         '': {
           controller: 'QueueSummaryController as vm',
-          templateUrl: 'queue/queue.summary.tpl.html',
+          templateUrl: 'queue/queue.summary.tpl.html'
         }
       }
     });
@@ -137,6 +137,17 @@
         '': {
           controller: 'QueueWorkController as vm',
           templateUrl: 'queue/queue.work.tpl.html',
+        }
+      }
+    });
+
+    $stateProvider.state('queue.by.details.task', {
+      url: '/add-task',
+
+      views: {
+        '': {
+          controller: 'QueueSubtaskController as vm',
+          templateUrl: 'queue/queue.subtask.tpl.html'
         }
       }
     });

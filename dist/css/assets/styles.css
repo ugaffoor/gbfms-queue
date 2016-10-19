@@ -59,7 +59,8 @@ body {
   overflow: hidden; }
 
 .well-details {
-  white-space: pre-wrap; }
+  white-space: pre-wrap;
+  margin-top: 15px; }
 
 .list-group {
   margin: 1em 0; }

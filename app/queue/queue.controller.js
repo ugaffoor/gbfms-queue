@@ -33,9 +33,9 @@
     }
 
     function hasDetails(item) {
-      return !_.isEmpty(item.values[queueDetailsValue]); 
+      return !_.isEmpty(item.values[queueDetailsValue]);
     }
-    
+
     function friendlySummary(item) {
       return item.values[queueSummaryValue] || '';
     }
@@ -55,9 +55,9 @@
 
     function friendlyAssignedGroup(item) {
       var friendlyName = 'Unassigned';
-      var assignedGroup = item.values['Assigned Group'];
+      var assignedGroup = AssignmentService.withoutRoot(item.values['Assigned Group']);
       if(!_.isEmpty(assignedGroup)) {
-        friendlyName = AssignmentService.withoutRoot(assignedGroup);
+        friendlyName = assignedGroup;
       }
 
       return friendlyName;

@@ -9,6 +9,12 @@
   function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Toast) {
     var vm = this;
     vm.item = item;
+    vm.isLoading = true;
+
+    vm.loading = function() {
+      console.log('applying', vm.isLoading);
+      return vm.isLoading;
+    };
 
     var details = $scope.details;
 
@@ -18,7 +24,7 @@
       if(details.isMine()) {
         var itemPath = $window.KD.base + '/submissions/' + item.id;
 
-        if(item.coreState === 'Closed') {
+        if(item.coreState === 'Closed' || item.coreState === 'Submitted') {
           itemPath += '?review';
         }
 
@@ -26,6 +32,12 @@
         K.load({
           container: '#workContainer',
           path: itemPath,
+          loaded: function() {
+            $timeout(function() {
+              vm.isLoading = false;
+              console.log('applied')
+            });
+          },
           completed: function() {
             $timeout(function() {
               Toast.success('Completed item!');

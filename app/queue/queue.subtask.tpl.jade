@@ -1,0 +1,23 @@
+.panel.panel-primary
+  .panel-heading
+    h5.panel-title
+      button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")
+        span.fa.fa-fw.fa-reply
+      | &nbsp;Add Task: {{vm.item.label}}
+  .panel-body
+    script(type="text/ng-template" id="subtask-template.html")
+      a
+        div(ng-bind-html="match.label | uibTypeaheadHighlight:query")
+        small(data-ng-if="match.model.description") {{match.model.description}}
+    div(data-ng-if="!vm.selectedSubtask")
+      label(for="task-selector") Select Task:
+      input.form-control#task-selector(
+        type="text",
+        data-ng-model="selected",
+        uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",
+        typeahead-min-length="0",
+        typeahead-editable="false",
+        typeahead-on-select="vm.selectSubtask($item)",
+        typeahead-template-url="subtask-template.html"
+        )
+    #workContainer

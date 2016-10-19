@@ -1,6 +1,10 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title {{vm.item.label}}
+    h5.panel-title
+      button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")
+        span.fa.fa-fw.fa-reply
+      | &nbsp;Work: {{vm.item.label}}
+      span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.Loading()")
   .panel-body
     div(data-ng-if="!details.isMine()")
       h4 Current {{queue.queueType}} is not assigned to you.

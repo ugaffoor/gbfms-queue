@@ -33,6 +33,7 @@
     vm.missingAdminKapp = false;
 
     vm.formGeneratorTemplates = [];
+    vm.filterableValues = [];
 
     vm.saveKapp = saveKapp;
     vm.generateForm = generateForm;
@@ -98,10 +99,10 @@
 
     function activate() {
       preflightCheck();
-
       resetForm();
 
       // Watch the form name field and if slug hasn't been manually modified, set the slug to the new value.
+
       $scope.$watch('vm.form.name', function(name) {
         if(vm.shouldSlugify) {
           vm.form.slug = name.toLowerCase() || '';

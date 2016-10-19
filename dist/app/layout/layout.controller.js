@@ -19,6 +19,20 @@
     layout.isParentActive = isParentActive;
     layout.kappUrl = kappUrl;
     layout.managementUrl = managementUrl;
+    layout.adminLinks = [
+      {
+        // The title to appear in the dropdown.
+        title: 'Queue Setup',
+        // The icon to appear to the left of the title.
+        iconClass: 'fa-wrench',
+        // Optional function to determine if it is visible to the user.
+        visibility: function() {
+          return true;
+        },
+        // The state to go to.
+        sref: 'setup'
+      }
+    ];
 
     function isSetupVisible() {
       var visibleAttribute = _.find(currentKapp.attributes, {name: 'Queue Setup Visible'});

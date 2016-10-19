@@ -9,7 +9,7 @@
   /* @ngInject */
   function routes($stateProvider) {
     $stateProvider.state('catalog', {
-      parent: 'default',
+      parent: 'protected',
       url: '/catalog',
 
       views: {

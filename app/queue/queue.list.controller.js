@@ -23,6 +23,7 @@
     list.nextPage = nextPage;
     list.prevPage = prevPage;
     list.hasMorePages = hasMorePages;
+    list.hasItems = hasItems;
 
     list.isChildState = isChildState;
     list.isActiveItem = isActiveItem;
@@ -106,6 +107,10 @@
 
     function hasMorePages() {
       return !_.isEmpty(list.prevPageTokens) || !_.isEmpty(list.nextPageToken);
+    }
+
+    function hasItems() {
+      return list.items && list.items.length > 0
     }
   }
 }());

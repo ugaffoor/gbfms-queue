@@ -65,6 +65,60 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/kinetic.header.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
+    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
+    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
+    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '        <li><a href="">{{header.currentUser.username}}\n' +
+    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<kinetic-header kapp="layout.kapp" admin-links="layout.adminLinks"></kinetic-header>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('errors/error.layout.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -150,12 +204,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('queue/queue.detail.tpl.html',
     '<a href="" data-ng-click="list.showList()" class="back-queue visible-sm visible-xs"><span class="fa fa-fw fa-arrow-left"></span>Back to Queue</a>\n' +
     '<div class="queue-details">\n' +
-    '  <ul class="nav nav-tabs">\n' +
-    '    <li role="presentation" data-ui-sref-active="active"><a data-ui-sref="queue.by.details.summary">Summary</a></li>\n' +
-    '    <li role="presentation" data-ui-sref-active="active"><a data-ui-sref="queue.by.details.work">Work</a></li>\n' +
-    '    <li role="presentation" data-ui-sref-active="active"><a data-ui-sref="queue.by.details.assignment">Assignment</a></li>\n' +
-    '    <li data-ng-if="queue.loading"><span class="fa fa-fw fa-3x fa-spin fa-circle-o-notch"></span></li>\n' +
-    '  </ul>\n' +
     '  <div data-ui-view=""></div>\n' +
     '</div>');
 }]);
@@ -195,9 +243,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div class="col-sm-12 col-md-8">\n' +
     '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': !list.shouldHideList(), \'hidden-sm\': !list.shouldHideList() }">\n' +
-    '      <div class="panel panel-default">\n' +
-    '        <div class="panel-body">Please select an item from the list.</div>\n' +
-    '      </div>\n' +
+    '      <div class="queue-details">Please select an item from the list.</div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
@@ -220,23 +266,50 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('queue/queue.subtask.tpl.html',
+    '\n' +
+    '<div class="panel panel-primary">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h5 class="panel-title">\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Add Task: {{vm.item.label}}\n' +
+    '    </h5>\n' +
+    '  </div>\n' +
+    '  <div class="panel-body">\n' +
+    '    <script type="text/ng-template" id="subtask-template.html"><a>\n' +
+    '        <div ng-bind-html="match.label | uibTypeaheadHighlight:query"></div><small data-ng-if="match.model.description">{{match.model.description}}</small></a></script>\n' +
+    '    <div data-ng-if="!vm.selectedSubtask">\n' +
+    '      <label for="task-selector">Select Task:</label>\n' +
+    '      <input id="task-selector" type="text" data-ng-model="selected" uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.selectSubtask($item)" typeahead-template-url="subtask-template.html" class="form-control"/>\n' +
+    '    </div>\n' +
+    '    <div id="workContainer"></div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.summary.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">{{vm.item.label}}</h5>\n' +
+    '    <h5 class="panel-title">Summary: {{vm.item.label}}<span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span></h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(vm.item)}}</div>\n' +
     '      <div class="col-xs-6">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(vm.item)}}</div>\n' +
+    '        <div data-ng-if="!vm.isAssigningGroup" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a href="" data-ng-click="vm.startGroupAssignment()">{{queue.friendlyAssignedGroup(vm.item)}}</a></div>\n' +
+    '        <div data-ng-if="vm.isAssigningGroup" class="selection"><a href="" data-ng-click="vm.stopGroupAssignment()">Cancel</a>\n' +
+    '          <input id="group-selector" type="text" ng-model="selected" uib-typeahead="group.label for group in vm.allGroups | filter:$viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.groupSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
     '      <div class="col-xs-6">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(vm.item)}}</div>\n' +
+    '        <div data-ng-if="!vm.isAssigningMember" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a href="" data-ng-click="vm.startMemberAssignment()">{{queue.friendlyAssignedName(vm.item)}}</a></div>\n' +
+    '        <div data-ng-if="vm.isAssigningMember" class="selection"><a href="" data-ng-click="vm.stopMemberAssignment()">Cancel</a>\n' +
+    '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="queue.hasDetails(vm.item)" class="row">\n' +
@@ -247,48 +320,31 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '</div>\n' +
     '<div data-ng-if="details.isMine()" class="row">\n' +
-    '  <div class="col-xs-6">\n' +
-    '    <button data-ui-sref="queue.by.details.work" class="btn btn-primary btn-block">Work It</button>\n' +
+    '  <div data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}">\n' +
+    '    <button data-ui-sref="queue.by.details.work" class="btn btn-primary btn-block">\n' +
+    '      <div data-ng-if="!details.isOpen()">Review It</div>\n' +
+    '      <div data-ng-if="details.isOpen()">Work It</div>\n' +
+    '    </button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-6">\n' +
-    '    <button data-ui-sref="queue.by.details.assignment" class="btn btn-warning btn-block">Reassign It</button>\n' +
+    '    <button data-ng-if="details.isOpen()" data-ui-sref="queue.by.details.task" class="btn btn-warning btn-block">Add Task</button>\n' +
     '  </div>\n' +
     '</div>\n' +
     '<div data-ng-if="!details.isMine()" class="row">\n' +
-    '  <div class="col-xs-6">\n' +
-    '    <button data-ng-click="details.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
-    '  </div>\n' +
-    '  <div class="col-xs-6">\n' +
-    '    <button data-ui-sref="queue.by.details.assignment" class="btn btn-warning btn-block">Assign It</button>\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
     '  </div>\n' +
     '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('queue/queue.tpl.html',
-    '\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <h3>{{queue.queueName}} <small><a data-ui-sref="queue.create" class="btn btn-default btn-sm">Add {{queue.queueType}}</a></small></h3>\n' +
-    '  </div>\n' +
-    '</div>\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <ul class="nav nav-pills hidden-xs">\n' +
-    '      <li data-ng-repeat="filter in queue.filters" data-ng-class="{\'active\': queue.filterName === filter.name}"><a href="" data-ui-sref="queue.by({filterName: filter.name})" data-ui-sref-opts="{reload:true}">{{filter.name}}</a></li>\n' +
-    '    </ul>\n' +
-    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control visible-xs"></select>\n' +
-    '  </div>\n' +
-    '</div>\n' +
-    '<div data-ui-view=""></div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('queue/queue.work.tpl.html',
+  $templateCache.put('queue/queue.tasks.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">{{vm.item.label}}</h5>\n' +
+    '    <h5 class="panel-title">\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}}\n' +
+    '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div data-ng-if="!details.isMine()">\n' +
@@ -300,63 +356,39 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
+  $templateCache.put('queue/queue.tpl.html',
     '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="queue.by({filterName: \'__default__\'})" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <!--ul.nav.navbar-nav-->\n' +
-    '      <!--  li(data-ng-if="layout.isSetupVisible()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")-->\n' +
-    '      <!--    a(data-ui-sref="setup") Queue Setup-->\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-th"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in layout.kapps"><a href="{{layout.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="layout.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
-    '            <li data-ng-if="layout.isSpaceAdmin()" class="divider"></li>\n' +
-    '            <li><a data-ng-if="layout.isSetupVisible() &amp;&amp; layout.isSpaceAdmin()" href="" data-ui-sref="setup"><span class="fa fa-fw fa-wrench"></span><span>Queue Setup</span></a></li>\n' +
-    '            <li><a data-ng-if="layout.isSpaceAdmin()" href="{{layout.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
+    '<div class="row visible-xs">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control visible-xs"></select>\n' +
     '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
+    '</div>\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-2 hidden-xs">\n' +
+    '    <ul class="nav nav-pills nav-stacked">\n' +
+    '      <li data-ng-repeat="filter in queue.filters" data-ng-class="{\'active\': queue.filterName === filter.name}"><a href="" data-ui-sref="queue.by({filterName: filter.name})" data-ui-sref-opts="{reload:true}" class="ellipsis">{{filter.name}}</a></li>\n' +
+    '    </ul>\n' +
+    '  </div>\n' +
+    '  <div class="col-xs-12 col-sm-10">\n' +
+    '    <div data-ui-view=""></div>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
+  $templateCache.put('queue/queue.work.tpl.html',
     '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
+    '<div class="panel panel-primary">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h5 class="panel-title">\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Work: {{vm.item.label}}<span data-ng-if="vm.Loading()" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
+    '    </h5>\n' +
     '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
-    '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
+    '  <div class="panel-body">\n' +
+    '    <div data-ng-if="!details.isMine()">\n' +
+    '      <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +
     '    </div>\n' +
+    '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -426,6 +458,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/setup/_queue.setup.details.tpl.html',
     '\n' +
     '<div class="setup-tab">\n' +
@@ -491,7 +539,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '                <li>\n' +
     '                  <div class="row">\n' +
     '                    <div class="col-xs-11">\n' +
-    '                      <input type="text" data-ng-model="vm.setup.tmpFilterName" placeholder="Queue Filter Name" class="form-control"/>\n' +
+    '                      <input type="text" data-ng-model="vm.setup.tmpFilterName" placeholder="Queue Filter Name..." class="form-control"/>\n' +
     '                    </div>\n' +
     '                    <div class="col-xs-1"><a href="" data-ng-click="vm.setup.addFilter()" class="btn btn-xs btn-success"><i class="fa fa-fw fa-plus"></i></a></div>\n' +
     '                  </div>\n' +
@@ -499,12 +547,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '              </ul>\n' +
     '            </div>\n' +
     '          </div>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-offset-10 col-xs-2"><a href="" data-ng-click="vm.saveKapp()" data-ng-disabled="vm.setup.isSetupValid()" class="btn btn-default btn-block">Save</a></div>\n' +
+    '          </div>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div class="row">\n' +
-    '    <div class="col-xs-offset-10 col-xs-2"><a href="" data-ng-click="vm.saveKapp()" data-ng-disabled="vm.setup.isSetupValid()" class="btn btn-default btn-block">Save</a></div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -570,14 +618,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-offset-1 col-xs-10">\n' +
-    '        <ul dnd-list="vm.filter.qualifications">\n' +
-    '          <li data-ng-repeat="qualification in vm.filter.qualifications" dnd-draggable="qualification" dnd-moved="vm.filter.qualifications.splice($index, 1)" dnd-effect-allowed="move" class="filter-item">\n' +
-    '            <div class="row">\n' +
+    '        <ul class="list-group">\n' +
+    '          <li data-ng-repeat="qualification in vm.filter.qualifications" class="list-group-item">\n' +
+    '            <div class="row filter-item">\n' +
     '              <div class="col-xs-10">\n' +
     '                <div class="form-group">\n' +
     '                  <label class="control-label col-xs-2">Field</label>\n' +
     '                  <div class="col-xs-10">\n' +
-    '                    <input type="text" data-ng-model="qualification.field" class="form-control"/>\n' +
+    '                    <input type="text" data-ng-model="qualification.field" uib-typeahead="value for value in vm.filterableValues | filter:$viewValue" class="form-control"/>\n' +
     '                  </div>\n' +
     '                </div>\n' +
     '                <div class="form-group">\n' +
@@ -592,13 +640,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '              </div>\n' +
     '            </div>\n' +
     '          </li>\n' +
-    '          <li>\n' +
+    '          <li class="list-group-item">\n' +
     '            <div class="row">\n' +
     '              <div class="col-xs-10">\n' +
     '                <div class="form-group">\n' +
     '                  <label class="control-label col-xs-2">Field</label>\n' +
     '                  <div class="col-xs-10">\n' +
-    '                    <input type="text" data-ng-model="vm.tmpQualification.field" placeholder="Qualification field..." required="" class="form-control"/>\n' +
+    '                    <input type="text" data-ng-model="vm.tmpQualification.field" placeholder="Qualification field..." required="" uib-typeahead="value for value in vm.filterableValues | filter:$viewValue" class="form-control"/>\n' +
     '                  </div>\n' +
     '                </div>\n' +
     '                <div class="form-group">\n' +
@@ -614,36 +662,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '            </div>\n' +
     '          </li>\n' +
     '        </ul>\n' +
-    '        <!--table.table.table-hover\n' +
-    '        thead\n' +
-    '          th Field\n' +
-    '          th Value\n' +
-    '          th &nbsp;\n' +
-    '        tbody\n' +
-    '          tr(data-ng-repeat="qualification in vm.filter.qualifications")\n' +
-    '            td\n' +
-    '              input.form-control(type="text",data-ng-model="qualification.field")\n' +
-    '            td\n' +
-    '              input.form-control(type="text",data-ng-model="qualification.value")\n' +
-    '            td\n' +
-    '              button.btn.btn-sm.btn-danger(type="button",data-ng-click="vm.removeQualification($index)")\n' +
-    '                span.fa.fa-fw.fa-minus\n' +
-    '          tr(data-ng-if="vm.filter.qualifications.length < 1")\n' +
-    '            td(colspan="3") No qualifications defined for this filter.\n' +
-    '        -->\n' +
-    '        <!--form(name="newQualificationForm",data-ng-submit="vm.addQualification()")\n' +
-    '        table.table\n' +
-    '          tbody\n' +
-    '            tr\n' +
-    '              td\n' +
-    '                input.form-control(type="text",data-ng-model="vm.tmpQualification.field",placeholder="Qualification field...",required="")\n' +
-    '              td\n' +
-    '                input.form-control(type="text",data-ng-model="vm.tmpQualification.value",placeholder="Qualification value...",required="")\n' +
-    '              td\n' +
-    '                button.btn.btn-sm.btn-success(type="submit",data-ng-disabled="newQualificationForm.$invalid")\n' +
-    '                  span.fa.fa-fw.fa-plus\n' +
-    '            \n' +
-    '        -->\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
