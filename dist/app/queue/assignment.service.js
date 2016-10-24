@@ -145,8 +145,8 @@
     function getAllGroups() {
       return Submission.search(adminKapp, 'group')
         .eq('values[Status]', 'active')
-        .include('values')
-        .execute();
+          .include('values')
+          .execute();
     }
 
     function getGroups(parent) {

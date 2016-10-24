@@ -106,7 +106,26 @@
           return $stateParams.itemId;
         },
         item: function(Submission, currentKapp, itemId) {
-          return Submission.build().one(itemId).get({include:'details,values'});
+          return Submission.build().one(itemId).get({include:'details,origin,parent,values,children,children.values'}).then(
+            function success(submission) {
+              // Once we've retrieved our submission we need to parse the subform fields so that we can add values
+              // to them later. Currently supported are the submission values below. To JSON parse additional value
+              // fields, add them to the SUBFORMS array.
+              var SUBFORMS = ['Subtasks', 'Notes'];
+              _.each(SUBFORMS, function(fieldName) {
+                var value = submission.values[fieldName];
+                if(!_.isEmpty(value)) {
+                  value = JSON.parse(value);
+                } else {
+                  value = [];
+                }
+
+                submission.values[fieldName] = value;
+              });
+
+              return submission;
+            }
+          );
         }
       },
 

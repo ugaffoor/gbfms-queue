@@ -74,10 +74,8 @@
     <script src="${bundle.location}/dist/app/queue/queue.assignment.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/items.service.js"></script>
     <script src="${bundle.location}/dist/app/queue/assignment.service.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
@@ -87,8 +85,10 @@
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.utils.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
     <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>

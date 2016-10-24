@@ -11,7 +11,8 @@
     $log.info('{Model} Defining "Submission" model.');
     var factory = {
       search: search,
-      build: build
+      build: build,
+      save: save
     };
     return factory;
 
@@ -31,6 +32,34 @@
     function search(kapp, form) {
       var searcher = new SubmissionSearch(kapp, form);
       return searcher;
+    }
+
+    function save(submission) {
+      var SUBFORMS = ['Subtasks', 'Notes'];
+      var DONT_SEND = ['children', 'closedAt', 'closedBy', 'coreState', 'createdAt', 'createdBy', 'currentPage', 'id',
+                       'label', 'origin', 'parent', 'sessionToken', 'submittedAt', 'submittedBy', 'type', 'updatedAt', 'updatedBy'];
+      var id = submission.id;
+      var page = submission.currentPage;
+
+      _.each(SUBFORMS, function(fieldName) {
+        var value = submission.values[fieldName];
+
+        if(value === null) {
+          value = [];
+        }
+
+        if(value instanceof Array) {
+          value = JSON.stringify(value);
+        }
+        submission.values[fieldName] = value;
+      });
+
+      // Cull off the fields that submission's cannot have:
+      _.each(DONT_SEND, function(fieldName) {
+        delete submission[fieldName];
+      });
+
+      return submission.customPOST(submission, id, {'page':page,'staged':true});
     }
 
     function SubmissionSearch(kapp, form) {

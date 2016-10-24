@@ -11,16 +11,35 @@
     var vm = this;
     var layout = $scope.layout;
 
+    // MEMBERS
     vm.item = item;
     vm.isAssigningGroup = false;
     vm.isAssigningMember = false;
     vm.isLoading = false;
     vm.membersForGroup = [];
 
+    // METHODS
     vm.grabIt = grabIt;
+    vm.startMemberAssignment = startMemberAssignment;
+    vm.stopMemberAssignment = stopMemberAssignment;
+    vm.memberSelected = memberSelected;
+    vm.startGroupAssignment = startGroupAssignment;
+    vm.stopGroupAssignment = stopGroupAssignment;
+    vm.groupSelected = groupSelected;
 
-    vm.startMemberAssignment = function() {
+    activate();
+
+    function activate() {
+      
+    }
+
+    function startMemberAssignment() {
       if(vm.isAssigningGroup) return;
+      if(_.isEmpty(AssignmentService.withoutRoot(vm.item.values['Assigned Group']))) {
+        vm.startGroupAssignment();
+        return;
+      }
+
       AssignmentService.getMembers(vm.item.values['Assigned Group']).then(
         function success(members) {
           vm.membersForGroup = _.map(members, function(member) {
@@ -35,13 +54,14 @@
         function failure() {
           Toast.error('There was a problem retrieving members for the current group!');
         });
-    };
+    }
 
-    vm.stopMemberAssignment = function() {
+    function stopMemberAssignment() {
       vm.isAssigningMember = false;
-    };
+    }
 
-    vm.memberSelected = function(member) {
+
+    function memberSelected(member) {
       vm.isLoading = true;
       delete vm.item.currentPage;
       vm.item.values['Assigned Individual'] = member;
@@ -54,21 +74,36 @@
           vm.isAssigningMember = false;
           $state.go('.', {}, {reload:true});
         });
-    };
+    }
 
-    vm.startGroupAssignment = function() {
+    function startGroupAssignment() {
       if(vm.isAssigningMember) return;
-      vm.isAssigningGroup = true;
-      $timeout(function() {
-        document.getElementById('group-selector').focus();
-      }, 100);
-    };
 
-    vm.stopGroupAssignment = function() {
+      AssignmentService.getAllGroups().then(
+        function success(groups) {
+          vm.isAssigningGroup = true;
+          vm.allGroups = _.map(groups, function(group) {
+            var groupName = AssignmentService.withoutRoot(group.values['Name']);
+            return { label: groupName, group: groupName };
+          });
+          vm.allGroups.unshift({label: 'Unassign', group: ''});
+
+          // Focus on the group selector.
+          $timeout(function() {
+            document.getElementById('group-selector').focus();
+          }, 100);
+        },
+        function failure() {
+          Toast.error('Failed to retrieve group information - assignment disabled.');
+        });
+
+    }
+
+    function stopGroupAssignment() {
       vm.isAssigningGroup = false;
-    };
+    }
 
-    vm.groupSelected = function(group) {
+    function groupSelected(group) {
       vm.isLoading = true;
       delete vm.item.currentPage;
 
@@ -88,22 +123,6 @@
           Toast.error('There was a problem reassigning the group!');
           $state.go('.', {}, {reload:true});
         });
-    };
-
-    activate();
-
-    function activate() {
-      AssignmentService.getAllGroups().then(
-        function success(groups) {
-          vm.allGroups = _.map(groups, function(group) {
-            var groupName = AssignmentService.withoutRoot(group.values['Name']);
-            return { label: groupName, group: groupName };
-          });
-          vm.allGroups.unshift({label: 'Unassign', group: ''});
-        },
-        function failure() {
-          Toast.error('Failed to retrieve group information - assignment disabled.');
-        });
     }
 
     function grabIt() {
@@ -117,7 +136,6 @@
           Toast.error(error);
           // And then start group assignment.
           vm.startGroupAssignment();
-          //$state.go('queue.by.details.assignment', {}, {reload:true});
         }
       );
     }

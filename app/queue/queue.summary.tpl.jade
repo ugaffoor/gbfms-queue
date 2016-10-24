@@ -1,6 +1,7 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title Summary: {{vm.item.label}}
+    h5.panel-title Summary: {{vm.item.label}} 
+      button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent
       span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.isLoading")
   .panel-body
     .row
@@ -55,4 +56,16 @@
   .col-xs-12
     button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
   
-    
+.row
+  .col-xs-12
+    table.table.table-striped.table-hover
+      thead
+        th Summary 
+        th Status
+        th Assigned To
+      tbody
+        tr(data-ng-repeat="child in vm.item.children")
+          td 
+            a(href="",data-ui-sref="queue.by.details.summary({itemId: child.id})") {{child.label}}
+          td {{child.values["Status"] || 'N/A' }}
+          td {{child.values["Assigned Group"] || 'Unassigned'}}

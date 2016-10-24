@@ -94,31 +94,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<kinetic-header kapp="layout.kapp" admin-links="layout.adminLinks"></kinetic-header>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('errors/error.layout.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -170,6 +145,31 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="alert alert-warning"> \n' +
     '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<kinetic-header kapp="layout.kapp" admin-links="layout.adminLinks"></kinetic-header>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -291,7 +291,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">Summary: {{vm.item.label}}<span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span></h5>\n' +
+    '    <h5 class="panel-title">Summary: {{vm.item.label}} \n' +
+    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button><span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
+    '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
@@ -333,6 +335,24 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div data-ng-if="!details.isMine()" class="row">\n' +
     '  <div class="col-xs-12">\n' +
     '    <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <table class="table table-striped table-hover">\n' +
+    '      <thead>\n' +
+    '        <th>Summary </th>\n' +
+    '        <th>Status</th>\n' +
+    '        <th>Assigned To</th>\n' +
+    '      </thead>\n' +
+    '      <tbody>\n' +
+    '        <tr data-ng-repeat="child in vm.item.children">\n' +
+    '          <td> <a href="" data-ui-sref="queue.by.details.summary({itemId: child.id})">{{child.label}}</a></td>\n' +
+    '          <td>{{child.values["Status"] || \'N/A\' }}</td>\n' +
+    '          <td>{{child.values["Assigned Group"] || \'Unassigned\'}}</td>\n' +
+    '        </tr>\n' +
+    '      </tbody>\n' +
+    '    </table>\n' +
     '  </div>\n' +
     '</div>');
 }]);

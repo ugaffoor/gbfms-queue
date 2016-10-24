@@ -25,15 +25,10 @@
     function activate() {
       list.hideList();
       list.activeItem = item.id;
-
-      //$scope.$on('$destroy', function() {
-      //  console.log('queue details destroyed');
-      //  list.activeItem = null;
-      //})
     }
 
     function isOpen() {
-      return item.coreState !== 'Closed' && item.coreState !== 'Submitted'
+      return item.coreState !== 'Closed' && item.coreState !== 'Submitted';
     }
 
     function isMine() {
