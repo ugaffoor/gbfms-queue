@@ -6,7 +6,7 @@
     .controller('QueueSubtaskController', QueueSubtaskController);
 
   /* @ngInject */
-  function QueueSubtaskController(item, currentKapp, Form, Submission, Toast, $window, $state, $timeout) {
+  function QueueSubtaskController(item, currentKapp, Bundle, Form, Submission, Toast, $window, $state, $timeout) {
     var vm = this;
     vm.item = item;
     vm.subtasks = [];
@@ -27,10 +27,7 @@
 
     function selectSubtask(subtask) {
       vm.selectedSubtask = subtask;
-
-      var itemPath = $window.KD.base + '/' + currentKapp.slug + '/' +subtask.slug;
-
-      console.log(vm.item);
+      var itemPath = Bundle.kappLocation() + '/' + subtask.slug;
 
       K.reset();
       K.load({

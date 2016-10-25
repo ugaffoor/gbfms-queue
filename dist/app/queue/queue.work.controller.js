@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  QueueWorkController.$inject = ["item", "$window", "$scope", "$state", "$timeout", "AssignmentService", "Toast"];
+  QueueWorkController.$inject = ["item", "$window", "$scope", "$state", "$timeout", "AssignmentService", "Bundle", "Toast"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueWorkController', QueueWorkController);
 
   /* @ngInject */
-  function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Toast) {
+  function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Bundle, Toast) {
     var vm = this;
     vm.item = item;
     vm.isLoading = true;
@@ -23,7 +23,7 @@
 
     function activate() {
       if(details.isMine()) {
-        var itemPath = $window.KD.base + '/submissions/' + item.id;
+        var itemPath = Bundle.spaceLocation() + '/submissions/' + item.id;
 
         if(item.coreState === 'Closed' || item.coreState === 'Submitted') {
           itemPath += '?review';

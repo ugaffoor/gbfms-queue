@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  LayoutController.$inject = ["currentKapp", "currentSpace", "currentUser", "kapps", "$state", "$window"];
+  LayoutController.$inject = ["currentKapp", "currentSpace", "currentUser", "kapps", "Bundle", "$state", "$window"];
   angular
     .module('kd.bundle.angular.layout')
     .controller('LayoutController', LayoutController);
 
   /* @ngInject */
-  function LayoutController(currentKapp, currentSpace, currentUser, kapps, $state, $window) {
+  function LayoutController(currentKapp, currentSpace, currentUser, kapps, Bundle, $state, $window) {
     var layout = this;
     layout.kapp = currentKapp;
     layout.kapps = kapps;
@@ -54,11 +54,11 @@
     }
 
     function kappUrl(kapp) {
-      return $window.KD.base + '/' + kapp.slug;
+      return Bundle.spaceLocation() + '/' + kapp.slug;
     }
 
     function managementUrl() {
-      return $window.KD.base + '/app/';
+      return Bundle.spaceLocation() + '/app/';
     }
   }
 })();

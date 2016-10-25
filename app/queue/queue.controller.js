@@ -5,7 +5,7 @@
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, $rootScope, $state) {
+  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $rootScope, $state) {
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
@@ -23,6 +23,9 @@
     queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
+    queue.imagePath = imagePath;
+
+    activate();
 
     function changeFilter() {
       $state.go('queue.by', {filterName:queue.filterName}, {reload:true});
@@ -79,7 +82,9 @@
       return now.isAfter(moment(dueDate));
     }
 
-    activate();
+    function imagePath(image) {
+      return Bundle.location() + '/' + image;
+    }
 
     function activate() {
       // The queue list controller will broadcast that it changed the filter.

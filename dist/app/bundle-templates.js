@@ -212,8 +212,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('queue/queue.list.tpl.html',
     '\n' +
     '<div class="row">\n' +
-    '  <div data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
-    '    <div class="list-group"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item">\n' +
+    '  <div data-ng-if="list.items.length &lt; 1" class="row"> \n' +
+    '    <div class="col-xs-12 center-items">\n' +
+    '      <div><img data-ng-src="{{queue.imagePath(\'happy-wally.png\')}}"/></div>\n' +
+    '      <div><strong>There are no items in this queue.</strong></div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
+    '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <h5>{{item.label}}</h5>\n' +
     '        <div class="row">\n' +
     '          <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(item)}}</div>\n' +
@@ -232,7 +238,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '            <p class="well-details">{{queue.friendlySummary(item)}}</p>\n' +
     '          </div>\n' +
     '        </div></a>\n' +
-    '      <div data-ng-if="list.items.length &lt; 1" class="list-group-item">There are no items in this queue.</div>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
     '        <ul class="pager queue-pager">\n' +
     '          <li><a data-ng-if="list.prevPageTokens.length &gt; 0" data-ng-click="list.prevPage()">Previous</a></li>\n' +
@@ -241,9 +246,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div class="col-sm-12 col-md-8">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0" class="col-sm-12 col-md-8">\n' +
     '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': !list.shouldHideList(), \'hidden-sm\': !list.shouldHideList() }">\n' +
-    '      <div class="queue-details">Please select an item from the list.</div>\n' +
+    '      <div class="queue-details">\n' +
+    '        <div class="panel no-data">\n' +
+    '          <h4>Please select an item from the list.</h4>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
@@ -329,7 +338,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-6">\n' +
-    '    <button data-ng-if="details.isOpen()" data-ui-sref="queue.by.details.task" class="btn btn-warning btn-block">Add Task</button>\n' +
+    '    <button data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" data-ui-sref="queue.by.details.task" class="btn btn-warning btn-block">Add Task</button>\n' +
     '  </div>\n' +
     '</div>\n' +
     '<div data-ng-if="!details.isMine()" class="row">\n' +
@@ -339,20 +348,30 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '</div>\n' +
     '<div class="row">\n' +
     '  <div class="col-xs-12">\n' +
-    '    <table class="table table-striped table-hover">\n' +
-    '      <thead>\n' +
-    '        <th>Summary </th>\n' +
-    '        <th>Status</th>\n' +
-    '        <th>Assigned To</th>\n' +
-    '      </thead>\n' +
-    '      <tbody>\n' +
-    '        <tr data-ng-repeat="child in vm.item.children">\n' +
-    '          <td> <a href="" data-ui-sref="queue.by.details.summary({itemId: child.id})">{{child.label}}</a></td>\n' +
-    '          <td>{{child.values["Status"] || \'N/A\' }}</td>\n' +
-    '          <td>{{child.values["Assigned Group"] || \'Unassigned\'}}</td>\n' +
-    '        </tr>\n' +
-    '      </tbody>\n' +
-    '    </table>\n' +
+    '    <div class="row row-cards">\n' +
+    '      <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="col-xs-6">\n' +
+    '        <div class="panel panel-card">\n' +
+    '          <h5>{{child.label}}</h5>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(child)}}</div>\n' +
+    '            <div class="col-xs-6">\n' +
+    '              <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(child)}}</div>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(child)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(child))}"></span></div>\n' +
+    '            <div class="col-xs-6">\n' +
+    '              <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(child)}}</div>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-12">\n' +
+    '              <p class="well-details">{{queue.friendlySummary(child)}}</p>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -380,7 +399,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="row visible-xs">\n' +
     '  <div class="col-xs-12">\n' +
-    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control visible-xs"></select>\n' +
+    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="queue-dropdown form-control visible-xs"></select>\n' +
     '  </div>\n' +
     '</div>\n' +
     '<div class="row">\n' +

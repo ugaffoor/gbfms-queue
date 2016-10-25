@@ -51,21 +51,34 @@
       div(data-ng-if="!details.isOpen()") Review It
       div(data-ng-if="details.isOpen()") Work It
   .col-xs-6
-    button.btn.btn-warning.btn-block(data-ng-if="details.isOpen()",data-ui-sref="queue.by.details.task") Add Task
+    button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.task") Add Task
 .row(data-ng-if="!details.isMine()")
   .col-xs-12
     button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
   
 .row
   .col-xs-12
-    table.table.table-striped.table-hover
-      thead
-        th Summary 
-        th Status
-        th Assigned To
-      tbody
-        tr(data-ng-repeat="child in vm.item.children")
-          td 
-            a(href="",data-ui-sref="queue.by.details.summary({itemId: child.id})") {{child.label}}
-          td {{child.values["Status"] || 'N/A' }}
-          td {{child.values["Assigned Group"] || 'Unassigned'}}
+    .row.row-cards
+      .col-xs-6(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+        .panel.panel-card
+          h5 {{child.label}}
+          .row
+            .col-xs-6
+              span.fa.fa-fw.fa-flag
+              | &nbsp;{{queue.friendlyStatus(child)}}
+            .col-xs-6
+              .ellipsis
+                span.fa.fa-fw.fa-users
+                | &nbsp;{{queue.friendlyAssignedGroup(child)}}
+          .row
+            .col-xs-6
+              span.fa.fa-fw.fa-calendar
+              | &nbsp;
+              span(data-time-ago="queue.friendlyDueDate(child)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(child))}")
+            .col-xs-6
+              .ellipsis
+                span.fa.fa-fw.fa-user
+                | &nbsp;{{queue.friendlyAssignedName(child)}}
+          .row
+            .col-xs-12
+              p.well-details {{queue.friendlySummary(child)}}

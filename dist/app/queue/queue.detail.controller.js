@@ -16,6 +16,7 @@
 
     vm.isOpen = isOpen;
     vm.isMine = isMine;
+    vm.canHaveSubtasks = canHaveSubtasks;
     vm.grabIt = grabIt;
     vm.getAssignedIndividual = getAssignedIndividual;
 
@@ -35,6 +36,15 @@
       return layout.currentUser.username === getAssignedIndividual(item);
     }
 
+    function canHaveSubtasks() {
+      var attribute = _.find(item.form.attributes, { name: 'DontAllowSubtasks' });
+      if(!_.isEmpty(attribute) && 'TRUE' == attribute.values[0].toUpperCase()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
     function grabIt() {
       AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Group'], item).then(
         function() {
@@ -44,8 +54,6 @@
         function(error) {
           // Display the error information to the user.
           Toast.error(error);
-          // And then change to the assignment tab.
-          //$state.go('queue.by.details.assignment', {}, {reload:true});
         }
       );
     }

@@ -13,11 +13,11 @@
 
       // Only resolve items which can be accessed anonymously.
       resolve: {
-        kappSlug: ["ConfigStore", function(ConfigStore) {
-          return ConfigStore.get('kappSlug');
+        kappSlug: ["Bundle", function(Bundle) {
+          return Bundle.kappSlug();
         }],
-        kappName: ["ConfigStore", function(ConfigStore) {
-          return ConfigStore.get('kappName');
+        kappName: ["Bundle", function(Bundle) {
+          return Bundle.kappSlug();
         }]
       },
 
@@ -55,10 +55,10 @@
         currentKapp: ["KappModel", "kappSlug", function(KappModel, kappSlug) {
           return KappModel.build().one(kappSlug).get({include:'details,attributes'});
         }],
-        currentUser: ["$http", "$q", "ConfigStore", function($http, $q, ConfigStore) {
+        currentUser: ["$http", "$q", "Bundle", function($http, $q, Bundle) {
           var deferred = $q.defer();
 
-          $http.get(ConfigStore.get('apiBaseUrl') + '/me').then(
+          $http.get(Bundle.apiLocation() + '/me').then(
             function(response) {
               deferred.resolve(response.data);
             },

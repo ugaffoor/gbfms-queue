@@ -114,7 +114,11 @@
           }
           switch(op.op) {
             case 'eq':
-              queryString += op.lvalue + ' = "' + op.rvalue + '"';
+              if(typeof op.rvalue === 'string' && op.rvalue === '') {
+                queryString += op.lvalue + ' = null';
+              } else {
+                queryString += op.lvalue + ' = "' + op.rvalue + '"';
+              }
               break;
             case 'in':
               queryString += op.lvalue + ' IN (';

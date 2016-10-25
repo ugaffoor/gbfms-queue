@@ -5,7 +5,7 @@
         a.btn.btn-default.btn-sm(data-ui-sref="queue.create") Add {{queue.queueType}}
 .row.visible-xs
   .col-xs-12
-    select.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
+    select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
 .row
   .col-xs-2.hidden-xs
     ul.nav.nav-pills.nav-stacked

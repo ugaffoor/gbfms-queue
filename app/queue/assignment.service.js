@@ -87,11 +87,6 @@
       return deferred.promise;
     }
 
-
-
-
-    // var helperSubmissionsBase = $window.KD.base + '/' + kappSlug + '/' + form.slug;
-
     function grabIt(currentUser, currentGroup, item) {
       var deferred = $q.defer();
 
