@@ -4,7 +4,7 @@
       div
         img(data-ng-src="{{queue.imagePath('happy-wally.png')}}")
       div
-        strong There are no items in this queue.
+        strong An empty queue is a happy queue.
   .col-sm-12.col-md-4(data-ng-if="list.items.length > 0",data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }")
     .list-group.queue-list()
       a.list-group-item.queue-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)",data-ng-class="{'active-item':list.isActiveItem(item)}")
@@ -37,6 +37,9 @@
             a(data-ng-if="list.nextPageToken",data-ng-click="list.nextPage()") Next
   .col-sm-12.col-md-8(data-ng-if="list.items.length > 0")
     div(data-ui-view="" data-ng-class="{'hidden-xs': !list.shouldHideList(), 'hidden-sm': !list.shouldHideList() }")
-      .queue-details
-        .panel.no-data
-          h4 Please select an item from the list.
+      .row
+        .col-xs-12.center-items
+          div
+            img(data-ng-src="{{queue.imagePath('working-wally.png')}}")
+          div
+            strong Time to start!

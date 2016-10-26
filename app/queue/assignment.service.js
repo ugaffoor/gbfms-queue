@@ -37,6 +37,8 @@
     }
 
     function withoutRoot(group) {
+      if(_.isEmpty(rootGroup)) return group;
+
       if(_.startsWith(group, rootGroup + '::')) {
         return group.slice(rootGroup.length + 2);
       } else if(group === rootGroup) {
@@ -47,6 +49,8 @@
     }
 
     function withRoot(group) {
+      if(_.isEmpty(rootGroup)) return group;
+
       var groupWithRoot = group;
       if(!_.startsWith(group, rootGroup)) {
         if(_.isEmpty(group)) {

@@ -1,5 +1,5 @@
-body {
-  padding-top: 80px; }
+.app-container {
+  padding-top: 1em; }
 
 .filter-name-edit {
   padding-bottom: 1em; }

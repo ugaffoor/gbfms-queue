@@ -150,7 +150,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('layout/layout.protected.tpl.html',
     '\n' +
-    '<kinetic-header kapp="layout.kapp" admin-links="layout.adminLinks"></kinetic-header>\n' +
     '<main>\n' +
     '  <div data-ui-view="" class="container"></div>\n' +
     '</main>');
@@ -215,7 +214,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div data-ng-if="list.items.length &lt; 1" class="row"> \n' +
     '    <div class="col-xs-12 center-items">\n' +
     '      <div><img data-ng-src="{{queue.imagePath(\'happy-wally.png\')}}"/></div>\n' +
-    '      <div><strong>There are no items in this queue.</strong></div>\n' +
+    '      <div><strong>An empty queue is a happy queue.</strong></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
@@ -248,9 +247,10 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div data-ng-if="list.items.length &gt; 0" class="col-sm-12 col-md-8">\n' +
     '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': !list.shouldHideList(), \'hidden-sm\': !list.shouldHideList() }">\n' +
-    '      <div class="queue-details">\n' +
-    '        <div class="panel no-data">\n' +
-    '          <h4>Please select an item from the list.</h4>\n' +
+    '      <div class="row">\n' +
+    '        <div class="col-xs-12 center-items">\n' +
+    '          <div><img data-ng-src="{{queue.imagePath(\'working-wally.png\')}}"/></div>\n' +
+    '          <div><strong>Time to start!</strong></div>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +

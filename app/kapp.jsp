@@ -1,5 +1,4 @@
-<%@taglib prefix="c"   uri="http://java.sun.com/jstl/core"  %>
-<%@taglib prefix="app" uri="http://kineticdata.com/taglibs/core/app" %>
+<%@include file="initialization.jspf" %>
 <!DOCTYPE html>
 <html ng-app="kd.bundle.angular">
   <head>
@@ -14,18 +13,21 @@
     <!-- inject:css -->
     <!-- endinject -->
 
-    <app:headContent/>
-  </head>
-  <body>
-    <div data-comment="top level view" data-ui-view=""></div>
-
     <!-- inject:vendor:js -->
     <!-- endinject -->
 
+    <app:headContent/>
+  </head>
+  <body>
+    <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8"/>
+    <div class="app-container" data-comment="top level view" data-ui-view=""></div>
+
+    <!-- One the footer is completed we'll uncomment this. -->
+    <!-- c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/ -->
     <!-- inject:js -->
     <!-- endinject -->
 
-
+    <!-- Uncomment this to enable a local live reload for development -->
     <!-- script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script -->
   </body>
 </html>

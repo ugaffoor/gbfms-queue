@@ -1,0 +1,55 @@
+<%-- Load Java libraries, Kinetic models & Identity --%>
+<%@page pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@page import="com.kineticdata.core.authentication.Identity" %>
+<%@page import="com.kineticdata.core.models.*" %>
+<%@page import="com.kineticdata.core.web.bundles.Bundle" %>
+<%@page import="com.kineticdata.core.web.bundles.BundleSubmissionComponent" %>
+<%@page import="java.util.*" %>
+
+<%-- Bundle Java libraries --%>
+<%@page import="com.kineticdata.bundles.*" %>
+
+<%-- Load tag libraries (JSTL) used in most bundles --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="app" uri="http://kineticdata.com/taglibs/core/app" %>
+<%@taglib prefix="bundle" uri="http://kineticdata.com/taglibs/bundle" %>
+<%@taglib prefix="json" uri="http://kineticdata.com/taglibs/json" %>
+
+<%@include file="/WEB-INF/app/includes/task4/task4.jspf" %>
+
+<%-- Get bundle, space, and kapp objects --%>
+<%
+    Bundle bundle = (Bundle)request.getAttribute("bundle");
+    Space space = (Space)request.getAttribute("space");
+    Kapp kapp = (Kapp)request.getAttribute("kapp");
+    Identity identity = (Identity)request.getAttribute("identity");
+%>
+
+<%-- Create paths for headers and footers which can be shared. --%>
+<%  
+   String contextPath = Text.replace(bundle.getSpaceLocation(), "/" + space.getSlug(), "");
+
+   String headerBundlePath = kapp != null ? kapp.getBundlePath() : space.getBundlePath();
+   if (kapp != null && kapp.hasAttribute("Header Bundle Path")){
+       headerBundlePath = kapp.getAttributeValue("Header Bundle Path");
+   }
+   else if (space.hasAttribute("Header Bundle Path")){
+       headerBundlePath = space.getAttributeValue("Header Bundle Path");
+   }
+   request.setAttribute("headerBundlePath", headerBundlePath);
+   request.setAttribute("headerPath", space.getBundleBase() + "/" + headerBundlePath);
+   request.setAttribute("headerLocation", contextPath + space.getBundleBase() + "/" + headerBundlePath);
+   
+   String footerBundlePath = kapp != null ? kapp.getBundlePath() : space.getBundlePath();
+   if (kapp != null && kapp.hasAttribute("Footer Bundle Path")){
+       footerBundlePath = kapp.getAttributeValue("Footer Bundle Path");
+   }
+   else if (space.hasAttribute("Footer Bundle Path")){
+       footerBundlePath = space.getAttributeValue("Footer Bundle Path");
+   }
+   request.setAttribute("footerBundlePath", footerBundlePath);
+   request.setAttribute("footerPath", space.getBundleBase() + "/" + footerBundlePath);
+   request.setAttribute("footerLocation", contextPath + space.getBundleBase() + "/" + footerBundlePath);
+%>

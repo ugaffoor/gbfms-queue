@@ -1,5 +1,4 @@
-<%@taglib prefix="c"   uri="http://java.sun.com/jstl/core"  %>
-<%@taglib prefix="app" uri="http://kineticdata.com/taglibs/core/app" %>
+<%@include file="initialization.jspf" %>
 <!DOCTYPE html>
 <html ng-app="kd.bundle.angular">
   <head>
@@ -17,20 +16,25 @@
     <link rel="stylesheet" href="${bundle.location}/dist/css/assets/styles.css">
     <!-- endinject -->
 
-    <app:headContent/>
-  </head>
-  <body>
-    <div data-comment="top level view" data-ui-view=""></div>
-
     <!-- inject:vendor:js -->
     <script src="${bundle.location}/dist/vendors/vendors.js"></script>
     <!-- endinject -->
 
+    <app:headContent/>
+  </head>
+  <body>
+    <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8"/>
+    <div class="app-container" data-comment="top level view" data-ui-view=""></div>
+
+    <!-- One the footer is completed we'll uncomment this. -->
+    <!-- c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/ -->
     <!-- inject:js -->
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/user.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
@@ -39,8 +43,6 @@
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
@@ -75,11 +77,11 @@
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>
@@ -87,7 +89,7 @@
     <script src="${bundle.location}/dist/app/app.config.js"></script>
     <!-- endinject -->
 
-
+    <!-- Uncomment this to enable a local live reload for development -->
     <!-- script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script -->
   </body>
 </html>
