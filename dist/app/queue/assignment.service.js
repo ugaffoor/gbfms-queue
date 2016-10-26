@@ -100,7 +100,7 @@
       getMembers(currentGroup).then(
         function(members) {
           var association = _.find(members, function(member) {
-            if(member.values['Group Id'] === withRoot(currentGroup) &&
+            if(member.values['Group Name'] === withRoot(currentGroup) &&
                member.values['Username'] === currentUser) {
               return true;
             }
@@ -167,7 +167,7 @@
       group = withRoot(group);
 
       return Submission.search(adminKapp, 'group-membership')
-        .eq('values[Group Id]', group)
+        .eq('values[Group Name]', group)
         .coreState('Draft')
         .include('values')
         .execute();
