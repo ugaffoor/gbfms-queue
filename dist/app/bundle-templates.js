@@ -347,10 +347,10 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<div class="row">\n' +
+    '<div class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
-    '    <div class="row row-cards">\n' +
-    '      <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="col-xs-6">\n' +
+    '    <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
     '          <h5>{{child.label}}</h5>\n' +
     '          <div class="row">\n' +
@@ -527,7 +527,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="col-xs-6">\n' +
     '      <div class="form-group">\n' +
-    '        <label class="control-label">Queue Type</label>\n' +
+    '        <label class="control-label">Default Queue Type</label>\n' +
     '        <input type="text" data-ng-model="vm.queueTypeAttribute.values[0]" placeholder="The form type that identifies different queue items." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +

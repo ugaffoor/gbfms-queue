@@ -35,10 +35,13 @@
 
           if(_.startsWith(lval, 'values')) {
             searcher.eq(lval, rval);
-          } else {
-            if(lval === 'coreState') {
-              searcher.coreState(rval);
+          } else if(lval === 'coreState') {
+            searcher.coreState(rval);
+          } else if(lval === 'type') {
+            if(rval === '${default}') {
+              rval = formType;
             }
+            searcher.type(rval);
           }
 
         }
@@ -50,7 +53,6 @@
       }
 
       return searcher
-        .type(formType)
         .limit(5)
         .includes(['values','details,form'])
         .execute();

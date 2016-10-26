@@ -57,10 +57,10 @@
 .row(data-ng-if="!details.isMine()")
   .col-xs-12
     button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
-.row
+.row.row-cards
   .col-xs-12
-    .row.row-cards
-      .col-xs-6(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+    .row(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+      .col-xs-12
         .panel.panel-card
           h5 {{child.label}}
           .row
