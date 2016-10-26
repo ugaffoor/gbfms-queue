@@ -9,12 +9,16 @@
   /* @ngInject */
   function QueueSubtaskController(item, currentKapp, Bundle, Form, Submission, Toast, $window, $state, $timeout) {
     var vm = this;
+
+    // MEMBERS
     vm.item = item;
     vm.subtasks = [];
     vm.selectedSubtask = null;
 
+    // METHODS
     vm.selectSubtask = selectSubtask;
 
+    // Initialize.
     activate();
 
     function activate() {
@@ -48,31 +52,12 @@
           }, 3000);
         },
         created: updateParent,
-        updated: updateParent /*function() {
-          console.log('updated', arguments);
-          $timeout(function() {
-            Toast.success('Updated item.');
-            $state.go('.', {}, {reload:true});
-          });
-        }*/
+        updated: updateParent
       });
 
-      function updateParent(response) {
-        console.log('updating parent')
-        var submission = response.submission;
-        var subtasks = vm.item.values['Subtasks'];
-
-        // Check to see if this submission is already in the array.
-        //if(!_.some(subtasks, {"id": submission.id})) {
-        //  subtasks.push({id: submission.id});
-        //  vm.item.values['Subtasks'] = JSON.stringify(subtasks);
-
-        //  Submission.save(vm.item).then(
-        //    function success() {
-              Toast.success('Added subtask.');
-              $state.go('queue.by.details.summary', {}, {reload:true});
-        //    });
-        //}
+      function updateParent() {
+        Toast.success('Added subtask.');
+        $state.go('queue.by.details.summary', {}, {reload:true});
       }
     }
   }

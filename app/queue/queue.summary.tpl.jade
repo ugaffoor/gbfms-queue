@@ -12,7 +12,8 @@
         .ellipsis(data-ng-if="!vm.isAssigningGroup")
           span.fa.fa-fw.fa-users
           | &nbsp;
-          a(href="",data-ng-click="vm.startGroupAssignment()") {{queue.friendlyAssignedGroup(vm.item)}}
+          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startGroupAssignment()") {{queue.friendlyAssignedGroup(vm.item)}}
+          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedGroup(vm.item)}}
         .selection(data-ng-if="vm.isAssigningGroup")
           a(href="",data-ng-click="vm.stopGroupAssignment()") Cancel
           input.form-control#group-selector(
@@ -31,7 +32,8 @@
         .ellipsis(data-ng-if="!vm.isAssigningMember")
           span.fa.fa-fw.fa-user
           | &nbsp;
-          a(href="",data-ng-click="vm.startMemberAssignment()") {{queue.friendlyAssignedName(vm.item)}}
+          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startMemberAssignment()") {{queue.friendlyAssignedName(vm.item)}}
+          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedName(vm.item)}}
         .selection(data-ng-if="vm.isAssigningMember")
           a(href="",data-ng-click="vm.stopMemberAssignment()") Cancel
           input.form-control#member-selector(
@@ -55,7 +57,6 @@
 .row(data-ng-if="!details.isMine()")
   .col-xs-12
     button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
-  
 .row
   .col-xs-12
     .row.row-cards

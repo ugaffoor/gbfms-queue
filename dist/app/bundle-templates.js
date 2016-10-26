@@ -281,6 +281,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title">\n' +
     '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Add Task: {{vm.item.label}}\n' +
+    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -308,7 +309,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="row">\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(vm.item)}}</div>\n' +
     '      <div class="col-xs-6">\n' +
-    '        <div data-ng-if="!vm.isAssigningGroup" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a href="" data-ng-click="vm.startGroupAssignment()">{{queue.friendlyAssignedGroup(vm.item)}}</a></div>\n' +
+    '        <div data-ng-if="!vm.isAssigningGroup" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startGroupAssignment()">{{queue.friendlyAssignedGroup(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedGroup(vm.item)}}</span></div>\n' +
     '        <div data-ng-if="vm.isAssigningGroup" class="selection"><a href="" data-ng-click="vm.stopGroupAssignment()">Cancel</a>\n' +
     '          <input id="group-selector" type="text" ng-model="selected" uib-typeahead="group.label for group in vm.allGroups | filter:$viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.groupSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
@@ -317,7 +318,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="row">\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
     '      <div class="col-xs-6">\n' +
-    '        <div data-ng-if="!vm.isAssigningMember" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a href="" data-ng-click="vm.startMemberAssignment()">{{queue.friendlyAssignedName(vm.item)}}</a></div>\n' +
+    '        <div data-ng-if="!vm.isAssigningMember" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startMemberAssignment()">{{queue.friendlyAssignedName(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedName(vm.item)}}</span></div>\n' +
     '        <div data-ng-if="vm.isAssigningMember" class="selection"><a href="" data-ng-click="vm.stopMemberAssignment()">Cancel</a>\n' +
     '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
@@ -420,7 +421,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title">\n' +
-    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Work: {{vm.item.label}}<span data-ng-if="vm.Loading()" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Work: {{vm.item.label}}\n' +
+    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button><span data-ng-if="vm.Loading()" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +

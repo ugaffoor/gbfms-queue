@@ -13,7 +13,6 @@
     vm.isLoading = true;
 
     vm.loading = function() {
-      console.log('applying', vm.isLoading);
       return vm.isLoading;
     };
 
@@ -36,7 +35,6 @@
           loaded: function() {
             $timeout(function() {
               vm.isLoading = false;
-              console.log('applied')
             });
           },
           completed: function() {
