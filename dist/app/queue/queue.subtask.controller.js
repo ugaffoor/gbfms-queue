@@ -34,7 +34,7 @@
       K.load({
         container: '#workContainer',
         parentId: vm.item.id,
-        originId: vm.item.origin || vm.item.id,
+        originId: vm.item.origin.id || vm.item.id,
         path: itemPath,
         loaded: function() {
           $timeout(function() {
