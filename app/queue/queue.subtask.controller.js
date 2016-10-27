@@ -33,11 +33,14 @@
       vm.selectedSubtask = subtask;
       var itemPath = Bundle.kappLocation() + '/' + subtask.slug;
 
+      var parentId = vm.item.id;
+      var originId = (vm.item.origin ? vm.item.origin.id : vm.item.id);
+
       K.reset();
       K.load({
         container: '#workContainer',
-        parentId: vm.item.id,
-        originId: vm.item.origin.id || vm.item.id,
+        parentId: parentId,
+        originId: originId,
         path: itemPath,
         loaded: function() {
           $timeout(function() {
