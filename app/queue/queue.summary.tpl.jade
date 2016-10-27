@@ -44,6 +44,9 @@
             typeahead-editable="false",
             typeahead-on-select="vm.memberSelected($item)",
             data-ng-disabled="vm.isLoading")
+    .row
+      .col-xs-12
+        .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
