@@ -7,6 +7,13 @@
     <!-- Specify content width scale for mobile devices and let the magic begin -->
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 
+    <!-- Kinops Favicons -->
+    <link rel="apple-touch-icon" href="${bundle.location}/images/favicon-apple-touch-76x76.png" sizes="76x76">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-96x96.png" sizes="96x96">
+    <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
+
     <!-- inject:vendor:css -->
     <!-- endinject -->
 
@@ -28,6 +35,6 @@
     <!-- endinject -->
 
     <!-- Uncomment this to enable a local live reload for development -->
-    <!-- script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script -->
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
   </body>
 </html>
