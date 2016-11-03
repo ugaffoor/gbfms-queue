@@ -34,7 +34,7 @@
     <div class="app-container" data-comment="top level view" data-ui-view=""></div>
 
     <!-- One the footer is completed we'll uncomment this. -->
-    <!-- c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/ -->
+    <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
     <!-- inject:js -->
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
