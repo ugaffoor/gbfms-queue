@@ -55,7 +55,7 @@
         span(data-time-ago="vm.item.updatedAt",time-ago-prefix="Updated")
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
-        .well.well-details {{queue.friendlyDetails(vm.item)}}
+        .well-details {{queue.friendlyDetails(vm.item)}}
 .row(data-ng-if="details.isMine()")
   div(data-ng-class="{'col-xs-6': details.isOpen(), 'col-xs-12': !details.isOpen()}")
     button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.summary.work")

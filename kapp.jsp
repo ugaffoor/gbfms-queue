@@ -7,6 +7,13 @@
     <!-- Specify content width scale for mobile devices and let the magic begin -->
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 
+    <!-- Kinops Favicons -->
+    <link rel="apple-touch-icon" href="${bundle.location}/images/favicon-apple-touch-76x76.png" sizes="76x76">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="${bundle.location}/images/favicon-96x96.png" sizes="96x96">
+    <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
+
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="${bundle.location}/dist/vendors/vendors.css">
     <!-- endinject -->
@@ -77,11 +84,11 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>

@@ -335,7 +335,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="queue.hasDetails(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
+    '        <div class="well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
