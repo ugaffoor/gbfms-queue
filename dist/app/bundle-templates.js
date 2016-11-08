@@ -227,10 +227,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          </div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(item))}"></span></div>\n' +
     '          <div class="col-xs-6">\n' +
     '            <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(item)}}</div>\n' +
     '          </div>\n' +
+    '        </div>\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.createdAt" time-ago-prefix="Created"></span></div>\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
     '          <div class="col-xs-12">\n' +
@@ -277,13 +281,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.subtask.tpl.html',
     '\n' +
-    '<div class="panel panel-primary">\n' +
-    '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">\n' +
-    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Add Task: {{vm.item.label}}\n' +
-    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button>\n' +
-    '    </h5>\n' +
-    '  </div>\n' +
+    '<div class="panel panel-primary row-cards">\n' +
+    '  <!--.panel-heading\n' +
+    '  h5.panel-title\n' +
+    '    button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")\n' +
+    '      span.fa.fa-fw.fa-reply\n' +
+    '    | &nbsp;Add Task: {{vm.item.label}}\n' +
+    '    button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent\n' +
+    '  -->\n' +
     '  <div class="panel-body">\n' +
     '    <script type="text/ng-template" id="subtask-template.html"><a>\n' +
     '        <div ng-bind-html="match.label | uibTypeaheadHighlight:query"></div><small data-ng-if="match.model.description">{{match.model.description}}</small></a></script>\n' +
@@ -301,7 +306,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">Summary: {{vm.item.label}} \n' +
+    '    <h5 class="panel-title">{{vm.item.label}} \n' +
     '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button><span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
     '    </h5>\n' +
     '  </div>\n' +
@@ -316,13 +321,17 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
     '      <div class="col-xs-6">\n' +
     '        <div data-ng-if="!vm.isAssigningMember" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startMemberAssignment()">{{queue.friendlyAssignedName(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedName(vm.item)}}</span></div>\n' +
     '        <div data-ng-if="vm.isAssigningMember" class="selection"><a href="" data-ng-click="vm.stopMemberAssignment()">Cancel</a>\n' +
     '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
     '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="row">\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span></div>\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="queue.hasDetails(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
@@ -333,18 +342,62 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '</div>\n' +
     '<div data-ng-if="details.isMine()" class="row">\n' +
     '  <div data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}">\n' +
-    '    <button data-ui-sref="queue.by.details.work" class="btn btn-primary btn-block">\n' +
+    '    <button data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
     '      <div data-ng-if="!details.isOpen()">Review It</div>\n' +
     '      <div data-ng-if="details.isOpen()">Work It</div>\n' +
     '    </button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-6">\n' +
-    '    <button data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" data-ui-sref="queue.by.details.task" class="btn btn-warning btn-block">Add Task</button>\n' +
+    '    <button data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" data-ui-sref="queue.by.details.summary.task" class="btn btn-warning btn-block">Add Task</button>\n' +
     '  </div>\n' +
     '</div>\n' +
+    '<!--.row(data-ng-if="details.isMine()")\n' +
+    'div(data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}")\n' +
+    '  button.btn.btn-primary.btn-block(data-ng-click="vm.toggleWorkingIt()")\n' +
+    '    div(data-ng-if="vm.workingIt && details.isOpen()") Stop Working It\n' +
+    '    div(data-ng-if="vm.workingIt && !details.isOpen()") Stop Reviewing It\n' +
+    '    div(data-ng-if="!vm.workingIt && !details.isOpen()") Review It\n' +
+    '    div(data-ng-if="!vm.workingIt && details.isOpen()") Work It\n' +
+    '.col-xs-6\n' +
+    '  button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ng-click="vm.toggleAddingSubtask()") \n' +
+    '    span(data-ng-if="!vm.addingSubtask") Add Task\n' +
+    '    span(data-ng-if="vm.addingSubtask") Cancel Adding Task\n' +
+    '-->\n' +
     '<div data-ng-if="!details.isMine()" class="row">\n' +
     '  <div class="col-xs-12">\n' +
     '    <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<div data-ng-if="vm.workingIt" class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <div class="panel panel-primary row-cards">\n' +
+    '      <div class="panel-body">\n' +
+    '        <div data-ng-if="!details.isMine()">\n' +
+    '          <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +
+    '        </div>\n' +
+    '        <div id="workContainer"></div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <div data-ui-view=""></div>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<div data-ng-if="vm.addingSubtask" class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <div class="panel panel-primary row-cards">\n' +
+    '      <div class="panel-body">\n' +
+    '        <script type="text/ng-template" id="subtask-template.html"><a>\n' +
+    '            <div ng-bind-html="match.label | uibTypeaheadHighlight:query"></div><small data-ng-if="match.model.description">{{match.model.description}}</small></a></script>\n' +
+    '        <div data-ng-if="!vm.selectedSubtask">\n' +
+    '          <label for="task-selector">Select Task:</label>\n' +
+    '          <input id="task-selector" type="text" data-ng-model="selected" uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.selectSubtask($item)" typeahead-template-url="subtask-template.html" class="form-control"/>\n' +
+    '        </div>\n' +
+    '        <div id="subtaskContainer"></div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>\n' +
     '<div class="row row-cards">\n' +
@@ -406,7 +459,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="row">\n' +
     '  <div class="col-xs-2 hidden-xs">\n' +
     '    <ul class="nav nav-pills nav-stacked">\n' +
-    '      <li data-ng-repeat="filter in queue.filters" data-ng-class="{\'active\': queue.filterName === filter.name}"><a href="" data-ui-sref="queue.by({filterName: filter.name})" data-ui-sref-opts="{reload:true}" class="ellipsis">{{filter.name}}</a></li>\n' +
+    '      <li data-ng-repeat="filter in queue.filters" data-ng-class="{\'active\': queue.filterName === filter.name}"><a href="" data-ui-sref="queue.by({filterName: filter.name})" data-ui-sref-opts="{reload:true}" class="ellipsis"> <span>{{filter.name}}</span>\n' +
+    '          <!--span.pull-right.badge(data-ng-bind="queue.filterChangeCount()")--></a></li>\n' +
     '    </ul>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-sm-10">\n' +
@@ -418,13 +472,15 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.work.tpl.html',
     '\n' +
-    '<div class="panel panel-primary">\n' +
-    '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">\n' +
-    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;Work: {{vm.item.label}}\n' +
-    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button><span data-ng-if="vm.Loading()" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
-    '    </h5>\n' +
-    '  </div>\n' +
+    '<div class="panel panel-primary row-cards">\n' +
+    '  <!--.panel-heading\n' +
+    '  h5.panel-title\n' +
+    '    button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")\n' +
+    '      span.fa.fa-fw.fa-reply\n' +
+    '    | &nbsp;Work: {{vm.item.label}}\n' +
+    '    button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent\n' +
+    '    span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.Loading()")\n' +
+    '  -->\n' +
     '  <div class="panel-body">\n' +
     '    <div data-ng-if="!details.isMine()">\n' +
     '      <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +

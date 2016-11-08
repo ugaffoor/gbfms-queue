@@ -6,9 +6,10 @@
     .controller('QueueSummaryController', QueueSummaryController);
 
   /* @ngInject */
-  function QueueSummaryController(item, AssignmentService, Toast, $scope, $state, $timeout) {
+  function QueueSummaryController(item, subtasks, AssignmentService, Bundle, Toast, $scope, $state, $timeout) {
     var vm = this;
     var layout = $scope.layout;
+    var details = $scope.details;
 
     // MEMBERS
     vm.item = item;
@@ -16,6 +17,10 @@
     vm.isAssigningMember = false;
     vm.isLoading = false;
     vm.membersForGroup = [];
+    vm.subtasks = subtasks;
+    vm.selectedSubtask = null;
+    vm.addingSubtask = false;
+    vm.workingIt = false;
 
     // METHODS
     vm.grabIt = grabIt;
@@ -25,6 +30,9 @@
     vm.startGroupAssignment = startGroupAssignment;
     vm.stopGroupAssignment = stopGroupAssignment;
     vm.groupSelected = groupSelected;
+    vm.selectSubtask = selectSubtask;
+    vm.toggleAddingSubtask = toggleAddingSubtask;
+    vm.toggleWorkingIt = toggleWorkingIt;
 
     activate();
 
@@ -137,6 +145,83 @@
           vm.startGroupAssignment();
         }
       );
+    }
+
+    function selectSubtask(subtask) {
+      vm.selectedSubtask = subtask;
+      var itemPath = Bundle.kappLocation() + '/' + subtask.slug;
+
+      K.reset();
+      K.load({
+        container: '#subtaskContainer',
+        parentId: vm.item.id,
+        originId: (vm.item.origin !== null ? vm.item.origin.id : vm.item.id),
+        path: itemPath,
+        loaded: function() {
+          $timeout(function() {
+            vm.isLoading = false;
+          });
+        },
+        completed: function() {
+          $timeout(function() {
+            Toast.success('Completed item!');
+            $state.go('queue.by.details.summary', {}, {reload:true});
+          }, 3000);
+        },
+        created: updateParent,
+        updated: updateParent
+      });
+
+      function updateParent() {
+        Toast.success('Added subtask.');
+        $state.go('queue.by.details.summary', {}, {reload:true});
+      }
+    }
+
+    function toggleAddingSubtask() {
+      vm.addingSubtask = !vm.addingSubtask;
+      if(!vm.addingSubtask) {
+        vm.selectedSubtask = null;
+        K.reset();
+      }
+    }
+
+    function toggleWorkingIt() {
+      vm.workingIt = !vm.workingIt;
+      if(vm.workingIt && details.isMine()) {
+        var itemPath = Bundle.spaceLocation() + '/submissions/' + vm.item.id;
+
+        if(vm.item.coreState === 'Closed' || vm.item.coreState === 'Submitted') {
+          itemPath += '?review';
+        }
+
+        $timeout(function() {
+          K.reset();
+          K.load({
+            container: '#workContainer',
+            path: itemPath,
+            loaded: function() {
+              $timeout(function() {
+                vm.isLoading = false;
+              });
+            },
+            completed: function() {
+              $timeout(function() {
+                Toast.success('Completed item!');
+                $state.go('queue.by', {}, {reload:true});
+              }, 3000);
+            },
+            updated: function() {
+              $timeout(function() {
+                Toast.success('Updated item.');
+                $state.go('.', {}, {reload:true});
+              });
+            }
+          }, 50);
+        });
+      } else {
+        K.reset();
+      }
     }
 
   }

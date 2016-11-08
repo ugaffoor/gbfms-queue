@@ -1,12 +1,12 @@
 (function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "filters", "queueName", "queueType", "queueDetailsValue", "queueSummaryValue", "AssignmentService", "Bundle", "$rootScope", "$state"];
+  QueueController.$inject = ["currentKapp", "filters", "queueName", "queueType", "queueDetailsValue", "queueSummaryValue", "AssignmentService", "Bundle", "$interval", "$rootScope", "$scope", "$state"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $rootScope, $state) {
+  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
@@ -25,6 +25,7 @@
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
     queue.imagePath = imagePath;
+    queue.filterChangeCount = filterChangeCount;
 
     activate();
 
@@ -87,6 +88,10 @@
       return Bundle.location() + '/' + image;
     }
 
+    function filterChangeCount(index) {
+      return 42;
+    }
+
     function activate() {
       // The queue list controller will broadcast that it changed the filter.
       // This helps us with knowing what the active filter is when the child
@@ -102,6 +107,14 @@
         if(!_.startsWith(toState.name, 'queue.by')) {
           queue.filterName = '';
         }
+      });
+
+      var filterCheck = $interval(function() {
+        // We'll do something fancy here.
+      }, 5000);
+
+      $scope.$on('$destroy', function() {
+        $interval.cancel(filterCheck);
       });
     }
   }

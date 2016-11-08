@@ -128,12 +128,23 @@
       views: {
         '': {
           controller: 'QueueSummaryController as vm',
-          templateUrl: 'queue/queue.summary.tpl.html'
+          templateUrl: 'queue/queue.summary.tpl.html',
+          resolve: {
+            subtasks: function(currentKapp, Form) {
+              return Form.build(currentKapp.slug).getList().then(
+                function success(forms) {
+                  return _.filter(forms, function(form) {
+                    return form.type === 'Subservice' && form.status === 'Active';
+                  });
+                });
+
+            }
+          }
         }
       }
     });
 
-    $stateProvider.state('queue.by.details.work', {
+    $stateProvider.state('queue.by.details.summary.work', {
       url: '/work',
 
       views: {
@@ -144,7 +155,7 @@
       }
     });
 
-    $stateProvider.state('queue.by.details.task', {
+    $stateProvider.state('queue.by.details.summary.task', {
       url: '/add-task',
 
       views: {

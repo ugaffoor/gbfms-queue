@@ -158,10 +158,6 @@
 
     }
 
-    /*
-    coreState=Draft&include=values&q=(+(+values%5BObject+1+Type%5D+%3D+%22Group%22+AND+values%5BObject+1+Id%5D+%3D+%22US::IT%22)+OR+(+values%5BObject+2+Type%5D+%3D+%22Group%22+AND+values%5BObject+2+Id%5D+%3D+%22US::IT%22))
-     */
-
     function getMembers(group) {
       group = withRoot(group);
 
