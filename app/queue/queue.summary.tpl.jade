@@ -53,10 +53,54 @@
         span.fa.fa-fw.fa-calendar
         | &nbsp;
         span(data-time-ago="vm.item.updatedAt",time-ago-prefix="Updated")
+      .col-xs-12
+        .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
-        .well-details {{queue.friendlyDetails(vm.item)}}
-.row(data-ng-if="details.isMine()")
+        .well.well-details {{queue.friendlyDetails(vm.item)}}
+    .row(data-ng-if="details.isMine()")
+      .col-xs-6(data-ng-if="vm.inWorkOrReview() && !vm.inSubtask()")
+        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.summary")
+          div(data-ng-if="!details.isOpen()") Stop Reviewing It
+          div(data-ng-if="details.isOpen()") Stop Working It
+      .col-xs-6(data-ng-if="!vm.inWorkOrReview() && !vm.inSubtask()")
+        button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.summary.work")
+          div(data-ng-if="!details.isOpen()") Review It
+          div(data-ng-if="details.isOpen()") Work It
+      .col-xs-3.col-xs-offset-9(data-ng-if="!vm.inWorkOrReview() && vm.inSubtask()")
+        button.btn.btn-warning.btn-block(type="button",data-ui-sref="queue.by.details.summary") Stop
+      .col-xs-3.col-xs-offset-3(data-ng-if="!vm.inWorkOrReview() && !vm.inSubtask()")
+        //button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.summary.task") Add
+        div(uib-dropdown="",data-ng-if="!vm.inSubtask()")
+          button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",uib-dropdown-toggle="") 
+            | Add&nbsp;
+            span.caret
+          ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
+            li(role="menuitem",data-ng-repeat="task in vm.subtasks")
+              a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
+        //button.btn.btn-default.pull-right(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ng-click="vm.toggleAddingSubtask()",uib-tooltip="{{vm.addingTask ? 'Stop choosing a task to create.' : 'Choose a task to create.'}}") 
+          span.fa.fa-fw.fa-plus(data-ng-if="!vm.addingSubtask")
+          span.fa.fa-fw.fa-times-circle-o(data-ng-if="vm.addingSubtask")
+    //.row(data-ng-if="vm.addingSubtask")
+      .col-xs-12
+        .panel.panel-primary.row-cards
+          .panel-body
+            script(type="text/ng-template" id="subtask-template.html")
+              a
+                div(ng-bind-html="match.label | uibTypeaheadHighlight:query")
+                small(data-ng-if="match.model.description") {{match.model.description}}
+            div(data-ng-if="!vm.selectedSubtask")
+              label(for="task-selector") Select Task:
+              input.form-control#task-selector(
+                type="text",
+                data-ng-model="selected",
+                uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",
+                typeahead-min-length="0",
+                typeahead-editable="false",
+                typeahead-on-select="vm.selectSubtask($item)",
+                typeahead-template-url="subtask-template.html"
+                )
+//.row(data-ng-if="details.isMine()")
   div(data-ng-class="{'col-xs-6': details.isOpen(), 'col-xs-12': !details.isOpen()}")
     button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.summary.work")
       div(data-ng-if="!details.isOpen()") Review It
@@ -88,7 +132,7 @@
 .row
   .col-xs-12
     div(data-ui-view="")
-.row(data-ng-if="vm.addingSubtask")
+//.row(data-ng-if="vm.addingSubtask")
   .col-xs-12
     .panel.panel-primary.row-cards
       .panel-body

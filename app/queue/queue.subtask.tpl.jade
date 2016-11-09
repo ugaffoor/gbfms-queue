@@ -1,16 +1,15 @@
-.panel.panel-primary.row-cards
-  //.panel-heading
+.panel.panel-default.row-cards
+  .panel-heading
     h5.panel-title
-      button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")
+      | Add: {{vm.subtask.name}}
+      button.btn.btn-default.btn-xs.pull-right(data-ui-sref="queue.by.details.summary")
         span.fa.fa-fw.fa-reply
-      | &nbsp;Add Task: {{vm.item.label}}
-      button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent
   .panel-body
-    script(type="text/ng-template" id="subtask-template.html")
+    //script(type="text/ng-template" id="subtask-template.html")
       a
         div(ng-bind-html="match.label | uibTypeaheadHighlight:query")
         small(data-ng-if="match.model.description") {{match.model.description}}
-    div(data-ng-if="!vm.selectedSubtask")
+    //div(data-ng-if="!vm.selectedSubtask")
       label(for="task-selector") Select Task:
       input.form-control#task-selector(
         type="text",

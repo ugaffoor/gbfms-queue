@@ -281,21 +281,30 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.subtask.tpl.html',
     '\n' +
-    '<div class="panel panel-primary row-cards">\n' +
-    '  <!--.panel-heading\n' +
-    '  h5.panel-title\n' +
-    '    button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")\n' +
-    '      span.fa.fa-fw.fa-reply\n' +
-    '    | &nbsp;Add Task: {{vm.item.label}}\n' +
-    '    button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent\n' +
-    '  -->\n' +
+    '<div class="panel panel-default row-cards">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h5 class="panel-title">Add: {{vm.subtask.name}}\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-default btn-xs pull-right"><span class="fa fa-fw fa-reply"></span></button>\n' +
+    '    </h5>\n' +
+    '  </div>\n' +
     '  <div class="panel-body">\n' +
-    '    <script type="text/ng-template" id="subtask-template.html"><a>\n' +
-    '        <div ng-bind-html="match.label | uibTypeaheadHighlight:query"></div><small data-ng-if="match.model.description">{{match.model.description}}</small></a></script>\n' +
-    '    <div data-ng-if="!vm.selectedSubtask">\n' +
-    '      <label for="task-selector">Select Task:</label>\n' +
-    '      <input id="task-selector" type="text" data-ng-model="selected" uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.selectSubtask($item)" typeahead-template-url="subtask-template.html" class="form-control"/>\n' +
-    '    </div>\n' +
+    '    <!--script(type="text/ng-template" id="subtask-template.html")\n' +
+    '    a\n' +
+    '      div(ng-bind-html="match.label | uibTypeaheadHighlight:query")\n' +
+    '      small(data-ng-if="match.model.description") {{match.model.description}}\n' +
+    '    -->\n' +
+    '    <!--div(data-ng-if="!vm.selectedSubtask")\n' +
+    '    label(for="task-selector") Select Task:\n' +
+    '    input.form-control#task-selector(\n' +
+    '      type="text",\n' +
+    '      data-ng-model="selected",\n' +
+    '      uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",\n' +
+    '      typeahead-min-length="0",\n' +
+    '      typeahead-editable="false",\n' +
+    '      typeahead-on-select="vm.selectSubtask($item)",\n' +
+    '      typeahead-template-url="subtask-template.html"\n' +
+    '      )\n' +
+    '    -->\n' +
     '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
@@ -332,25 +341,78 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="row">\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span></div>\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <div class="well-details">{{queue.friendlySummary(vm.item)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="queue.hasDetails(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
+    '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
+    '    <div data-ng-if="details.isMine()" class="row">\n' +
+    '      <div data-ng-if="vm.inWorkOrReview() &amp;&amp; !vm.inSubtask()" class="col-xs-6">\n' +
+    '        <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-block">\n' +
+    '          <div data-ng-if="!details.isOpen()">Stop Reviewing It</div>\n' +
+    '          <div data-ng-if="details.isOpen()">Stop Working It</div>\n' +
+    '        </button>\n' +
+    '      </div>\n' +
+    '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; !vm.inSubtask()" class="col-xs-6">\n' +
+    '        <button data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
+    '          <div data-ng-if="!details.isOpen()">Review It</div>\n' +
+    '          <div data-ng-if="details.isOpen()">Work It</div>\n' +
+    '        </button>\n' +
+    '      </div>\n' +
+    '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; vm.inSubtask()" class="col-xs-3 col-xs-offset-9">\n' +
+    '        <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-warning btn-block">Stop</button>\n' +
+    '      </div>\n' +
+    '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; !vm.inSubtask()" class="col-xs-3 col-xs-offset-3">\n' +
+    '        <!--button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.summary.task") Add-->\n' +
+    '        <div uib-dropdown="" data-ng-if="!vm.inSubtask()">\n' +
+    '          <button id="subtasks" type="button" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle">\n' +
+    '             \n' +
+    '            Add&nbsp;<span class="caret"></span>\n' +
+    '          </button>\n' +
+    '          <ul uib-dropdown-menu="" role="menu" aria-labelledby="subtasks" class="dropdown-menu dropdown-menu-right dropdown-mobile">\n' +
+    '            <li role="menuitem" data-ng-repeat="task in vm.subtasks"><a data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})">{{task.name}}</a></li>\n' +
+    '          </ul>\n' +
+    '        </div>\n' +
+    '        <!--button.btn.btn-default.pull-right(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ng-click="vm.toggleAddingSubtask()",uib-tooltip="{{vm.addingTask ? \'Stop choosing a task to create.\' : \'Choose a task to create.\'}}") \n' +
+    '        span.fa.fa-fw.fa-plus(data-ng-if="!vm.addingSubtask")\n' +
+    '        span.fa.fa-fw.fa-times-circle-o(data-ng-if="vm.addingSubtask")\n' +
+    '        -->\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <!--.row(data-ng-if="vm.addingSubtask")\n' +
+    '    .col-xs-12\n' +
+    '      .panel.panel-primary.row-cards\n' +
+    '        .panel-body\n' +
+    '          script(type="text/ng-template" id="subtask-template.html")\n' +
+    '            a\n' +
+    '              div(ng-bind-html="match.label | uibTypeaheadHighlight:query")\n' +
+    '              small(data-ng-if="match.model.description") {{match.model.description}}\n' +
+    '          div(data-ng-if="!vm.selectedSubtask")\n' +
+    '            label(for="task-selector") Select Task:\n' +
+    '            input.form-control#task-selector(\n' +
+    '              type="text",\n' +
+    '              data-ng-model="selected",\n' +
+    '              uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",\n' +
+    '              typeahead-min-length="0",\n' +
+    '              typeahead-editable="false",\n' +
+    '              typeahead-on-select="vm.selectSubtask($item)",\n' +
+    '              typeahead-template-url="subtask-template.html"\n' +
+    '              )\n' +
+    '    -->\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<div data-ng-if="details.isMine()" class="row">\n' +
-    '  <div data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}">\n' +
-    '    <button data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
-    '      <div data-ng-if="!details.isOpen()">Review It</div>\n' +
-    '      <div data-ng-if="details.isOpen()">Work It</div>\n' +
-    '    </button>\n' +
-    '  </div>\n' +
-    '  <div class="col-xs-6">\n' +
-    '    <button data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" data-ui-sref="queue.by.details.summary.task" class="btn btn-warning btn-block">Add Task</button>\n' +
-    '  </div>\n' +
-    '</div>\n' +
+    '<!--.row(data-ng-if="details.isMine()")\n' +
+    'div(data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}")\n' +
+    '  button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.summary.work")\n' +
+    '    div(data-ng-if="!details.isOpen()") Review It\n' +
+    '    div(data-ng-if="details.isOpen()") Work It\n' +
+    '.col-xs-6\n' +
+    '  button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.summary.task") Add Task\n' +
+    '-->\n' +
     '<!--.row(data-ng-if="details.isMine()")\n' +
     'div(data-ng-class="{\'col-xs-6\': details.isOpen(), \'col-xs-12\': !details.isOpen()}")\n' +
     '  button.btn.btn-primary.btn-block(data-ng-click="vm.toggleWorkingIt()")\n' +
@@ -385,21 +447,27 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div data-ui-view=""></div>\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<div data-ng-if="vm.addingSubtask" class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <div class="panel panel-primary row-cards">\n' +
-    '      <div class="panel-body">\n' +
-    '        <script type="text/ng-template" id="subtask-template.html"><a>\n' +
-    '            <div ng-bind-html="match.label | uibTypeaheadHighlight:query"></div><small data-ng-if="match.model.description">{{match.model.description}}</small></a></script>\n' +
-    '        <div data-ng-if="!vm.selectedSubtask">\n' +
-    '          <label for="task-selector">Select Task:</label>\n' +
-    '          <input id="task-selector" type="text" data-ng-model="selected" uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.selectSubtask($item)" typeahead-template-url="subtask-template.html" class="form-control"/>\n' +
-    '        </div>\n' +
-    '        <div id="subtaskContainer"></div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>\n' +
+    '<!--.row(data-ng-if="vm.addingSubtask")\n' +
+    '.col-xs-12\n' +
+    '  .panel.panel-primary.row-cards\n' +
+    '    .panel-body\n' +
+    '      script(type="text/ng-template" id="subtask-template.html")\n' +
+    '        a\n' +
+    '          div(ng-bind-html="match.label | uibTypeaheadHighlight:query")\n' +
+    '          small(data-ng-if="match.model.description") {{match.model.description}}\n' +
+    '      div(data-ng-if="!vm.selectedSubtask")\n' +
+    '        label(for="task-selector") Select Task:\n' +
+    '        input.form-control#task-selector(\n' +
+    '          type="text",\n' +
+    '          data-ng-model="selected",\n' +
+    '          uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",\n' +
+    '          typeahead-min-length="0",\n' +
+    '          typeahead-editable="false",\n' +
+    '          typeahead-on-select="vm.selectSubtask($item)",\n' +
+    '          typeahead-template-url="subtask-template.html"\n' +
+    '          )\n' +
+    '      #subtaskContainer\n' +
+    '-->\n' +
     '<div class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
     '    <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +

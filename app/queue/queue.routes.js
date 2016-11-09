@@ -156,12 +156,20 @@
     });
 
     $stateProvider.state('queue.by.details.summary.task', {
-      url: '/add-task',
+      url: '/add-task/{subtaskSlug}',
 
       views: {
         '': {
           controller: 'QueueSubtaskController as vm',
-          templateUrl: 'queue/queue.subtask.tpl.html'
+          templateUrl: 'queue/queue.subtask.tpl.html',
+          resolve: {
+            subtaskSlug: function($stateParams) {
+              return $stateParams.subtaskSlug;
+            },
+            subtask: function(currentKapp, subtaskSlug, Form) {
+              return Form.build(currentKapp.slug).one(subtaskSlug).get();
+            }
+          }
         }
       }
     });

@@ -35,6 +35,9 @@
     vm.toggleAddingSubtask = toggleAddingSubtask;
     vm.toggleWorkingIt = toggleWorkingIt;
 
+    vm.inWorkOrReview = inWorkOrReview;
+    vm.inSubtask = inSubtask;
+
     activate();
 
     function activate() {
@@ -223,6 +226,14 @@
       } else {
         K.reset();
       }
+    }
+
+    function inWorkOrReview() {
+      return $state.current.name === 'queue.by.details.summary.work';
+    }
+
+    function inSubtask() {
+      return $state.current.name === 'queue.by.details.summary.task';
     }
 
   }
