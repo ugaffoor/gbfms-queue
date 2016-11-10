@@ -37,8 +37,10 @@
     }
 
     function canHaveSubtasks() {
-      var attribute = _.find(item.form.attributes, { name: 'DontAllowSubtasks' });
-      if(!_.isEmpty(attribute) && 'TRUE' == attribute.values[0].toUpperCase()) {
+      var attribute = _.find(item.form.attributes, { name: 'Prohibit Subtasks' });
+      if(!_.isEmpty(attribute) && (
+        'TRUE' === attribute.values[0].toUpperCase() ||
+        'YES' === attribute.values[0].toUpperCase())) {
         return false;
       } else {
         return true;

@@ -1,7 +1,6 @@
 .panel.panel-primary
   .panel-heading
     h5.panel-title {{vm.item.label}} 
-      button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent
       span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.isLoading")
   .panel-body
     .row
@@ -58,6 +57,9 @@
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
+    .row(data-ng-if="!details.isMine()")
+      .col-xs-12
+        button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
     .row(data-ng-if="details.isMine()")
       .col-xs-6(data-ng-if="vm.inWorkOrReview() && !vm.inSubtask()")
         button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.summary")
@@ -69,7 +71,7 @@
           div(data-ng-if="details.isOpen()") Work It
       .col-xs-3.col-xs-offset-9(data-ng-if="!vm.inWorkOrReview() && vm.inSubtask()")
         button.btn.btn-warning.btn-block(type="button",data-ui-sref="queue.by.details.summary") Stop
-      .col-xs-3.col-xs-offset-3(data-ng-if="!vm.inWorkOrReview() && !vm.inSubtask()")
+      .col-xs-3.col-xs-offset-3(data-ng-if="!vm.inWorkOrReview() && !vm.inSubtask() && details.canHaveSubtasks()")
         //button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.summary.task") Add
         div(uib-dropdown="",data-ng-if="!vm.inSubtask()")
           button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",uib-dropdown-toggle="") 
@@ -118,42 +120,37 @@
     button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ng-click="vm.toggleAddingSubtask()") 
       span(data-ng-if="!vm.addingSubtask") Add Task
       span(data-ng-if="vm.addingSubtask") Cancel Adding Task
-.row(data-ng-if="!details.isMine()")
-  .col-xs-12
-    button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
-.row(data-ng-if="vm.workingIt")
-  .col-xs-12
-    .panel.panel-primary.row-cards
-      .panel-body
-        div(data-ng-if="!details.isMine()")
-          h4 Current {{queue.queueType}} is not assigned to you.
-          a.btn.btn-block.btn-primary(data-ng-click="details.grabIt()") Grab It
-        #workContainer
 .row
   .col-xs-12
     div(data-ui-view="")
-//.row(data-ng-if="vm.addingSubtask")
+.row.row-cards(data-ng-if="vm.item.parent")
   .col-xs-12
-    .panel.panel-primary.row-cards
-      .panel-body
-        script(type="text/ng-template" id="subtask-template.html")
-          a
-            div(ng-bind-html="match.label | uibTypeaheadHighlight:query")
-            small(data-ng-if="match.model.description") {{match.model.description}}
-        div(data-ng-if="!vm.selectedSubtask")
-          label(for="task-selector") Select Task:
-          input.form-control#task-selector(
-            type="text",
-            data-ng-model="selected",
-            uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",
-            typeahead-min-length="0",
-            typeahead-editable="false",
-            typeahead-on-select="vm.selectSubtask($item)",
-            typeahead-template-url="subtask-template.html"
-            )
-        #subtaskContainer
+    h5.item-header Created From
+    .panel.panel-card(data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})")
+      h5 {{vm.item.parent.label}}
+      .row
+        .col-xs-6
+          span.fa.fa-fw.fa-flag
+          | &nbsp;{{queue.friendlyStatus(vm.item.parent)}}
+        .col-xs-6
+          .ellipsis
+            span.fa.fa-fw.fa-users
+            | &nbsp;{{queue.friendlyAssignedGroup(vm.item.parent)}}
+      .row
+        .col-xs-6
+          span.fa.fa-fw.fa-calendar
+          | &nbsp;
+          span(data-time-ago="queue.friendlyDueDate(vm.item.parent)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item.parent))}")
+        .col-xs-6
+          .ellipsis
+            span.fa.fa-fw.fa-user
+            | &nbsp;{{queue.friendlyAssignedName(vm.item.parent)}}
+      .row
+        .col-xs-12
+          p.well-details {{queue.friendlySummary(vm.item.parent)}}
 .row.row-cards
   .col-xs-12
+    h5.item-header Related Items
     .row(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")
       .col-xs-12
         .panel.panel-card

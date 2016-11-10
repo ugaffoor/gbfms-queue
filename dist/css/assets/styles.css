@@ -100,3 +100,9 @@ select, select.form-control {
 
 .center-items {
   text-align: center; }
+
+.item-header {
+  color: #337ab7;
+  padding-bottom: 8px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px; }

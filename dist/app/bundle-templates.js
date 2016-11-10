@@ -315,9 +315,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">{{vm.item.label}} \n' +
-    '      <button data-ng-if="vm.item.parent !== null &amp;&amp; vm.item.id !== vm.item.parent.id" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="pull-right btn btn-xs btn-primary">To Parent</button><span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span>\n' +
-    '    </h5>\n' +
+    '    <h5 class="panel-title">{{vm.item.label}} <span data-ng-if="vm.isLoading" class="fa fa-fw fa-spin fa-circle-o-notch pull-right"></span></h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
@@ -350,6 +348,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
+    '    <div data-ng-if="!details.isMine()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '    <div data-ng-if="details.isMine()" class="row">\n' +
     '      <div data-ng-if="vm.inWorkOrReview() &amp;&amp; !vm.inSubtask()" class="col-xs-6">\n' +
     '        <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-block">\n' +
@@ -366,7 +369,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; vm.inSubtask()" class="col-xs-3 col-xs-offset-9">\n' +
     '        <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-warning btn-block">Stop</button>\n' +
     '      </div>\n' +
-    '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; !vm.inSubtask()" class="col-xs-3 col-xs-offset-3">\n' +
+    '      <div data-ng-if="!vm.inWorkOrReview() &amp;&amp; !vm.inSubtask() &amp;&amp; details.canHaveSubtasks()" class="col-xs-3 col-xs-offset-3">\n' +
     '        <!--button.btn.btn-warning.btn-block(data-ng-if="details.isOpen() && details.canHaveSubtasks()",data-ui-sref="queue.by.details.summary.task") Add-->\n' +
     '        <div uib-dropdown="" data-ng-if="!vm.inSubtask()">\n' +
     '          <button id="subtasks" type="button" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle">\n' +
@@ -425,51 +428,39 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    span(data-ng-if="!vm.addingSubtask") Add Task\n' +
     '    span(data-ng-if="vm.addingSubtask") Cancel Adding Task\n' +
     '-->\n' +
-    '<div data-ng-if="!details.isMine()" class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
-    '  </div>\n' +
-    '</div>\n' +
-    '<div data-ng-if="vm.workingIt" class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <div class="panel panel-primary row-cards">\n' +
-    '      <div class="panel-body">\n' +
-    '        <div data-ng-if="!details.isMine()">\n' +
-    '          <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +
-    '        </div>\n' +
-    '        <div id="workContainer"></div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>\n' +
     '<div class="row">\n' +
     '  <div class="col-xs-12">\n' +
     '    <div data-ui-view=""></div>\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<!--.row(data-ng-if="vm.addingSubtask")\n' +
-    '.col-xs-12\n' +
-    '  .panel.panel-primary.row-cards\n' +
-    '    .panel-body\n' +
-    '      script(type="text/ng-template" id="subtask-template.html")\n' +
-    '        a\n' +
-    '          div(ng-bind-html="match.label | uibTypeaheadHighlight:query")\n' +
-    '          small(data-ng-if="match.model.description") {{match.model.description}}\n' +
-    '      div(data-ng-if="!vm.selectedSubtask")\n' +
-    '        label(for="task-selector") Select Task:\n' +
-    '        input.form-control#task-selector(\n' +
-    '          type="text",\n' +
-    '          data-ng-model="selected",\n' +
-    '          uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",\n' +
-    '          typeahead-min-length="0",\n' +
-    '          typeahead-editable="false",\n' +
-    '          typeahead-on-select="vm.selectSubtask($item)",\n' +
-    '          typeahead-template-url="subtask-template.html"\n' +
-    '          )\n' +
-    '      #subtaskContainer\n' +
-    '-->\n' +
+    '<div data-ng-if="vm.item.parent" class="row row-cards">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <h5 class="item-header">Created From</h5>\n' +
+    '    <div data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="panel panel-card">\n' +
+    '      <h5>{{vm.item.parent.label}}</h5>\n' +
+    '      <div class="row">\n' +
+    '        <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(vm.item.parent)}}</div>\n' +
+    '        <div class="col-xs-6">\n' +
+    '          <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(vm.item.parent)}}</div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="row">\n' +
+    '        <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item.parent)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item.parent))}"></span></div>\n' +
+    '        <div class="col-xs-6">\n' +
+    '          <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(vm.item.parent)}}</div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="row">\n' +
+    '        <div class="col-xs-12">\n' +
+    '          <p class="well-details">{{queue.friendlySummary(vm.item.parent)}}</p>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>\n' +
     '<div class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
+    '    <h5 class="item-header">Related Items</h5>\n' +
     '    <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
