@@ -221,7 +221,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <h5>{{item.label}}</h5>\n' +
     '        <div class="row">\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.createdAt" time-ago-prefix="Created"></span></div>\n' +
     '          <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(item)}}</div>\n' +
+    '        </div>\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '          <div class="col-xs-6">\n' +
     '            <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(item)}}</div>\n' +
     '          </div>\n' +
@@ -231,10 +235,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div class="col-xs-6">\n' +
     '            <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(item)}}</div>\n' +
     '          </div>\n' +
-    '        </div>\n' +
-    '        <div class="row">\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.createdAt" time-ago-prefix="Created"></span></div>\n' +
-    '          <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '        </div>\n' +
     '        <div class="row">\n' +
     '          <div class="col-xs-12">\n' +
@@ -319,7 +319,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span></div>\n' +
     '      <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(vm.item)}}</div>\n' +
+    '    </div>\n' +
+    '    <div class="row">\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '      <div class="col-xs-6">\n' +
     '        <div data-ng-if="!vm.isAssigningGroup" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startGroupAssignment()">{{queue.friendlyAssignedGroup(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedGroup(vm.item)}}</span></div>\n' +
     '        <div data-ng-if="vm.isAssigningGroup" class="selection"><a href="" data-ng-click="vm.stopGroupAssignment()">Cancel</a>\n' +
@@ -335,10 +339,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
     '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="row">\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span></div>\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="well-details">{{queue.friendlySummary(vm.item)}}</div>\n' +
     '      </div>\n' +

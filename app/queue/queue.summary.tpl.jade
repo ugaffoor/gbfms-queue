@@ -5,8 +5,19 @@
   .panel-body
     .row
       .col-xs-6
+        span.fa.fa-fw.fa-calendar
+        | &nbsp;
+        span(data-time-ago="vm.item.createdAt",time-ago-prefix="Created")
+      .col-xs-6
         span.fa.fa-fw.fa-flag
         | &nbsp;{{queue.friendlyStatus(vm.item)}}
+        
+    .row
+      .col-xs-6
+        span.fa.fa-fw.fa-calendar
+        | &nbsp;
+        span(data-time-ago="vm.item.updatedAt",time-ago-prefix="Updated")
+        
       .col-xs-6
         .ellipsis(data-ng-if="!vm.isAssigningGroup")
           span.fa.fa-fw.fa-users
@@ -43,15 +54,7 @@
             typeahead-editable="false",
             typeahead-on-select="vm.memberSelected($item)",
             data-ng-disabled="vm.isLoading")
-    .row
-      .col-xs-6
-        span.fa.fa-fw.fa-calendar
-        | &nbsp;
-        span(data-time-ago="vm.item.createdAt",time-ago-prefix="Created")
-      .col-xs-6
-        span.fa.fa-fw.fa-calendar
-        | &nbsp;
-        span(data-time-ago="vm.item.updatedAt",time-ago-prefix="Updated")
+        
       .col-xs-12
         .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")

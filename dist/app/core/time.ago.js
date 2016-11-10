@@ -34,7 +34,7 @@
         } else {
           var m = moment(scope.timeAgo);
           element.text(prefixText + ' ' + m.fromNow());
-          element.attr('title', m.format('MMMM Do YYYY, h:mm:ss A'));
+          element.attr('title', prefixText + ' ' + m.format('MMMM Do YYYY, h:mm:ss A'));
           element.attr('data-toggle', 'tooltip');
           $(element).tooltip();
         }

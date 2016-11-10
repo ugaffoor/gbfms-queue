@@ -11,8 +11,18 @@
         h5 {{item.label}}
         .row
           .col-xs-6
+            span.fa.fa-fw.fa-calendar
+            | &nbsp;
+            span(data-time-ago="item.createdAt",time-ago-prefix="Created")
+          .col-xs-6
             span.fa.fa-fw.fa-flag
             | &nbsp;{{queue.friendlyStatus(item)}}
+            
+        .row
+          .col-xs-6
+            span.fa.fa-fw.fa-calendar
+            | &nbsp;
+            span(data-time-ago="item.updatedAt",time-ago-prefix="Updated")
           .col-xs-6
             .ellipsis
               span.fa.fa-fw.fa-users
@@ -26,15 +36,6 @@
             .ellipsis
               span.fa.fa-fw.fa-user
               | &nbsp;{{queue.friendlyAssignedName(item)}}
-        .row
-          .col-xs-6
-            span.fa.fa-fw.fa-calendar
-            | &nbsp;
-            span(data-time-ago="item.createdAt",time-ago-prefix="Created")
-          .col-xs-6
-            span.fa.fa-fw.fa-calendar
-            | &nbsp;
-            span(data-time-ago="item.updatedAt",time-ago-prefix="Updated")
         .row
           .col-xs-12
             p.well-details {{queue.friendlySummary(item)}}
