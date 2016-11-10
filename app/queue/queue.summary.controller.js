@@ -47,6 +47,7 @@
           vm.membersForGroup = _.map(members, function(member) {
             return member.values['Username'];
           });
+          vm.membersForGroup.unshift('');
           vm.isAssigningMember = true;
 
           $timeout(function() {
@@ -74,7 +75,7 @@
           Toast.success("Changed assigned individual!");
           vm.isLoading = false;
           vm.isAssigningMember = false;
-          $state.go('.', {}, {reload:true});
+          $state.go('queue.by.details.summary', {}, {reload:true});
         });
     }
 
@@ -119,7 +120,7 @@
           Toast.success("Changed assigned group!");
           vm.isLoading = false;
           vm.isAssigningGroup = false;
-          $state.go('.', {}, {reload:true});
+          $state.go('queue.by.details.summary', {}, {reload:true});
         },
         function failure() {
           Toast.error('There was a problem reassigning the group!');

@@ -6,7 +6,8 @@
     .controller('QueueSubtaskController', QueueSubtaskController);
 
   /* @ngInject */
-  function QueueSubtaskController(item, currentKapp, subtask, Bundle, Form, Submission, Toast, $window, $state, $timeout) {
+  function QueueSubtaskController(item, currentKapp, subtask, Bundle, Form, Submission, Toast, $window, $scope, $state, $timeout) {
+    var details = $scope.details;
     var vm = this;
 
     // MEMBERS
@@ -22,12 +23,10 @@
     activate();
 
     function activate() {
-      // Form.build(currentKapp.slug).getList().then(
-      //   function success(forms) {
-      //     vm.subtasks = _.filter(forms, function(form) {
-      //       return form.type === 'Subservice' && form.status === 'Active';
-      //     });
-      //   });
+      if(!details.isMine()) {
+        return;
+      }
+
       var itemPath = Bundle.kappLocation() + '/' + subtask.slug;
 
       K.reset();

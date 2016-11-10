@@ -107,7 +107,7 @@
           return $stateParams.itemId;
         }],
         item: ["Submission", "currentKapp", "itemId", function(Submission, currentKapp, itemId) {
-          return Submission.build().one(itemId).get({include:'details,form,form.attributes,origin,parent,parent.values,values,children,children.values'}).then(
+          return Submission.build().one(itemId).get({include:'details,form,form.attributes,values,origin,parent,parent.values,parent.details,children,children.details,children.values'}).then(
             function success(submission) {
               return submission;
             }

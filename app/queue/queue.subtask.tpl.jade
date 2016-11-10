@@ -3,21 +3,8 @@
     h5.panel-title
       | Add: {{vm.subtask.name}}
       button.btn.btn-default.btn-xs.pull-right(data-ui-sref="queue.by.details.summary")
-        span.fa.fa-fw.fa-reply
+        span.fa.fa-fw.fa-times
   .panel-body
-    //script(type="text/ng-template" id="subtask-template.html")
-      a
-        div(ng-bind-html="match.label | uibTypeaheadHighlight:query")
-        small(data-ng-if="match.model.description") {{match.model.description}}
-    //div(data-ng-if="!vm.selectedSubtask")
-      label(for="task-selector") Select Task:
-      input.form-control#task-selector(
-        type="text",
-        data-ng-model="selected",
-        uib-typeahead="task.name for task in vm.subtasks | filter: $viewValue | limitTo:8",
-        typeahead-min-length="0",
-        typeahead-editable="false",
-        typeahead-on-select="vm.selectSubtask($item)",
-        typeahead-template-url="subtask-template.html"
-        )
+    div(data-ng-if="!details.isMine()")
+      h4 This item is not assigned to you.
     #workContainer

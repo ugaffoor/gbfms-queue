@@ -8,37 +8,7 @@
   .col-sm-12.col-md-4(data-ng-if="list.items.length > 0",data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }")
     .list-group.queue-list()
       a.list-group-item.queue-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)",data-ng-class="{'active-item':list.isActiveItem(item)}")
-        h5 {{item.label}}
-        .row
-          .col-xs-6
-            span.fa.fa-fw.fa-calendar
-            | &nbsp;
-            span(data-time-ago="item.createdAt",time-ago-prefix="Created")
-          .col-xs-6
-            span.fa.fa-fw.fa-flag
-            | &nbsp;{{queue.friendlyStatus(item)}}
-            
-        .row
-          .col-xs-6
-            span.fa.fa-fw.fa-calendar
-            | &nbsp;
-            span(data-time-ago="item.updatedAt",time-ago-prefix="Updated")
-          .col-xs-6
-            .ellipsis
-              span.fa.fa-fw.fa-users
-              | &nbsp;{{queue.friendlyAssignedGroup(item)}}
-        .row
-          .col-xs-6
-            span.fa.fa-fw.fa-clock-o
-            | &nbsp;
-            span(data-time-ago="queue.friendlyDueDate(item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(item))}")
-          .col-xs-6
-            .ellipsis
-              span.fa.fa-fw.fa-user
-              | &nbsp;{{queue.friendlyAssignedName(item)}}
-        .row
-          .col-xs-12
-            p.well-details {{queue.friendlySummary(item)}}
+        queue-card(data-queue-item="item")
       .list-group-item(data-ng-if="list.hasMorePages()")
         ul.pager.queue-pager
           li

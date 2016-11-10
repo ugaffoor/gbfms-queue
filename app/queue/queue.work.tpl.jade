@@ -1,13 +1,9 @@
-.panel.panel-primary.row-cards
-  //.panel-heading
-    h5.panel-title
-      button.btn.btn-primary.btn-xs(data-ui-sref="queue.by.details.summary")
-        span.fa.fa-fw.fa-reply
-      | &nbsp;Work: {{vm.item.label}}
-      button.pull-right.btn.btn-xs.btn-primary(data-ng-if="vm.item.parent !== null && vm.item.id !== vm.item.parent.id",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") To Parent
-      span.fa.fa-fw.fa-spin.fa-circle-o-notch.pull-right(data-ng-if="vm.Loading()")
+.panel.panel-default.row-cards
+  .panel-heading
+    | &nbsp;
+    button.pull-right.btn.btn-xs.btn-default(data-ui-sref="queue.by.details.summary")
+      span.fa.fa-fw.fa-times
   .panel-body
     div(data-ng-if="!details.isMine()")
-      h4 Current {{queue.queueType}} is not assigned to you.
-      a.btn.btn-block.btn-primary(data-ng-click="details.grabIt()") Grab It
+      h4 This item is not assigned to you.
     #workContainer
