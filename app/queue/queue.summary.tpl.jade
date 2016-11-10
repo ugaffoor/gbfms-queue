@@ -64,7 +64,7 @@
       .col-xs-12
         button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
     .row(data-ng-if="details.isMine()")
-      .col-xs-9
+      div(data-ng-class="{'col-xs-9': details.canHaveSubtasks(), 'col-xs-12': !details.canHaveSubtasks()}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="!details.isOpen()") Review It
           div(data-ng-if="details.isOpen()") Work It

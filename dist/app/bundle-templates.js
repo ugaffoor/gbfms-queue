@@ -348,7 +348,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="details.isMine()" class="row">\n' +
-    '      <div class="col-xs-9">\n' +
+    '      <div data-ng-class="{\'col-xs-9\': details.canHaveSubtasks(), \'col-xs-12\': !details.canHaveSubtasks()}">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
     '          <div data-ng-if="!details.isOpen()">Review It</div>\n' +
     '          <div data-ng-if="details.isOpen()">Work It</div>\n' +
