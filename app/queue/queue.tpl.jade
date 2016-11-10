@@ -1,8 +1,3 @@
-//-.row
-  .col-xs-12
-    h3 {{queue.queueName}} 
-      small
-        a.btn.btn-default.btn-sm(data-ui-sref="queue.create") Add {{queue.queueType}}
 .row.visible-xs
   .col-xs-12
     select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")

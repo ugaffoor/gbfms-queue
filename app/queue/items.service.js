@@ -13,7 +13,7 @@
 
     return service;
 
-    function filter(kappSlug, user, itemFilter, formType, pageToken) {
+    function filter(kappSlug, user, itemFilter, pageToken) {
       var searcher =  Submission.search(kappSlug);
 
       _.each(itemFilter.qualifications, function(qualification) {
@@ -37,9 +37,6 @@
           } else if(lval === 'coreState') {
             searcher.coreState(rval);
           } else if(lval === 'type') {
-            if(rval === '${default}') {
-              rval = formType;
-            }
             searcher.type(rval);
           }
 
@@ -53,7 +50,7 @@
 
       return searcher
         .limit(5)
-        .includes(['values','details,form'])
+        .includes(['values,details,form,form.attributes'])
         .execute();
     }
   }

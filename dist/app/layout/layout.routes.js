@@ -90,6 +90,7 @@
             var attribute = _.find(currentKapp.attributes, {name:attributeKey});
             if(_.isEmpty(attribute) || _.isEmpty(attribute.values)) {
               if(currentUser.spaceAdmin) {
+                console.log('Missing attribute: ' + attributeKey)
                 $state.go('setup');
               } else {
                 $state.go('error.setup');

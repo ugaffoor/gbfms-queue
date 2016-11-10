@@ -84,7 +84,7 @@
     h5.item-header Created From
     .panel.panel-card(data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})")
       queue-card(data-queue-item="vm.item.parent")
-.row.row-cards
+.row.row-cards(data-ng-if="vm.item.children.length > 0")
   .col-xs-12
     h5.item-header Related Items
     .row(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")

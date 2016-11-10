@@ -5,10 +5,10 @@ div
       span.fa.fa-fw.fa-calendar
       | &nbsp;
       span(data-time-ago="queueItem.createdAt",time-ago-prefix="Created") 
-    .col-xs-6
+    .col-xs-6(data-ng-if="!isSummary()")
       span.fa.fa-fw.fa-flag
       | &nbsp;{{queue.friendlyStatus(queueItem)}}
-  .row
+  .row(data-ng-if="!isSummary()")
     .col-xs-6
       span.fa.fa-fw.fa-calendar
       | &nbsp;
@@ -17,7 +17,7 @@ div
       .ellipsis
         span.fa.fa-fw.fa-users
         | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}}
-  .row
+  .row(data-ng-if="!isSummary()")
     .col-xs-6
       span.fa.fa-fw.fa-clock-o
       | &nbsp;

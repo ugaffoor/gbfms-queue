@@ -10,7 +10,6 @@
     var vm = this;
     var requiredAttributes = [
       { name:'Queue Name', allowsMutliple: false },
-      { name: 'Queue Form Type', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Details Value', allowsMutliple: false },
       { name: 'Queue Summary Value', allowsMutliple: false },
@@ -24,7 +23,6 @@
 
     vm.queueNameAttribute = {};
     vm.queueSetupVisibleAttribute = {};
-    vm.queueTypeAttribute = {};
     vm.queueDetailsAttribute = {};
     vm.queueFilterAttribute = {};
     vm.queueDefaultGroup = {};
@@ -318,7 +316,7 @@
       vm.currentKapp.put().then(
         function() {
           setupConfigurationObject();
-          addFormType().then(
+          addSubtaskType().then(
             function() {
               Toast.success('Updated Kapp configuration.');
             },
@@ -344,7 +342,6 @@
                 // Update the form template with the new slug, etc.
                 formTemplate.slug = vm.form.slug;
                 formTemplate.name = vm.form.name;
-                formTemplate.type = vm.queueTypeAttribute.values[0];
 
                 // TODO: Are there other things we should be adding? Categories or something?
 
@@ -373,15 +370,15 @@
       );
     }
 
-    function addFormType() {
+    function addSubtaskType() {
       var deferred = $q.defer();
 
       FormTypes.build(vm.currentKapp.slug).getList().then(
         function(formTypes) {
-          if(_.some(formTypes, {name: vm.queueTypeAttribute.values[0]})) {
+          if(_.some(formTypes, {name: 'Subtask'})) {
             deferred.resolve();
           } else {
-            FormTypes.build(vm.currentKapp.slug).post({name: vm.queueTypeAttribute.values[0]}).then(
+            FormTypes.build(vm.currentKapp.slug).post({name: 'Subtask'}).then(
               function() {
                 deferred.resolve();
               },
@@ -411,11 +408,6 @@
         vm.currentKapp.attributes.push(vm.queueSetupVisibleAttribute);
       } else {
         vm.queueSetupVisibleAttribute.values[0] = ''+vm.queueSetupVisibleAttribute.values[0];
-      }
-      vm.queueTypeAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Type'});
-      if(_.isEmpty(vm.queueTypeAttribute)) {
-        vm.queueTypeAttribute = { name: 'Queue Type', values: [''] };
-        vm.currentKapp.attributes.push(vm.queueTypeAttribute);
       }
       vm.queueDetailsAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Details Value'});
       if(_.isEmpty(vm.queueDetailsAttribute)) {

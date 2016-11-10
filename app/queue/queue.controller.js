@@ -5,12 +5,11 @@
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueType, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
+  function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
     queue.queueName = queueName;
-    queue.queueType = queueType;
     queue.filterName = '';
     queue.loading = false;
 

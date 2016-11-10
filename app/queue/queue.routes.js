@@ -16,10 +16,6 @@
           var queueNameAttribute = kappConfigResolver('Queue Name');
           return queueNameAttribute.values[0];
         },
-        queueType: function(kappConfigResolver) {
-          var queueTypeAttribute = kappConfigResolver('Queue Type');
-          return queueTypeAttribute.values[0];
-        },
         queueSetupVisible: function(kappConfigResolver) {
           var queueSetupVisibleAttribute = kappConfigResolver('Queue Setup Visible');
           return queueSetupVisibleAttribute.values[0];
@@ -63,6 +59,9 @@
           queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
 
           return queueFilterAttribute.values;
+        },
+        forms: function(currentKapp, Form) {
+          return Form.build(currentKapp.slug).getList({include:'details,attributes'});
         }
       },
 
@@ -91,8 +90,8 @@
             filter: function(filters, filterName) {
               return _.find(filters, {name: filterName});
             },
-            items: function(Submission, ItemsService, currentKapp, currentUser, filter, queueType) {
-              return ItemsService.filter(currentKapp.slug, currentUser, filter, queueType);
+            items: function(Submission, ItemsService, currentKapp, currentUser, filter) {
+              return ItemsService.filter(currentKapp.slug, currentUser, filter);
             }
           }
         }
@@ -106,7 +105,7 @@
           return $stateParams.itemId;
         },
         item: function(Submission, currentKapp, itemId) {
-          return Submission.build().one(itemId).get({include:'details,form,form.attributes,values,origin,parent,parent.values,parent.details,children,children.details,children.values'}).then(
+          return Submission.build().one(itemId).get({include:'details,form,form.attributes,values,origin,parent,parent.values,parent.details,parent.form,parent.form.attributes,children,children.details,children.form,children.form.attributes,children.values'}).then(
             function success(submission) {
               return submission;
             }
@@ -130,14 +129,24 @@
           controller: 'QueueSummaryController as vm',
           templateUrl: 'queue/queue.summary.tpl.html',
           resolve: {
-            subtasks: function(currentKapp, Form) {
-              return Form.build(currentKapp.slug).getList().then(
-                function success(forms) {
-                  return _.filter(forms, function(form) {
-                    return form.type === 'Subservice' && form.status === 'Active';
-                  });
-                });
+            subtasks: function(item, forms, $q) {
+              // Reduce the list of potential forms to just ones that are of a type 'Subtask' and active.
+              var subtasks = _.filter(forms, {
+                status: 'Active',
+                type: 'Subtask'
+              });
 
+              // Check to see if this item has been configured to specify subtasks. If it is listing permitted
+              // subtasks we will need to take the master list of subtasks and filter it down to the ones that
+              // are allowed on this item.
+              var permittedSubtasksAttribute = _.find(item.form.attributes, {name: 'Permitted Subtasks'});
+              if(typeof permittedSubtasksAttribute !== 'undefined') {
+                var permittedSubtasks = permittedSubtasksAttribute.values;
+                subtasks = _.filter(subtasks, function(subtask) {
+                  return permittedSubtasks.indexOf(subtask.slug) > -1;
+                });
+              }
+              return $q.resolve(subtasks);
             }
           }
         }
@@ -150,7 +159,7 @@
       views: {
         '': {
           controller: 'QueueWorkController as vm',
-          templateUrl: 'queue/queue.work.tpl.html',
+          templateUrl: 'queue/queue.work.tpl.html'
         }
       }
     });
@@ -174,39 +183,12 @@
       }
     });
 
-    $stateProvider.state('queue.by.details.assignment', {
-      url: '/assignment',
-
-      views: {
-        '': {
-          controller: 'QueueAssignmentController as vm',
-          templateUrl: 'queue/queue.assignment.tpl.html',
-        }
-      }
-    });
-
     $stateProvider.state('queue.create', {
       url: '/create',
       views: {
         '': {
           templateUrl: 'queue/queue.new.item.tpl.html',
-          controller: 'QueueNewItemController as vm',
-          resolve: {
-            forms: function(Form, currentKapp, queueType, $q) {
-              var deferred = $q.defer();
-
-              Form.build(currentKapp.slug).getList().then(
-                function(forms) {
-                  deferred.resolve(_.filter(forms, {type:queueType}));
-                },
-                function() {
-                  deferred.reject('Failed to retrieve forms list.');
-                }
-              );
-
-              return deferred.promise;
-            }
-          }
+          controller: 'QueueNewItemController as vm'
         }
       }
     });

@@ -1,13 +1,13 @@
 (function() {
   'use strict';
-  QueueListController.$inject = ["currentKapp", "currentUser", "queueType", "filter", "filterName", "items", "ItemsService", "$scope", "$state", "$stateParams"];
+  QueueListController.$inject = ["currentKapp", "currentUser", "filter", "filterName", "items", "ItemsService", "$scope", "$state", "$stateParams"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueListController', QueueListController);
 
   /* @ngInject */
   function QueueListController(
-      currentKapp, currentUser, queueType, filter, filterName, items,
+      currentKapp, currentUser, filter, filterName, items,
       ItemsService,
       $scope, $state, $stateParams) {
     var list = this;
@@ -74,7 +74,7 @@
 
     function nextPage() {
       list.loading = true;
-      ItemsService.filter(currentKapp.slug, currentUser, filter, queueType, list.nextPageToken).then(
+      ItemsService.filter(currentKapp.slug, currentUser, filter, list.nextPageToken).then(
         function(items) {
           list.loading = false;
           list.items = items;
@@ -93,7 +93,7 @@
       // Pop the current page off of the stack, and grab the previous page.
       list.prevPageTokens.pop();
       var pageToken = _.last(list.prevPageTokens);
-      ItemsService.filter(currentKapp.slug, currentUser, filter, queueType, pageToken).then(
+      ItemsService.filter(currentKapp.slug, currentUser, filter, pageToken).then(
         function(items) {
           list.loading = false;
           list.items = items;
@@ -111,7 +111,7 @@
     }
 
     function hasItems() {
-      return list.items && list.items.length > 0
+      return list.items && list.items.length > 0;
     }
   }
 }());

@@ -206,15 +206,15 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <h5>{{queueItem.label}}</h5>\n' +
     '  <div class="row">\n' +
     '    <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.createdAt" time-ago-prefix="Created"> </span></div>\n' +
-    '    <div class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary()" class="col-xs-6"><span class="fa fa-fw fa-flag"></span>&nbsp;{{queue.friendlyStatus(queueItem)}}</div>\n' +
     '  </div>\n' +
-    '  <div class="row">\n' +
+    '  <div data-ng-if="!isSummary()" class="row">\n' +
     '    <div class="col-xs-6"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '    <div class="col-xs-6">\n' +
     '      <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}}</div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div class="row">\n' +
+    '  <div data-ng-if="!isSummary()" class="row">\n' +
     '    <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
     '    <div class="col-xs-6">\n' +
     '      <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
@@ -277,7 +277,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div data-ng-class="{\'col-md-4\': vm.isFormLoaded()}" class="col-xs-12">\n' +
     '    <div class="list-group"><a href="" data-ng-repeat="form in vm.forms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
     '        <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
-    '        <p class="list-group-item-text">{{form.description || \'A \' + vm.queueType + \' form.\'}}</p></a></div>\n' +
+    '        <p data-ng-if="form.description" class="list-group-item-text">{{form.description}}</p></a></div>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-md-8">\n' +
     '    <h3>{{vm.loadedForm.name}}</h3>\n' +
@@ -381,7 +381,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<div class="row row-cards">\n' +
+    '<div data-ng-if="vm.item.children.length &gt; 0" class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h5 class="item-header">Related Items</h5>\n' +
     '    <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
@@ -543,8 +543,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="col-xs-6">\n' +
     '      <div class="form-group">\n' +
-    '        <label class="control-label">Default Queue Type</label>\n' +
-    '        <input type="text" data-ng-model="vm.queueTypeAttribute.values[0]" placeholder="The form type that identifies different queue items." class="form-control"/>\n' +
+    '        <label class="control-label">Group Hierarchy Base</label>\n' +
+    '        <input type="text" data-ng-model="vm.queueGroupBase.values[0]" placeholder="The base group used as the root of assignment." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -553,12 +553,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="form-group">\n' +
     '        <label class="control-label">Queue Details Value</label>\n' +
     '        <input type="text" data-ng-model="vm.queueDetailsAttribute.values[0]" placeholder="The name of the value to display in the details area." class="form-control"/>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="col-xs-6">\n' +
-    '      <div class="form-group">\n' +
-    '        <label class="control-label">Group Hierarchy Base</label>\n' +
-    '        <input type="text" data-ng-model="vm.queueGroupBase.values[0]" placeholder="The base group used as the root of assignment." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
