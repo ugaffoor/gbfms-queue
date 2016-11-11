@@ -72,9 +72,13 @@
 
         // These helpers are used by the "setup" in the kapp feature.
         spaceConfigResolver: ["currentUser", "currentSpace", "$state", function(currentUser, currentSpace, $state) {
-          return function(attributeKey) {
+          return function(attributeKey, shouldFail) {
+            if(typeof shouldFail !== 'boolean') {
+              shouldFail = true;
+            }
+
             var attribute = _.find(currentSpace.attributes, {name:attributeKey});
-            if(_.isEmpty(attribute)) {
+            if(shouldFail && _.isEmpty(attribute)) {
               if(currentUser.spaceAdmin) {
                 $state.go('setup');
               } else {

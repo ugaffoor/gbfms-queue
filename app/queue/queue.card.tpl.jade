@@ -1,28 +1,47 @@
 div
-  h5 {{queueItem.label}}
+  h5 {{queueItem.label}} 
+    span.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
   .row
-    .col-xs-6
+    .col-xs-12
       span.fa.fa-fw.fa-calendar
       | &nbsp;
       span(data-time-ago="queueItem.createdAt",time-ago-prefix="Created") 
-    .col-xs-6(data-ng-if="!isSummary()")
-      span.fa.fa-fw.fa-flag
-      | &nbsp;{{queue.friendlyStatus(queueItem)}}
   .row(data-ng-if="!isSummary()")
-    .col-xs-6
+    .col-xs-12
       span.fa.fa-fw.fa-calendar
       | &nbsp;
       span(data-time-ago="queueItem.updatedAt",time-ago-prefix="Updated")
-    .col-xs-6
-      .ellipsis
-        span.fa.fa-fw.fa-users
-        | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}}
   .row(data-ng-if="!isSummary()")
-    .col-xs-6
+    .col-xs-12
       span.fa.fa-fw.fa-clock-o
       | &nbsp;
       span(data-time-ago="queue.friendlyDueDate(queueItem)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(queueItem))}")
-    .col-xs-6
+  //- Person info for non-list views.
+  .row(data-ng-if="!isSummary() && !isListView()")
+    .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .ellipsis
+        span.fa.fa-fw.fa-users
+        | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+  //- Person info for small list views
+  .row.hidden-md.hidden-lg(data-ng-if="!isSummary() && isListView()")
+    .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .ellipsis
+        span.fa.fa-fw.fa-users
+        | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+  //- Person info large list views.
+  .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
+    .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .ellipsis
+        span.fa.fa-fw.fa-users
+        | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}}
+  //- Person info large list views.
+  .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
+    .col-xs-12
+      .ellipsis
+        span.fa.fa-fw.fa-user
+        | &nbsp;{{queue.friendlyAssignedName(queueItem)}}
+  .row(data-ng-if="isSummary()")
+    .col-xs-12
       .ellipsis
         span.fa.fa-fw.fa-user
         | &nbsp;{{queue.friendlyAssignedName(queueItem)}}

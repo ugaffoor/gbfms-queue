@@ -13,6 +13,12 @@
       url: '/queue',
 
       resolve: {
+        // queueTitle: function(spaceConfigResolver) {
+        //   var pageTitlePrefixAttribute = spaceConfigResolve('Page Title Prefix');
+        //   if(typeof pageTitlePrefixAttrbute !== 'undefined') {
+            
+        //   }
+        // },
         queueName: ["kappConfigResolver", function(kappConfigResolver) {
           var queueNameAttribute = kappConfigResolver('Queue Name');
           return queueNameAttribute.values[0];

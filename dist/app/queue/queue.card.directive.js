@@ -18,9 +18,14 @@
     };
     return directive;
 
-    function link(scope) {
+    function link(scope, element, attributes) {
       scope.queue = scope.$parent.queue;
       scope.isSummary = isSummary;
+      scope.isListView = isListView;
+
+      function isListView() {
+        return !_.isEmpty(attributes.listView);
+      }
 
       function isSummary() {
         var summaryAttribute = _.find(scope.queueItem.form.attributes, {name: 'Summary Card View'});
