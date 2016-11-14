@@ -1,4 +1,4 @@
-.row.visible-xs
+//.row.visible-xs(data-ng-if="queue.isListView()")
   .col-xs-12
     select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
 .row

@@ -1,6 +1,12 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title {{vm.item.label}} 
+    h5.panel-title.visible-sm.visible-xs 
+      button.btn.btn-primary.btn-xs(href="",data-ng-click="list.showList()")
+        span.fa.fa-fw.fa-reply
+      | &nbsp;{{vm.item.label}} 
+      span.pull-right ({{queue.friendlyStatus(vm.item)}})
+    h5.panel-title.hidden-sm.hidden-xs 
+      | &nbsp;{{vm.item.label}} 
       span.pull-right ({{queue.friendlyStatus(vm.item)}})
   .panel-body
     .row

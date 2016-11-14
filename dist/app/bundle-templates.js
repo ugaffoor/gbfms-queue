@@ -248,7 +248,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.detail.tpl.html',
-    '<a href="" data-ng-click="list.showList()" class="back-queue visible-sm visible-xs"><span class="fa fa-fw fa-arrow-left"></span>Back to Queue</a>\n' +
+    '\n' +
     '<div class="queue-details">\n' +
     '  <div data-ui-view=""></div>\n' +
     '</div>');
@@ -257,6 +257,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.list.tpl.html',
     '\n' +
+    '<div data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="queue-dropdown form-control visible-xs"></select>\n' +
+    '  </div>\n' +
+    '</div>\n' +
     '<div class="row">\n' +
     '  <div data-ng-if="list.items.length &lt; 1" class="row"> \n' +
     '    <div class="col-xs-12 center-items">\n' +
@@ -327,7 +332,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">{{vm.item.label}} <span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span></h5>\n' +
+    '    <h5 class="panel-title visible-sm visible-xs"> \n' +
+    '      <button href="" data-ng-click="list.showList()" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}} <span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '    </h5>\n' +
+    '    <h5 class="panel-title hidden-sm hidden-xs">\n' +
+    '       \n' +
+    '      &nbsp;{{vm.item.label}} <span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
@@ -437,11 +448,10 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.tpl.html',
     '\n' +
-    '<div class="row visible-xs">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <select data-ng-options="filter.name as filter.name for filter in queue.filters" data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="queue-dropdown form-control visible-xs"></select>\n' +
-    '  </div>\n' +
-    '</div>\n' +
+    '<!--.row.visible-xs(data-ng-if="queue.isListView()")\n' +
+    '.col-xs-12\n' +
+    '  select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")\n' +
+    '-->\n' +
     '<div class="row">\n' +
     '  <div class="col-xs-2 hidden-xs">\n' +
     '    <ul class="nav nav-pills nav-stacked">\n' +
