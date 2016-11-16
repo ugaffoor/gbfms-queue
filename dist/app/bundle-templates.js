@@ -249,7 +249,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.detail.tpl.html',
     '\n' +
-    '<div class="queue-details">\n' +
+    '<div fixed-height="" fh-bottom-pad="#shared-bundle-footer" class="queue-details">\n' +
     '  <div data-ui-view=""></div>\n' +
     '</div>');
 }]);
@@ -269,7 +269,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div><strong>An empty queue is a happy queue.</strong></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" class="col-sm-12 col-md-4">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" fixed-height="" class="col-sm-12 col-md-4">\n' +
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <queue-card data-queue-item="item" list-view="true"></queue-card></a>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -453,7 +453,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")\n' +
     '-->\n' +
     '<div class="row">\n' +
-    '  <div class="col-xs-2 hidden-xs">\n' +
+    '  <div fixed-height="" class="col-xs-2 hidden-xs">\n' +
     '    <ul class="nav nav-pills nav-stacked">\n' +
     '      <li data-ng-repeat="filter in queue.filters" data-ng-class="{\'active\': queue.filterName === filter.name}"><a href="" data-ui-sref="queue.by({filterName: filter.name})" data-ui-sref-opts="{reload:true}" class="ellipsis"> <span>{{filter.name}}</span>\n' +
     '          <!--span.pull-right.badge(data-ng-bind="queue.filterChangeCount()")--></a></li>\n' +

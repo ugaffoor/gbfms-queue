@@ -82,6 +82,7 @@
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
     <script src="${bundle.location}/dist/app/core/kinetic.header.js"></script>
     <script src="${bundle.location}/dist/app/core/gravatar.js"></script>
+    <script src="${bundle.location}/dist/app/core/fixedHeight.js"></script>
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>

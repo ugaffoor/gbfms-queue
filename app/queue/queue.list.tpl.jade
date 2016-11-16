@@ -8,7 +8,7 @@
         img(data-ng-src="{{queue.imagePath('happy-wally.png')}}")
       div
         strong An empty queue is a happy queue.
-  .col-sm-12.col-md-4(data-ng-if="list.items.length > 0",data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }")
+  .col-sm-12.col-md-4(data-ng-if="list.items.length > 0",data-ng-class="{'hidden-xs': list.shouldHideList(), 'hidden-sm': list.shouldHideList() }",fixed-height="")
     .list-group.queue-list
       a.list-group-item.queue-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)",data-ng-class="{'active-item':list.isActiveItem(item)}")
         queue-card(data-queue-item="item",list-view="true")
