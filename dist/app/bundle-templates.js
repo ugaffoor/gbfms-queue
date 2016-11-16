@@ -416,7 +416,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div data-ng-if="vm.item.children.length &gt; 0" class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h5 class="item-header">Related Items</h5>\n' +
-    '    <div data-ng-repeat="child in vm.item.children" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
+    '    <div data-ng-repeat="child in vm.item.children | orderBy:\'-updatedAt\'" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
     '          <queue-card data-queue-item="child"></queue-card>\n' +
@@ -477,6 +477,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <h4>This item is not assigned to you.</h4>\n' +
     '    </div>\n' +
     '    <div id="workContainer"></div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -543,22 +559,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</section>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
-    '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {

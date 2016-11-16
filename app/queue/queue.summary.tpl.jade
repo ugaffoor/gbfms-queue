@@ -92,7 +92,7 @@
 .row.row-cards(data-ng-if="vm.item.children.length > 0")
   .col-xs-12
     h5.item-header Related Items
-    .row(data-ng-repeat="child in vm.item.children",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+    .row(data-ng-repeat="child in vm.item.children | orderBy:'-updatedAt'",data-ui-sref="queue.by.details.summary({itemId: child.id})")
       .col-xs-12
         .panel.panel-card
           queue-card(data-queue-item="child")
