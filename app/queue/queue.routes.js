@@ -12,12 +12,20 @@
       url: '/queue',
 
       resolve: {
-        // queueTitle: function(spaceConfigResolver) {
-        //   var pageTitlePrefixAttribute = spaceConfigResolve('Page Title Prefix');
-        //   if(typeof pageTitlePrefixAttrbute !== 'undefined') {
-            
-        //   }
-        // },
+        titleBrand: function(spaceConfigResolver) {
+          var pageTitlePrefixAttribute = spaceConfigResolver('Page Title Prefix', false);
+          if(typeof pageTitlePrefixAttribute !== 'undefined') {
+            return pageTitlePrefixAttribute.values[0];
+          }
+          return 'Kinetic Data';
+        },
+        titleCompany: function(spaceConfigResolver) {
+          var companyNameAttribute = spaceConfigResolver('Company Name', false);
+          if(typeof companyNameAttribute !== 'undefined') {
+            return companyNameAttribute.values[0];
+          }
+          return '';
+        },
         queueName: function(kappConfigResolver) {
           var queueNameAttribute = kappConfigResolver('Queue Name');
           return queueNameAttribute.values[0];

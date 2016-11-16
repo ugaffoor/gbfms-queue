@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html ng-app="kd.bundle.angular">
   <head>
-    <title>Request CE</title>
+    <title></title>
 
     <!-- Specify content width scale for mobile devices and let the magic begin -->
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
