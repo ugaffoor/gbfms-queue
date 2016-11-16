@@ -14,6 +14,8 @@
         span.fa.fa-fw.fa-calendar
         | &nbsp;
         span(data-time-ago="vm.item.createdAt",time-ago-prefix="Created")
+        a.btn.btn-xs.btn-default.pull-right(data-ng-if="vm.showQueueIcon()",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") Q
+        a.btn.btn-xs.btn-default.pull-right(data-ng-if="vm.showRequestIcon()",href="{{vm.originLink()}}",target="_blank") K
     .row
       .col-xs-12
         span.fa.fa-fw.fa-calendar
@@ -54,7 +56,22 @@
             typeahead-editable="false",
             typeahead-on-select="vm.memberSelected($item)",
             data-ng-disabled="vm.isLoading")
-        
+    .row
+      .col-xs-12(data-ng-if="vm.notes.length > 0")
+        span.fa.fa-fw.fa-comment-o
+        a(href="",data-ng-click="vm.toggleNotes()")
+          | &nbsp;Notes ({{vm.notes.length}})
+          span.fa.fa-fw(data-ng-class="{'fa-caret-right': !vm.showNotes, 'fa-caret-down': vm.showNotes}")
+        .row-note(data-ng-if="vm.showNotes",data-ng-repeat="note in vm.notes | orderBy:'-updatedAt'")
+          .row
+            .col-xs-6
+              | {{note.submittedBy}}
+            .col-xs-6
+              span(data-time-ago="note.createdAt",time-ago-prefix="Posted")
+          .row
+            .col-xs-12
+              | {{queue.friendlySummary(note)}}
+    .row    
       .col-xs-12
         .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")
@@ -84,7 +101,7 @@
       .col-xs-12
         div(data-ui-view="")
   
-.row.row-cards(data-ng-if="vm.item.parent")
+//.row.row-cards(data-ng-if="vm.item.parent")
   .col-xs-12
     h5.item-header Created From
     .panel.panel-card(data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})")
@@ -92,7 +109,7 @@
 .row.row-cards(data-ng-if="vm.item.children.length > 0")
   .col-xs-12
     h5.item-header Related Items
-    .row(data-ng-repeat="child in vm.item.children | orderBy:'-updatedAt'",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+    .row(data-ng-repeat="child in vm.item.children | filter:({form: {slug: '!note'}}) | orderBy:'-updatedAt'",data-ui-sref="queue.by.details.summary({itemId: child.id})")
       .col-xs-12
         .panel.panel-card
           queue-card(data-queue-item="child")

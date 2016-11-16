@@ -148,30 +148,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.assignment.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -342,7 +318,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span></div>\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span><a data-ng-if="vm.showQueueIcon()" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="btn btn-xs btn-default pull-right">Q</a><a data-ng-if="vm.showRequestIcon()" href="{{vm.originLink()}}" target="_blank" class="btn btn-xs btn-default pull-right">K</a></div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
@@ -359,6 +335,21 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member || \'Unassign\' for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
     '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="row">\n' +
+    '      <div data-ng-if="vm.notes.length &gt; 0" class="col-xs-12"><span class="fa fa-fw fa-comment-o"></span><a href="" data-ng-click="vm.toggleNotes()">&nbsp;Notes ({{vm.notes.length}})<span data-ng-class="{\'fa-caret-right\': !vm.showNotes, \'fa-caret-down\': vm.showNotes}" class="fa fa-fw"></span></a>\n' +
+    '        <div data-ng-if="vm.showNotes" data-ng-repeat="note in vm.notes | orderBy:\'-updatedAt\'" class="row-note">\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-6">{{note.submittedBy}}</div>\n' +
+    '            <div class="col-xs-6"><span data-time-ago="note.createdAt" time-ago-prefix="Posted"></span></div>\n' +
+    '          </div>\n' +
+    '          <div class="row">\n' +
+    '            <div class="col-xs-12">{{queue.friendlySummary(note)}}</div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="row">   \n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="well-details">{{queue.friendlySummary(vm.item)}}</div>\n' +
     '      </div>\n' +
@@ -405,18 +396,16 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    -->\n' +
     '  </div>\n' +
     '</div>\n' +
-    '<div data-ng-if="vm.item.parent" class="row row-cards">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <h5 class="item-header">Created From</h5>\n' +
-    '    <div data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="panel panel-card">\n' +
-    '      <queue-card data-queue-item="vm.item.parent"></queue-card>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>\n' +
+    '<!--.row.row-cards(data-ng-if="vm.item.parent")\n' +
+    '.col-xs-12\n' +
+    '  h5.item-header Created From\n' +
+    '  .panel.panel-card(data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})")\n' +
+    '    queue-card(data-queue-item="vm.item.parent")\n' +
+    '-->\n' +
     '<div data-ng-if="vm.item.children.length &gt; 0" class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h5 class="item-header">Related Items</h5>\n' +
-    '    <div data-ng-repeat="child in vm.item.children | orderBy:\'-updatedAt\'" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
+    '    <div data-ng-repeat="child in vm.item.children | filter:({form: {slug: \'!note\'}}) | orderBy:\'-updatedAt\'" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
     '          <queue-card data-queue-item="child"></queue-card>\n' +
@@ -482,19 +471,27 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
+  $templateCache.put('layout/layout.protected.tpl.html',
     '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
     '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
     '  </div>\n' +
-    '</div>');
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -559,6 +556,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</section>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {

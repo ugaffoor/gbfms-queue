@@ -153,6 +153,11 @@
                 });
               }
               return $q.resolve(subtasks);
+            },
+            notes: function(item) {
+              return _.filter(item.children, function(child) {
+                return (child.form.slug === 'note');
+              });
             }
           }
         }

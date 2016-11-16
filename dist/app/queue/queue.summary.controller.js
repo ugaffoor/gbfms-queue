@@ -1,24 +1,26 @@
 (function() {
   'use strict';
 
-  QueueSummaryController.$inject = ["item", "subtasks", "AssignmentService", "Bundle", "Toast", "$scope", "$state", "$timeout"];
+  QueueSummaryController.$inject = ["item", "subtasks", "notes", "AssignmentService", "Bundle", "Toast", "$scope", "$state", "$timeout"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueSummaryController', QueueSummaryController);
 
   /* @ngInject */
-  function QueueSummaryController(item, subtasks, AssignmentService, Bundle, Toast, $scope, $state, $timeout) {
+  function QueueSummaryController(item, subtasks, notes, AssignmentService, Bundle, Toast, $scope, $state, $timeout) {
     var vm = this;
     var layout = $scope.layout;
     var details = $scope.details;
 
     // MEMBERS
     vm.item = item;
+    vm.notes = notes;
     vm.isAssigningGroup = false;
     vm.isAssigningMember = false;
     vm.isLoading = false;
     vm.membersForGroup = [];
     vm.subtasks = subtasks;
+    vm.showNotes = false;
 
     // METHODS
     vm.grabIt = grabIt;
@@ -31,6 +33,28 @@
 
     vm.inWorkOrReview = inWorkOrReview;
     vm.inSubtask = inSubtask;
+
+    vm.toggleNotes = toggleNotes;
+
+    vm.showQueueIcon = function() {
+      // If the parent isn't null, and there is an origin and the parent is not the same as the origin.
+      if(vm.item.origin !== null) {
+        return vm.item.parent !== null && vm.item.origin.id !== vm.item.parent.id;
+      }
+      return vm.item.parent !== null;
+    };
+
+    vm.showRequestIcon = function() {
+      // if the origin isn't null and the parent is the same.
+      if(vm.item.origin !== null) {
+        return vm.item.parent !== null && vm.item.origin.id === vm.item.parent.id;
+      }
+      return false;
+    };
+
+    vm.originLink = function() {
+      return Bundle.spaceLocation() + '/submissions/' + vm.item.origin.id + '?review';
+    };
 
     activate();
 
@@ -150,6 +174,10 @@
 
     function inSubtask() {
       return $state.current.name === 'queue.by.details.summary.task';
+    }
+
+    function toggleNotes() {
+      vm.showNotes = !vm.showNotes;
     }
 
   }
