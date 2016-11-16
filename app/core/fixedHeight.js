@@ -31,7 +31,10 @@
         if (_.isEmpty(padAttr) ) {
           pad = 0;
         } else if (typeof padAttr === 'string' && (padAttr[0] === '.' || padAttr[0] === '#')) {
-          pad = $(padAttr).height();
+          var padElement = $(padAttr);
+          if(padElement.is(':visible')) {
+            pad = padElement.height();
+          }
           pad = pad || 0;
         } else {
           pad = padAttr;
@@ -50,7 +53,7 @@
       };
 
       scope.$watch(scope.getWindowDimensions, function(win) {
-        $(element).css('height', win.height - win.top - win.bottomPad - win.topPad);
+        $(element).css('height', win.height - win.top - win.bottomPad - win.topPad - 15);
       }, true);
 
       w.bind('resize', function() {

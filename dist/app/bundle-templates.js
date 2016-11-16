@@ -269,7 +269,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div><strong>An empty queue is a happy queue.</strong></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" fixed-height="" class="col-sm-12 col-md-4">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': list.shouldHideList(), \'hidden-sm\': list.shouldHideList() }" fixed-height="" fh-bottom-pad="#shared-bundle-footer" class="col-sm-12 col-md-4">\n' +
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <queue-card data-queue-item="item" list-view="true"></queue-card></a>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
