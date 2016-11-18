@@ -62,13 +62,23 @@
         a(href="",data-ng-click="vm.toggleNotes()")
           | &nbsp;Notes ({{vm.notes.length}})
           span.fa.fa-fw(data-ng-class="{'fa-caret-right': !vm.showNotes, 'fa-caret-down': vm.showNotes}")
-        .row-note(data-ng-if="vm.showNotes",data-ng-repeat="note in vm.notes | orderBy:'-updatedAt'")
-          .row
+        .row.row-note(data-ng-if="vm.showNotes",data-ng-repeat="note in vm.notes | orderBy:'-updatedAt'")
+          .col-xs-1
+            gravatar.center-block.img-circle(email="{{note.createdBy}}",width="30",height="30")
+          .col-xs-11
+            .row
+              .col-xs-12
+                span {{note.submittedBy}} -
+                span(data-time-ago="note.createdAt",time-ago-prefix="posted") 
+            .row
+              .col-xs-12
+                | {{queue.friendlySummary(note)}}
+          //.row
             .col-xs-6
               | {{note.submittedBy}}
             .col-xs-6
               span(data-time-ago="note.createdAt",time-ago-prefix="Posted")
-          .row
+          //.row
             .col-xs-12
               | {{queue.friendlySummary(note)}}
     .row    

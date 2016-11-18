@@ -362,14 +362,28 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div data-ng-if="vm.notes.length &gt; 0" class="col-xs-12"><span class="fa fa-fw fa-comment-o"></span><a href="" data-ng-click="vm.toggleNotes()">&nbsp;Notes ({{vm.notes.length}})<span data-ng-class="{\'fa-caret-right\': !vm.showNotes, \'fa-caret-down\': vm.showNotes}" class="fa fa-fw"></span></a>\n' +
-    '        <div data-ng-if="vm.showNotes" data-ng-repeat="note in vm.notes | orderBy:\'-updatedAt\'" class="row-note">\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-6">{{note.submittedBy}}</div>\n' +
-    '            <div class="col-xs-6"><span data-time-ago="note.createdAt" time-ago-prefix="Posted"></span></div>\n' +
+    '        <div data-ng-if="vm.showNotes" data-ng-repeat="note in vm.notes | orderBy:\'-updatedAt\'" class="row row-note">\n' +
+    '          <div class="col-xs-1">\n' +
+    '            <gravatar email="{{note.createdBy}}" width="30" height="30" class="center-block img-circle"></gravatar>\n' +
     '          </div>\n' +
-    '          <div class="row">\n' +
-    '            <div class="col-xs-12">{{queue.friendlySummary(note)}}</div>\n' +
+    '          <div class="col-xs-11">\n' +
+    '            <div class="row">\n' +
+    '              <div class="col-xs-12"><span>{{note.submittedBy}} -</span><span data-time-ago="note.createdAt" time-ago-prefix="posted"> </span></div>\n' +
+    '            </div>\n' +
+    '            <div class="row">\n' +
+    '              <div class="col-xs-12">{{queue.friendlySummary(note)}}</div>\n' +
+    '            </div>\n' +
     '          </div>\n' +
+    '          <!--.row\n' +
+    '          .col-xs-6\n' +
+    '            | {{note.submittedBy}}\n' +
+    '          .col-xs-6\n' +
+    '            span(data-time-ago="note.createdAt",time-ago-prefix="Posted")\n' +
+    '          -->\n' +
+    '          <!--.row\n' +
+    '          .col-xs-12\n' +
+    '            | {{queue.friendlySummary(note)}}\n' +
+    '          -->\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -482,7 +496,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('queue/queue.work.tpl.html',
     '\n' +
     '<div class="panel panel-default row-cards">\n' +
-    '  <div class="panel-heading">Working&hellip;\n' +
+    '  <div class="panel-heading">{{vm.isReviewing() ? \'Reviewing\' : \'Working\'}}&hellip;\n' +
     '    <button data-ui-sref="queue.by.details.summary" class="pull-right btn btn-xs btn-default"><span class="fa fa-fw fa-times"></span></button>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
