@@ -1,6 +1,6 @@
 .panel.panel-default.row-cards
   .panel-heading
-    | Working&hellip;
+    | {{vm.isReviewing() ? 'Reviewing' : 'Working'}}&hellip;
     button.pull-right.btn.btn-xs.btn-default(data-ui-sref="queue.by.details.summary")
       span.fa.fa-fw.fa-times
   .panel-body

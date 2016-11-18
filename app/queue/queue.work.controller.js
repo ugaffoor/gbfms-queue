@@ -15,6 +15,10 @@
       return vm.isLoading;
     };
 
+    vm.isReviewing = function() {
+      return item.coreState === 'Closed' || item.coreState === 'Submitted';
+    };
+
     var details = $scope.details;
 
     activate();
@@ -26,7 +30,7 @@
 
       var itemPath = Bundle.spaceLocation() + '/submissions/' + item.id;
 
-      if(item.coreState === 'Closed' || item.coreState === 'Submitted') {
+      if(vm.isReviewing()) {
         itemPath += '?review';
       }
 
