@@ -11,6 +11,7 @@
     var requiredAttributes = [
       { name:'Queue Name', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
+      { name: 'Queue Completed Value', allowsMutliple: false },
       { name: 'Queue Details Value', allowsMutliple: false },
       { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
@@ -23,6 +24,7 @@
 
     vm.queueNameAttribute = {};
     vm.queueSetupVisibleAttribute = {};
+    vm.queueCompletedAttribute = {};
     vm.queueDetailsAttribute = {};
     vm.queueFilterAttribute = {};
     vm.queueDefaultGroup = {};
@@ -213,7 +215,7 @@
       // If there were any missing attributes...
       if(vm.missingAttributes.length > 0) {
         var promises = _.map(vm.missingAttributes, function(attributeDefinition) {
-          return createAttributeDefinition(attributeDefinition)
+          return createAttributeDefinition(attributeDefinition);
         });
         $q.all(promises).then(
           function() {
@@ -224,7 +226,7 @@
             Toast.error('Failed to create missing attribute definitions.');
             deferred.reject();
           }
-        )
+        );
       } else {
         deferred.resolve(true);
       }
@@ -408,6 +410,11 @@
         vm.currentKapp.attributes.push(vm.queueSetupVisibleAttribute);
       } else {
         vm.queueSetupVisibleAttribute.values[0] = ''+vm.queueSetupVisibleAttribute.values[0];
+      }
+      vm.queueCompletedAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Completed Value'});
+      if(_.isEmpty(vm.queueCompletedAttribute)) {
+        vm.queueCompletedAttribute = { name: 'Queue Completed Value', values: [''] };
+        vm.currentKapp.attributes.push(vm.queueCompletedAttribute);
       }
       vm.queueDetailsAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Details Value'});
       if(_.isEmpty(vm.queueDetailsAttribute)) {

@@ -87,6 +87,10 @@
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
+    .row(data-ng-if="queue.hasCompleted(vm.item) && !details.isOpen()")
+      .col-xs-12
+        h5.item-header Resolution
+        .well.well-details {{queue.friendlyCompleted(vm.item)}}
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-12
         button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It

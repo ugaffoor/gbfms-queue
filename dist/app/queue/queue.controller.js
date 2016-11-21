@@ -1,12 +1,12 @@
 (function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "filters", "queueName", "queueDetailsValue", "queueSummaryValue", "AssignmentService", "Bundle", "$interval", "$rootScope", "$scope", "$state"];
+  QueueController.$inject = ["currentKapp", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "$interval", "$rootScope", "$scope", "$state"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
+  function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
@@ -19,6 +19,8 @@
     queue.friendlyAssignedGroup = friendlyAssignedGroup;
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
+    queue.friendlyCompleted = friendlyCompleted;
+    queue.hasCompleted = hasCompleted;
     queue.hasDetails = hasDetails;
     queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
@@ -38,6 +40,14 @@
 
     function hasDetails(item) {
       return !_.isEmpty(item.values[queueDetailsValue]);
+    }
+
+    function friendlyCompleted(item) {
+      return item.values[queueCompletedValue] || '';
+    }
+
+    function hasCompleted(item) {
+      return !_.isEmpty(item.values[queueCompletedValue]);
     }
 
     function friendlySummary(item) {

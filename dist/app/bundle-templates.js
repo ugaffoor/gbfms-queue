@@ -397,6 +397,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div class="well well-details">{{queue.friendlyDetails(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
+    '    <div data-ng-if="queue.hasCompleted(vm.item) &amp;&amp; !details.isOpen()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <h5 class="item-header">Resolution</h5>\n' +
+    '        <div class="well well-details">{{queue.friendlyCompleted(vm.item)}}</div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '    <div data-ng-if="!details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
@@ -611,6 +617,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="form-group">\n' +
     '        <label class="control-label">Queue Details Value</label>\n' +
     '        <input type="text" data-ng-model="vm.queueDetailsAttribute.values[0]" placeholder="The name of the value to display in the details area." class="form-control"/>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="col-xs-6">\n' +
+    '      <div class="form-group">\n' +
+    '        <label class="control-label">Queue Completed Value</label>\n' +
+    '        <input type="text" data-ng-model="vm.queueCompletedAttribute.values[0]" placeholder="The name of the value to display when the item is completed." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +

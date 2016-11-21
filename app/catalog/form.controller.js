@@ -6,7 +6,7 @@
     .controller('FormController', FormController);
 
   /* @ngInject */
-  function FormController(kappSlug, form, $window, $state, $scope, $timeout) {
+  function FormController(kappSlug, form, Bundle, $state, $scope, $timeout) {
     var vm = this;
     // MEMBERS
     vm.form = form;
@@ -15,7 +15,7 @@
     activate();
 
     function activate() {
-      var formPath = $window.KD.base + '/' + kappSlug + '/' + form.slug;
+      var formPath = Bundle.kappLocation()  + '/' + form.slug;
 
       K.reset();
       K.load({

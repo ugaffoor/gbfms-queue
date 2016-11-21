@@ -30,6 +30,10 @@
           var queueNameAttribute = kappConfigResolver('Queue Name');
           return queueNameAttribute.values[0];
         },
+        queueCompletedValue: function(kappConfigResolver) {
+          var queueNameAttribute = kappConfigResolver('Queue Completed Value');
+          return queueNameAttribute.values[0];
+        },
         queueSetupVisible: function(kappConfigResolver) {
           var queueSetupVisibleAttribute = kappConfigResolver('Queue Setup Visible');
           return queueSetupVisibleAttribute.values[0];
