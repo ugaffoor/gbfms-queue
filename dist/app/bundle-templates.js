@@ -158,14 +158,17 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('layout/layout.public.tpl.html',
     '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a data-ui-sref="loggingIn" data-ui-sref-opts="{reload:true}" class="navbar-brand">{{layout.kappName}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse"></div>\n' +
-    '  </div>\n' +
-    '</nav>\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
     '<main>\n' +
     '  <div data-ui-view="" class="container"></div>\n' +
     '</main>');
