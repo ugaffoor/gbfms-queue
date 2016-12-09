@@ -48,3 +48,7 @@ div
   .row
     .col-xs-12
       p.well-details {{queue.friendlySummary(queueItem)}}
+  .row(data-ng-if="queue.hasCompleted(queueItem) && !isListView() && !details.isOpen()")
+    .col-xs-12
+      h5.item-header Resolution
+      .well.well-details {{queue.friendlyCompleted(queueItem)}}

@@ -81,7 +81,7 @@
           //.row
             .col-xs-12
               | {{queue.friendlySummary(note)}}
-    .row    
+    .row
       .col-xs-12
         .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")
@@ -97,9 +97,8 @@
     .row
       .col-xs-12
         div(data-ui-view="")
-    .row(data-ng-if="details.isMine()") 
-      // && !vm.inSubtasks() && !vm.inWorkOrReview()")
-      div(data-ng-class="{'col-xs-9': details.canHaveSubtasks(), 'col-xs-12': !details.canHaveSubtasks()}")
+    .row(data-ng-if="details.isMine()")
+      div(data-ng-class="{'col-xs-9': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-12': (!details.canHaveSubtasks() || !details.isOpen())}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="!details.isOpen()") Review It
           div(data-ng-if="details.isOpen()") Work It
@@ -111,15 +110,6 @@
           ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
-    //.row
-      .col-xs-12
-        div(data-ui-view="")
-  
-//.row.row-cards(data-ng-if="vm.item.parent")
-  .col-xs-12
-    h5.item-header Created From
-    .panel.panel-card(data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})")
-      queue-card(data-queue-item="vm.item.parent")
 .row.row-cards(data-ng-if="vm.relatedItems.length > 0")
   .col-xs-12
     h5.item-header Related Items
