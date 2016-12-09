@@ -25,10 +25,6 @@
     activate();
 
     function activate() {
-      if(!details.isMine()) {
-        return;
-      }
-
       var itemPath = Bundle.spaceLocation() + '/submissions/' + item.id;
 
       if(vm.isReviewing()) {

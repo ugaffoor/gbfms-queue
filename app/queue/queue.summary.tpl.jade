@@ -97,11 +97,11 @@
     .row
       .col-xs-12
         div(data-ui-view="")
-    .row(data-ng-if="details.isMine()")
+    .row
       div(data-ng-class="{'col-xs-9': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-12': (!details.canHaveSubtasks() || !details.isOpen())}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="!details.isOpen()") Review It
-          div(data-ng-if="details.isOpen()") Work It
+          div(data-ng-if="details.isMine() && details.isOpen()") Work It
       .col-xs-3(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
         div(uib-dropdown="")
           button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",uib-dropdown-toggle="") 

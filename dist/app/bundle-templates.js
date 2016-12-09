@@ -422,11 +422,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div data-ui-view=""></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div data-ng-if="details.isMine()" class="row">\n' +
+    '    <div class="row">\n' +
     '      <div data-ng-class="{\'col-xs-9\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-12\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
     '          <div data-ng-if="!details.isOpen()">Review It</div>\n' +
-    '          <div data-ng-if="details.isOpen()">Work It</div>\n' +
+    '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Work It</div>\n' +
     '        </button>\n' +
     '      </div>\n' +
     '      <div data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" class="col-xs-3">\n' +
@@ -503,9 +503,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <button data-ui-sref="queue.by.details.summary" class="pull-right btn btn-xs btn-default"><span class="fa fa-fw fa-times"></span></button>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
-    '    <div data-ng-if="!details.isMine()">\n' +
-    '      <h4>This item is not assigned to you.</h4>\n' +
-    '    </div>\n' +
     '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
