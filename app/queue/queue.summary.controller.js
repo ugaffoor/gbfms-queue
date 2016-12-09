@@ -76,6 +76,7 @@
     function memberSelected(member) {
       vm.isLoading = true;
       delete vm.item.currentPage;
+      delete vm.item.coreState;
       vm.item.values['Assigned Individual'] = member;
       vm.item.values['Assigned Individual Display Name'] = member;
 
@@ -117,9 +118,9 @@
 
     function groupSelected(group) {
       vm.isLoading = true;
+
       delete vm.item.currentPage;
-
-
+      delete vm.item.coreState;
       vm.item.values['Assigned Group'] = AssignmentService.withRoot(group.group);
       vm.item.values['Assigned Individual'] = '';
       vm.item.values['Assigned Individual Display Name'] = '';

@@ -116,6 +116,9 @@
             // don't actually care about sending it since we don't want to change
             // what page we're on. So just remove it.
             delete item.currentPage;
+            // Even though we're not actually changing the coreState the server will
+            // not allow individuals who are not space admins to send this property.
+            delete item.coreState;
 
             // Save the submission with the new assignment information.
             item.put().then(
