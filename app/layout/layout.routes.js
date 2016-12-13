@@ -55,18 +55,11 @@
           return KappModel.build().one(kappSlug).get({include:'details,attributes'});
         },
         currentUser: function($http, $q, Bundle) {
-          var deferred = $q.defer();
-
-          $http.get(Bundle.apiLocation() + '/me').then(
+          return $http.get(Bundle.apiLocation() + '/me').then(
             function(response) {
-              deferred.resolve(response.data);
-            },
-            function(error) {
-              deferred.reject(error);
+              return response.data;
             }
           );
-
-          return deferred.promise;
         },
 
         // These helpers are used by the "setup" in the kapp feature.

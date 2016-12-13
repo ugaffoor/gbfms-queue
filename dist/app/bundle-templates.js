@@ -422,10 +422,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div data-ui-view=""></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div class="row">\n' +
+    '    <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
     '      <div data-ng-class="{\'col-xs-9\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-12\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
-    '          <div data-ng-if="!details.isOpen()">Review It</div>\n' +
     '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Work It</div>\n' +
     '        </button>\n' +
     '      </div>\n' +
@@ -439,6 +438,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '            <li role="menuitem" data-ng-repeat="task in vm.subtasks"><a data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})">{{task.name}}</a></li>\n' +
     '          </ul>\n' +
     '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div data-ng-if="!details.isOpen()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">Review It</button>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +

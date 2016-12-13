@@ -97,10 +97,9 @@
     .row
       .col-xs-12
         div(data-ui-view="")
-    .row
+    .row(data-ng-if="details.isMine() && details.isOpen()")
       div(data-ng-class="{'col-xs-9': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-12': (!details.canHaveSubtasks() || !details.isOpen())}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
-          div(data-ng-if="!details.isOpen()") Review It
           div(data-ng-if="details.isMine() && details.isOpen()") Work It
       .col-xs-3(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
         div(uib-dropdown="")
@@ -110,6 +109,9 @@
           ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
+    .row(data-ng-if="!details.isOpen()")
+      .col-xs-12
+        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work") Review It
 .row.row-cards(data-ng-if="vm.relatedItems.length > 0")
   .col-xs-12
     h5.item-header Related Items
