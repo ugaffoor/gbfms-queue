@@ -68,8 +68,9 @@
           .col-xs-11
             .row
               .col-xs-12
-                span {{note.submittedBy}} -
-                span(data-time-ago="note.createdAt",time-ago-prefix="posted") 
+                span
+                  strong {{note.submittedBy}}&nbsp;
+                span(data-time-ago="note.createdAt",time-ago-prefix="-")
             .row
               .col-xs-12
                 | {{queue.friendlySummary(note)}}

@@ -377,7 +377,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          </div>\n' +
     '          <div class="col-xs-11">\n' +
     '            <div class="row">\n' +
-    '              <div class="col-xs-12"><span>{{note.submittedBy}} -</span><span data-time-ago="note.createdAt" time-ago-prefix="posted"> </span></div>\n' +
+    '              <div class="col-xs-12"><span><strong>{{note.submittedBy}}&nbsp;</strong></span><span data-time-ago="note.createdAt" time-ago-prefix="-"></span></div>\n' +
     '            </div>\n' +
     '            <div class="row">\n' +
     '              <div class="col-xs-12">{{queue.friendlySummary(note)}}</div>\n' +
