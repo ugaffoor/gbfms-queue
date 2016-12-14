@@ -56,7 +56,7 @@
           AssignmentService.setAdminKapp(adminKapp.values[0]);
           return adminKapp.values[0];
         },
-        filters: function(kappConfigResolver) {
+        filters: function(kappConfigResolver, currentUser) {
           // Fetch the attribute
           var queueFilterAttribute = kappConfigResolver('Queue Filters');
           // If it's not defined we want it to work as if there are no filters.
@@ -76,7 +76,39 @@
 
           queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
 
-          return queueFilterAttribute.values;
+          var filters = _.cloneDeep(queueFilterAttribute.values);
+          var groupAttribute = _.find(currentUser.attributes, {name: 'Group'});
+          var groupOrder = filters.length;
+          if(groupAttribute) {
+            _.each(groupAttribute.values, function(group) {
+              var groupFilter = {
+                name: group,
+                order: groupOrder,
+                qualifications: [
+                  {
+                    field: 'values[Status]',
+                    value: '${openStatuses}'
+                  },
+                  {
+                    field: 'values[Assigned Group]',
+                    value: group
+                  }
+                ]
+              };
+              filters.push(groupFilter);
+              groupOrder++;
+            });
+          }
+
+          if(currentUser.spaceAdmin) {
+            filters.push({
+              name: 'All',
+              order: filters.length,
+              qualifications: [
+              ]
+            });
+          }
+          return filters;
         },
         forms: function(currentKapp, Form) {
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});

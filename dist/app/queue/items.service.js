@@ -25,6 +25,17 @@
             searcher.eq(qualification.field, status);
           });
           searcher.end();
+        } else if(qualification.value === '${myGroups}') {
+          var groupsAttribute = _.find(user.attributes, { name: 'Group'});
+          var groups = (groupsAttribute ? groupsAttribute.values : []);
+
+          if(groups.length > 0) {
+            searcher.or();
+            _.each(groups, function(group) {
+              searcher.eq(qualification.field, group);
+            });
+            searcher.end();
+          }
         } else {
           var rval = qualification.value;
           var lval = qualification.field;
