@@ -1,12 +1,12 @@
 (function() {
   'use strict';
 
-  timeAgo.$inject = ["moment", "$interval"];
-  angular
-    .module('kd.core')
-    .directive('timeAgo', timeAgo);
+  // angular
+  //   .module('kd.core')
+  //   .directive('timeAgo', timeAgo);
 
   /* @ngInject */
+  timeAgo.$inject = ["moment", "$interval"];
   function timeAgo(moment, $interval) {
     // Usage:
     // <span data-time-ago='submission.submittedAt'></span>

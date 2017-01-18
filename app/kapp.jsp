@@ -31,6 +31,15 @@
 
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
+    <c:if test="${not empty responseServerPath}">
+      <script src="${responseServerPath}/assets/response_bundle.js"></script>
+      <script>
+       bundle = bundle || {};
+       bundle.config = bundle.config || {};
+       bundle.config.queue = { response: true }
+      </script>
+    </c:if>
+    
     <!-- inject:js -->
     <!-- endinject -->
 

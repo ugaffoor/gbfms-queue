@@ -206,50 +206,57 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('queue/queue.card.tpl.html',
     '\n' +
     '<div>\n' +
-    '  <h5>{{queueItem.label}} <span data-ng-if="!isSummary()" class="pull-right">({{queue.friendlyStatus(queueItem)}})</span></h5>\n' +
-    '  <div class="row">\n' +
-    '    <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.createdAt" time-ago-prefix="Created"> </span></div>\n' +
+    '  <div data-ng-if="isResponse()" style="margin: 1em;">\n' +
+    '    <response-server base="responseServer" watch-issue="queueItem.values[\'Response GUID\']">\n' +
+    '      <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser"></issue-summary>\n' +
+    '    </response-server>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="!isSummary()" class="row">\n' +
-    '    <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!isSummary()" class="row">\n' +
-    '    <div class="col-xs-12"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
-    '    <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '      <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '  <div data-ng-if="!isResponse()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
+    '    <h5>{{queueItem.label}}&nbsp;<span data-ng-if="!isSummary()" class="pull-right">({{queue.friendlyStatus(queueItem)}})</span></h5>\n' +
+    '    <div class="row">\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.createdAt" time-ago-prefix="Created"></span></div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row hidden-md hidden-lg">\n' +
-    '    <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '      <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary()" class="row">\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
-    '    <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '      <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary()" class="row">\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
-    '    <div class="col-xs-12">\n' +
-    '      <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="isSummary()" class="row">\n' +
-    '    <div class="col-xs-12">\n' +
-    '      <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row hidden-md hidden-lg">\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div class="row">\n' +
-    '    <div class="col-xs-12">\n' +
-    '      <p class="well-details">{{queue.friendlySummary(queueItem)}}</p>\n' +
+    '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="queue.hasCompleted(queueItem) &amp;&amp; !isListView() &amp;&amp; !details.isOpen()" class="row">\n' +
-    '    <div class="col-xs-12">\n' +
-    '      <h5 class="item-header">Resolution</h5>\n' +
-    '      <div class="well well-details">{{queue.friendlyCompleted(queueItem)}}</div>\n' +
+    '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div data-ng-if="isSummary()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <p class="well-details">{{queue.friendlySummary(queueItem)}}</p>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div data-ng-if="queue.hasCompleted(queueItem) &amp;&amp; !isListView() &amp;&amp; !details.isOpen()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <h5 class="item-header">Resolution</h5>\n' +
+    '        <div class="well well-details">{{queue.friendlyCompleted(queueItem)}}</div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
@@ -450,31 +457,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div data-ng-if="vm.relatedItems.length &gt; 0" class="row row-cards">\n' +
     '  <div class="col-xs-12">\n' +
     '    <h5 class="item-header">Related Items</h5>\n' +
-    '    <div data-ng-repeat="child in vm.relatedItems | orderBy:\'-updatedAt\'" data-ui-sref="queue.by.details.summary({itemId: child.id})" class="row">\n' +
+    '    <div data-ng-repeat="child in vm.relatedItems | orderBy:\'-updatedAt\'" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
-    '          <queue-card data-queue-item="child"></queue-card>\n' +
+    '          <queue-card data-queue-item="child" data-response-server="vm.responseServer"></queue-card>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('queue/queue.tasks.tpl.html',
-    '\n' +
-    '<div class="panel panel-primary">\n' +
-    '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">\n' +
-    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}}\n' +
-    '    </h5>\n' +
-    '  </div>\n' +
-    '  <div class="panel-body">\n' +
-    '    <div data-ng-if="!details.isMine()">\n' +
-    '      <h4>Current {{queue.queueType}} is not assigned to you.</h4><a data-ng-click="details.grabIt()" class="btn btn-block btn-primary">Grab It</a>\n' +
-    '    </div>\n' +
-    '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -629,6 +618,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="form-group">\n' +
     '        <label class="control-label">Queue Summary Value</label>\n' +
     '        <input type="text" data-ng-model="vm.queueSummaryAttribute.values[0]" placeholder="The name of the value to display in the summary in the list." class="form-control"/>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="col-xs-6">\n' +
+    '      <div class="form-group">\n' +
+    '        <label class="control-label">Queue Response Server</label>\n' +
+    '        <input type="text" data-ng-model="vm.queueResponseServer.values[0]" placeholder="The URL of the Response Server that Queue will use for converations." class="form-control"/>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +

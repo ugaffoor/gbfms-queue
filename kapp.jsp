@@ -35,6 +35,15 @@
 
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
+    <c:if test="${not empty responseServerPath}">
+      <script src="${responseServerPath}/assets/response_bundle.js"></script>
+      <script>
+       bundle = bundle || {};
+       bundle.config = bundle.config || {};
+       bundle.config.queue = { response: true }
+      </script>
+    </c:if>
+    
     <!-- inject:js -->
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
@@ -75,6 +84,8 @@
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
@@ -84,13 +95,11 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>

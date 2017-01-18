@@ -48,9 +48,13 @@
           return queueSummaryAttribute.values[0];
         }],
         queueGroupBase: ["kappConfigResolver", "AssignmentService", function(kappConfigResolver, AssignmentService) {
-          var queueGroupBase = kappConfigResolver('Queue Group Base');
+          var queueGroupBase = kappConfigResolver('Queue Group Base', false);
           AssignmentService.setAssignmentBase(queueGroupBase.values[0]);
           return queueGroupBase.values[0];
+        }],
+        queueResponseServer: ["kappConfigResolver", function(kappConfigResolver) {
+          var queueResponseServer = kappConfigResolver('Queue Response Server', false);
+          return queueResponseServer.values[0];
         }],
         adminKapp: ["spaceConfigResolver", "AssignmentService", function(spaceConfigResolver, AssignmentService) {
           var adminKapp = spaceConfigResolver('Admin Kapp Slug');

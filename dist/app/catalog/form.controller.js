@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  FormController.$inject = ["kappSlug", "form", "$window", "$state", "$scope", "$timeout"];
+  FormController.$inject = ["kappSlug", "form", "Bundle", "$state", "$scope", "$timeout"];
   angular
     .module('kd.bundle.angular.catalog')
     .controller('FormController', FormController);
 
   /* @ngInject */
-  function FormController(kappSlug, form, $window, $state, $scope, $timeout) {
+  function FormController(kappSlug, form, Bundle, $state, $scope, $timeout) {
     var vm = this;
     // MEMBERS
     vm.form = form;
@@ -16,7 +16,7 @@
     activate();
 
     function activate() {
-      var formPath = $window.KD.base + '/' + kappSlug + '/' + form.slug;
+      var formPath = Bundle.kappLocation()  + '/' + form.slug;
 
       K.reset();
       K.load({

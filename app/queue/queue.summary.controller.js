@@ -6,7 +6,7 @@
     .controller('QueueSummaryController', QueueSummaryController);
 
   /* @ngInject */
-  function QueueSummaryController(item, subtasks, notes, relatedItems, AssignmentService, Bundle, Toast, $scope, $state, $timeout) {
+  function QueueSummaryController(item, subtasks, notes, relatedItems, queueResponseServer, AssignmentService, Bundle, Toast, $scope, $state, $timeout) {
     var vm = this;
     var layout = $scope.layout;
     var details = $scope.details;
@@ -21,6 +21,7 @@
     vm.membersForGroup = [];
     vm.subtasks = subtasks;
     vm.showNotes = false;
+    vm.responseServer = queueResponseServer;
 
     // METHODS
     vm.grabIt = grabIt;

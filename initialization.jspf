@@ -52,4 +52,7 @@
    request.setAttribute("footerBundlePath", footerBundlePath);
    request.setAttribute("footerPath", space.getBundleBase() + "/" + footerBundlePath);
    request.setAttribute("footerLocation", contextPath + space.getBundleBase() + "/" + footerBundlePath);
+
+   String responseServerPath = kapp != null && kapp.hasAttribute("Queue Response Server") ? kapp.getAttributeValue("Queue Response Server") : "";
+   request.setAttribute("responseServerPath", responseServerPath);
 %>

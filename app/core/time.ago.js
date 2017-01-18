@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  angular
-    .module('kd.core')
-    .directive('timeAgo', timeAgo);
+  // angular
+  //   .module('kd.core')
+  //   .directive('timeAgo', timeAgo);
 
   /* @ngInject */
   function timeAgo(moment, $interval) {

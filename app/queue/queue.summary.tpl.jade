@@ -116,7 +116,7 @@
 .row.row-cards(data-ng-if="vm.relatedItems.length > 0")
   .col-xs-12
     h5.item-header Related Items
-    .row(data-ng-repeat="child in vm.relatedItems | orderBy:'-updatedAt'",data-ui-sref="queue.by.details.summary({itemId: child.id})")
+    .row(data-ng-repeat="child in vm.relatedItems | orderBy:'-updatedAt'")
       .col-xs-12
         .panel.panel-card
-          queue-card(data-queue-item="child")
+          queue-card(data-queue-item="child", data-response-server="vm.responseServer")

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('kd.bundle.angular', [
+  var modules = [
     'kd.core',
     'kd.core.authentication',
     'kd.core.models',
@@ -14,7 +14,12 @@
     'kd.bundle.angular.catalog',
     'kd.bundle.angular.queue',
     'kd.bundle.angular.queue.setup'
-  ]).run(["$rootScope", "$state", function($rootScope, $state) {
+  ];
+
+  if(bundle.config.queue.response) {
+    modules.push('kd.response');
+  }
+  angular.module('kd.bundle.angular', modules).run(["$rootScope", "$state", function($rootScope, $state) {
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
       if(error.status != 401) {
         $state.go('error.system');

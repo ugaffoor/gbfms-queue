@@ -82,9 +82,13 @@
           };
         },
         kappConfigResolver: function(currentUser, currentKapp, $state) {
-          return function(attributeKey) {
+          return function(attributeKey, shouldFail) {
+            if(typeof shouldFail !== 'boolean') {
+              shouldFail = true;
+            }
+
             var attribute = _.find(currentKapp.attributes, {name:attributeKey});
-            if(_.isEmpty(attribute) || _.isEmpty(attribute.values)) {
+            if(shouldFail && (_.isEmpty(attribute) || _.isEmpty(attribute.values))) {
               if(currentUser.spaceAdmin) {
                 console.log('Missing attribute: ' + attributeKey)
                 $state.go('setup');
