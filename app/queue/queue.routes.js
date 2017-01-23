@@ -53,6 +53,9 @@
         },
         queueResponseServer: function(kappConfigResolver) {
           var queueResponseServer = kappConfigResolver('Queue Response Server', false);
+          if(angular.isUndefined(queueResponseServer)) {
+            return '';
+          }
           return queueResponseServer.values[0];
         },
         adminKapp: function(spaceConfigResolver, AssignmentService) {

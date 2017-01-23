@@ -16,7 +16,7 @@
     'kd.bundle.angular.queue.setup'
   ];
 
-  if(bundle.config.queue.response) {
+  if(bundle && bundle.config && bundle.config.queue && bundle.config.queue.response) {
     modules.push('kd.response');
   }
   angular.module('kd.bundle.angular', modules).run(function($rootScope, $state) {
