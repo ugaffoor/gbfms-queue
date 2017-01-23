@@ -151,7 +151,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('layout/layout.protected.tpl.html',
     '\n' +
     '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
+    '  <div data-ui-view="" class="container-fluid"></div>\n' +
     '</main>');
 }]);
 
