@@ -1,12 +1,15 @@
 (function() {
   'use strict';
 
-  // angular
-  //   .module('kd.core')
-  //   .directive('timeAgo', timeAgo);
+  // If Response is not enabled, then include this directive, since the names collide right now.
+  timeAgo.$inject = ["moment", "$interval"];
+  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.response)) {
+    angular
+      .module('kd.core')
+      .directive('timeAgo', timeAgo);
+  }
 
   /* @ngInject */
-  timeAgo.$inject = ["moment", "$interval"];
   function timeAgo(moment, $interval) {
     // Usage:
     // <span data-time-ago='submission.submittedAt'></span>
