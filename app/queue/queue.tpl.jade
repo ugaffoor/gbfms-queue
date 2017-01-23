@@ -2,7 +2,7 @@
   .col-xs-12
     select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
 .row
-  .col-xs-2.hidden-xs(fixed-height="")
+  .col-xs-2.hidden-xs(fixed-height="",fh-bottom-pad="70")
     ul.nav.nav-pills.nav-stacked
       li(data-ng-repeat="filter in queue.filters",data-ng-class="{'active': queue.filterName === filter.name}")
         a.ellipsis(href="",data-ui-sref="queue.by({filterName: filter.name})", data-ui-sref-opts="{reload:true}") 
