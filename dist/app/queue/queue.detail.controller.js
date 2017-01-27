@@ -10,6 +10,7 @@
   function QueueDetailController(item, AssignmentService, Toast, $state, $scope) {
     var list = $scope.list;
     var layout = $scope.layout;
+    var queue = $scope.queue;
     var vm = this;
 
     vm.item = item;
@@ -24,7 +25,7 @@
     activate();
 
     function activate() {
-      list.hideList();
+      queue.showDetails();
       list.activeItem = item.id;
     }
 

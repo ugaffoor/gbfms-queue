@@ -65,26 +65,18 @@
           return adminKapp.values[0];
         }],
         filters: ["kappConfigResolver", "currentUser", function(kappConfigResolver, currentUser) {
-          // Fetch the attribute
-          var queueFilterAttribute = kappConfigResolver('Queue Filters');
-          // If it's not defined we want it to work as if there are no filters.
-          if(typeof queueFilterAttribute === 'undefined') {
-            queueFilterAttribute = {
-              name: 'Queue Filters',
-              values: []
-            };
-          }
-
-          queueFilterAttribute.values = _.map(queueFilterAttribute.values, function(filter) {
-            if(typeof filter === 'string') {
-                return JSON.parse(filter);
+          var filters = [
+            {
+              name: 'Mine',
+              qualifications: [
+                {
+                  field: 'values[Assigned Individual]',
+                  value: '${me}'
+                }
+              ]
             }
-            return filter;
-          });
+          ];
 
-          queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
-
-          var filters = _.cloneDeep(queueFilterAttribute.values);
           var groupAttribute = _.find(currentUser.attributes, {name: 'Group'});
           var groupOrder = filters.length;
           if(groupAttribute) {
@@ -93,10 +85,6 @@
                 name: group,
                 order: groupOrder,
                 qualifications: [
-                  {
-                    field: 'values[Status]',
-                    value: '${openStatuses}'
-                  },
                   {
                     field: 'values[Assigned Group]',
                     value: group
@@ -116,7 +104,61 @@
               ]
             });
           }
+
           return filters;
+
+          // // Fetch the attribute
+          // var queueFilterAttribute = kappConfigResolver('Queue Filters');
+          // // If it's not defined we want it to work as if there are no filters.
+          // if(typeof queueFilterAttribute === 'undefined') {
+          //   queueFilterAttribute = {
+          //     name: 'Queue Filters',
+          //     values: []
+          //   };
+          // }
+
+          // queueFilterAttribute.values = _.map(queueFilterAttribute.values, function(filter) {
+          //   if(typeof filter === 'string') {
+          //       return JSON.parse(filter);
+          //   }
+          //   return filter;
+          // });
+
+          // queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
+
+          // var filters = _.cloneDeep(queueFilterAttribute.values);
+          // var groupAttribute = _.find(currentUser.attributes, {name: 'Group'});
+          // var groupOrder = filters.length;
+          // if(groupAttribute) {
+          //   _.each(groupAttribute.values, function(group) {
+          //     var groupFilter = {
+          //       name: group,
+          //       order: groupOrder,
+          //       qualifications: [
+          //         {
+          //           field: 'values[Status]',
+          //           value: '${openStatuses}'
+          //         },
+          //         {
+          //           field: 'values[Assigned Group]',
+          //           value: group
+          //         }
+          //       ]
+          //     };
+          //     filters.push(groupFilter);
+          //     groupOrder++;
+          //   });
+          // }
+
+          // if(currentUser.spaceAdmin) {
+          //   filters.push({
+          //     name: 'All',
+          //     order: filters.length,
+          //     qualifications: [
+          //     ]
+          //   });
+          // }
+          // return filters;
         }],
         forms: ["currentKapp", "Form", function(currentKapp, Form) {
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});
@@ -132,7 +174,7 @@
     });
 
     $stateProvider.state('queue.by', {
-      url: '/filter/{filterName}',
+      url: '/filter/{filterName}/{filterType}',
       views: {
         '': {
           controller: 'QueueListController as list',
@@ -145,11 +187,68 @@
               }
               return filterName;
             }],
+            filterType: ["$stateParams", "filters", function($stateParams, filters) {
+              return $stateParams.filterType;
+            }],
             filter: ["filters", "filterName", function(filters, filterName) {
               return _.find(filters, {name: filterName});
             }],
-            items: ["Submission", "ItemsService", "currentKapp", "currentUser", "filter", function(Submission, ItemsService, currentKapp, currentUser, filter) {
-              return ItemsService.filter(currentKapp.slug, currentUser, filter);
+            openItems: ["Submission", "ItemsService", "currentKapp", "currentUser", "filter", function(Submission, ItemsService, currentKapp, currentUser, filter) {
+              var openQualification = {
+                field: 'values[Status]',
+                value: '${openStatuses}'
+              };
+              var effectiveFilter = _.cloneDeep(filter);
+              effectiveFilter.qualifications.push(openQualification);
+
+              return ItemsService.filter(currentKapp.slug, currentUser, effectiveFilter);
+            }],
+            items: ["$q", "Submission", "ItemsService", "currentKapp", "currentUser", "filter", "filterType", "openItems", function($q, Submission, ItemsService, currentKapp, currentUser, filter, filterType, openItems) {
+              var startDate = new Date();
+              var endDate = new Date();
+
+              // If the filter type is 'Open' we already calculate the open items and retrieved them.
+              if(filterType === 'Open') {
+                return $q.resolve(openItems);
+              }
+
+              var today = moment();
+              if(filterType === 'Backlog') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    var dueDate = moment(item.values['Due Date']);
+                    if(!dueDate.isValid()) return false;
+
+                    return dueDate.isBefore(today.startOf('day'));
+                  })
+                );
+              }
+
+              if(filterType === 'Due Today') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    var dueDate = moment(item.values['Due Date']);
+                    if(!dueDate.isValid()) return false;
+                    return dueDate.isSame(today.startOf('day'), 'd');
+                  })
+                );
+              }
+
+              // If it is not open then assume it is time-boxed.
+              if(filterType === 'Recent Hour') {
+                startDate.setHours(startDate.getHours() - 2);
+              } else {
+                startDate.setHours(startDate.getHours() - 24);
+              }
+
+              var effectiveFilter = _.cloneDeep(filter);
+              effectiveFilter.startDate = startDate;
+              effectiveFilter.endDate = endDate;
+
+              console.log(effectiveFilter);
+
+              // TODO use the filterType here.
+              return ItemsService.filter(currentKapp.slug, currentUser, effectiveFilter);
             }]
           }
         }

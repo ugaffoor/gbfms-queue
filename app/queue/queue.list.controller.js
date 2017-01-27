@@ -6,7 +6,7 @@
 
   /* @ngInject */
   function QueueListController(
-      currentKapp, currentUser, filter, filterName, items,
+    currentKapp, currentUser, filter, filterName, filterType, items, openItems,
       ItemsService,
       $scope, $state, $stateParams) {
     var list = this;
@@ -14,7 +14,6 @@
 
     list.currentKapp = currentKapp;
     list.loading = false;
-    list.hideOnXS = true;
     list.items = items;
     list.activeItem;
     list.nextPageToken = items.nextPageToken;
@@ -28,16 +27,17 @@
     list.isChildState = isChildState;
     list.isActiveItem = isActiveItem;
     list.selectItem = selectItem;
-    list.showList = showList;
-    list.hideList = hideList;
-    list.shouldHideList = shouldHideList;
 
     var queue = $scope.queue;
     queue.filterName = filterName;
+    queue.filterType = filterType;
+    queue.openItems = openItems;
 
     activate();
 
     function activate() {
+      queue.showList();
+      queue.populateStats();
       list.activeItem = null;
     }
 
@@ -52,23 +52,11 @@
 
     function selectItem(item) {
       if(isActiveItem(item)) {
-        list.hideList();
+        queue.xsView = 'details';
       } else {
         list.activeItem = item.id;
         $state.go('queue.by.details.summary', {itemId: item.id});
       }
-    }
-
-    function showList() {
-      list.hideOnXS = false;
-    }
-
-    function hideList() {
-      list.hideOnXS = true;
-    }
-
-    function shouldHideList() {
-      return list.hideOnXS && list.isChildState();
     }
 
     function nextPage() {

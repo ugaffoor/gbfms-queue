@@ -7,12 +7,17 @@
 
   /* @ngInject */
   function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
+    var STATE_MATCH = /queue\.by\./;
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
     queue.queueName = queueName;
     queue.filterName = '';
     queue.loading = false;
+    queue.hideListOnXS = true;
+    queue.hideFiltersOnXS = true;
+
+    queue.xsView = 'details';
 
     queue.changeFilter = changeFilter;
     queue.friendlyAssignedName = friendlyAssignedName;
@@ -27,6 +32,16 @@
     queue.isOverdue = isOverdue;
     queue.imagePath = imagePath;
     queue.filterChangeCount = filterChangeCount;
+    queue.isChildState = isChildState;
+
+    queue.shouldShowFilters = shouldShowFilters;
+    queue.shouldShowList = shouldShowList;
+    queue.shouldShowTeams = shouldShowTeams;
+    queue.showList = showList;
+    queue.showFilters = showFilters;
+    queue.showDetails = showDetails;
+
+    queue.populateStats = populateStats;
 
     activate();
 
@@ -36,6 +51,35 @@
 
     function friendlyDetails(item) {
       return item.values[queueDetailsValue] || '';
+    }
+
+    function isChildState() {
+      var currentState = $state.current.name;
+      return currentState.match(STATE_MATCH) !== null;
+    }
+
+    function shouldShowFilters() {
+      return queue.xsView === 'filters';
+    }
+
+    function shouldShowList() {
+      return queue.xsView === 'list' || !queue.isChildState();
+    }
+
+    function shouldShowTeams() {
+      return queue.filterName !== 'Mine' && queue.filterName !== 'All';
+    }
+
+    function showList() {
+      queue.xsView = 'list';
+    }
+
+    function showFilters() {
+      queue.xsView = 'filters';
+    }
+
+    function showDetails() {
+      queue.xsView = 'details';
     }
 
     function hasDetails(item) {
@@ -99,6 +143,27 @@
 
     function filterChangeCount(index) {
       return 42;
+    }
+
+    function populateStats() {
+      queue.stats = {
+        backlog: 0,
+        dueToday: 0,
+        totalOpen: queue.openItems.length
+      };
+
+      _.each(queue.openItems, function(item) {
+        // Check for a Due Date.
+        var dueDate = moment(item.values['Due Date']);
+        var today = moment();
+        if(dueDate.isValid()) {
+          if(dueDate.isSame(today.startOf('day'), 'd')) {
+            queue.stats.dueToday++;
+          } else if(dueDate.isBefore(today.startOf('day'))) {
+            queue.stats.backlog++;
+          }
+        }
+      });
     }
 
     function activate() {

@@ -1,12 +1,58 @@
-//.row.visible-xs(data-ng-if="queue.isListView()")
-  .col-xs-12
-    select.queue-dropdown.form-control.visible-xs(data-ng-options="filter.name as filter.name for filter in queue.filters",data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
 .row
-  .col-xs-2.hidden-xs(fixed-height="",fh-bottom-pad="70")
-    ul.nav.nav-pills.nav-stacked
+  .col-sm-2.col-xs-12(data-ng-class="{'hidden-xs': !queue.shouldShowFilters()}",fixed-height="",fh-bottom-pad="70")
+    button.btn.btn-primary.btn-xs.visible-xs(type="button",data-ng-click="queue.showList()")
+      span.fa.fa-mail-forward
+    .form-group
+      label #[strong Team:]
+      br
+      .btn-group(uib-dropdown="")
+        button.btn.btn-default(type="button",uib-dropdown-toggle="")
+          | {{queue.filterName || 'Choose Team'}}&nbsp;
+          span.caret
+        ul.dropdown-menu(uib-dropdown-menu,role="menu")
+          li(role="menuitem",data-ng-repeat="filter in queue.filters")
+            a(href="",data-ui-sref="queue.by({filterName: filter.name, filterType: 'Open'})", data-ui-sref-opts="{reload:true}") {{filter.name}}
+    .form-group
+      label #[strong Filter:]
+      br
+      .btn-group(uib-dropdown="")
+        button.btn.btn-default(type="button",uib-dropdown-toggle="")
+          | {{queue.filterType || 'Open'}}&nbsp;
+          span.caret
+        ul.dropdown-menu(uib-dropdown-menu,role="menu")
+          li(role="menuitem")
+            a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Open'})", data-ui-sref-opts="{reload:true}") Open
+            a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Due Today'})", data-ui-sref-opts="{reload:true}") Due Today
+            a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Backlog'})", data-ui-sref-opts="{reload:true}") Backlog
+            a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Hour'})", data-ui-sref-opts="{reload:true}") Recent Hour
+            a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Day'})", data-ui-sref-opts="{reload:true}") Recent Day
+
+    ul.list-unstyled
+      li
+        | Backlog&nbsp;
+        span.badge {{queue.stats.backlog}}
+      li
+        | Due Today&nbsp;
+        span.badge {{queue.stats.dueToday}}
+      li
+        | Total Open&nbsp;
+        span.badge {{queue.stats.totalOpen}}
+
+    .teams-container(data-ng-if="queue.shouldShowTeams()")
+      hr
+      h5 Teams
+
+      ul.list-unstyled
+        li
+          | Team Members:&nbsp;
+          span.badge 8
+        li
+          | Active Members:&nbsp;
+          span.badge 2
+    button.btn.btn-block.btn-success(type="button",data-ui-sref="queue.create") New 
+    //-ul.nav.nav-pills.nav-stacked
       li(data-ng-repeat="filter in queue.filters",data-ng-class="{'active': queue.filterName === filter.name}")
         a.ellipsis(href="",data-ui-sref="queue.by({filterName: filter.name})", data-ui-sref-opts="{reload:true}") 
           span {{filter.name}}
-          //span.pull-right.badge(data-ng-bind="queue.filterChangeCount()")
   .col-xs-12.col-sm-10
     div(data-ui-view="")

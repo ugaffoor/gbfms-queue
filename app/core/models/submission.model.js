@@ -233,7 +233,7 @@
 
       self.sortDirection = function(direction) {
         validateOuter('Sorting cannot be nested.');
-        if(direction !== 'ASC' || direction !== 'DESC') {
+        if(direction !== 'ASC' && direction !== 'DESC') {
           throw new Error('Invalid sort direction: ' + direction);
         }
 
@@ -251,6 +251,22 @@
         validateOuter('Core State cannot be nested');
         self.searchMeta.coreState = coreState;
         return self;
+      };
+
+      self.startDate = function(startDate) {
+        validateOuter('Start Date cannot be nested.');
+        if(!(startDate instanceof Date)) {
+          throw new Error('Start Date must be a Date object.');
+        }
+        self.searchMeta.start = startDate.toISOString();
+      };
+
+      self.endDate = function(endDate) {
+        validateOuter('End Date cannot be nested.');
+        if(!(endDate instanceof Date)) {
+          throw new Error('End Date must be a Date object.');
+        }
+        self.searchMeta.end = endDate.toISOString();
       };
 
       self.limit = function(limit) {

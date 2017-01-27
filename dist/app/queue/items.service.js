@@ -60,8 +60,20 @@
         searcher.pageToken(pageToken);
       }
 
+      if(itemFilter.startDate instanceof Date) {
+        console.log('start date')
+        searcher.startDate(itemFilter.startDate);
+      }
+
+      if(itemFilter.endDate instanceof Date) {
+        console.log('end date')
+        searcher.endDate(itemFilter.endDate);
+      }
+
       return searcher
-        .limit(5)
+        .sortBy('updatedAt')
+        .sortDirection('DESC')
+        .limit(1000)
         .includes(['values,details,form,form.attributes'])
         .execute();
     }
