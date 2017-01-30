@@ -12,10 +12,16 @@
     queue.filters = filters;
     queue.queueName = queueName;
     queue.filterName = '';
+    queue.FILTER_TYPES = [
+      'Open',
+      'Due Today',
+      'Backlog',
+      'Recent Hour',
+      'Recent Day'
+    ];
     queue.loading = false;
     queue.hideListOnXS = true;
     queue.hideFiltersOnXS = true;
-
     queue.xsView = 'details';
 
     queue.changeFilter = changeFilter;
@@ -66,7 +72,7 @@
     }
 
     function shouldShowTeams() {
-      return queue.filterName !== 'Mine' && queue.filterName !== 'All';
+      return queue.filterName && queue.filterName !== 'Mine' && queue.filterName !== 'All';
     }
 
     function showList() {

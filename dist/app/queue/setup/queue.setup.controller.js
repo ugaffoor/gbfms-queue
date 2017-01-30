@@ -9,14 +9,15 @@
   function QueueSetupController(currentKapp, kapps, AttributeDefinition, SpaceModel, Form, FormTypes, Toast, Slugifier, $uibModal, $q, $scope) {
     var vm = this;
     var requiredAttributes = [
-      { name:'Queue Name', allowsMutliple: false },
+      { name: 'Queue Name', allowsMutliple: false },
+      { name: 'Description', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
       { name: 'Queue Completed Value', allowsMutliple: false },
       { name: 'Queue Details Value', allowsMutliple: false },
       { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
       { name: 'Queue Setup Visible', allowsMultiple: false },
-      { name: 'Queue Response Server', allowsMultiple: false }
+      { name: 'Response Server Url', allowsMultiple: false }
     ];
 
     vm.currentKapp = currentKapp;
@@ -24,6 +25,7 @@
     vm.readyToEdit = false;
 
     vm.queueNameAttribute = {};
+    vm.descriptionAttribute = {};
     vm.queueSetupVisibleAttribute = {};
     vm.queueCompletedAttribute = {};
     vm.queueDetailsAttribute = {};
@@ -144,9 +146,9 @@
                           function() {
                             Toast.error('Failed to retrieve existing form when creating default templates.');
                           }
-                        )
+                        );
                       }, function() {
-                        Toast.error('Creating default forms failed!')
+                        Toast.error('Creating default forms failed!');
                       }
                     );
                   }
@@ -154,13 +156,13 @@
                 function() {
                   return $q.reject();
                 }
-              )
+              );
 
             },
             function() {
-              Toast.error('Failed to determine setup status!')
+              Toast.error('Failed to determine setup status!');
             }
-          )
+          );
         },
         // If the admin kapp check fails.
         function() {
@@ -272,7 +274,7 @@
             deferred.resolve();
           } else {
             var promises = _.map(templatesToCreate, function(templateSlug) {
-              return populateDefaultTemplate(templateSlug)
+              return populateDefaultTemplate(templateSlug);
             });
             $q.all(promises).then(
               function() {
@@ -281,7 +283,7 @@
               function() {
                 deferred.reject();
               }
-            )
+            );
           }
 
         },
@@ -337,7 +339,7 @@
       Form.build(vm.currentKapp.slug).getList().then(
         function(forms) {
           if(_.some(forms, {slug: vm.form.slug})) {
-            Toast.error('Form "'+vm.form.slug+'" already exists!')
+            Toast.error('Form "'+vm.form.slug+'" already exists!');
           } else {
             // Next get the form we'll be cloning.
             Form.build(currentKapp.slug).one(vm.formTemplate.slug).get({include: 'details,attributes,pages,categorizations,securityPolicies,bridgedResources,customHeadContent'}).then(
@@ -362,13 +364,13 @@
                 );
               },
               function() {
-                Toast.error('Failed to retrieve form template to clone.')
+                Toast.error('Failed to retrieve form template to clone.');
               }
             );
           }
         },
         function() {
-          Toast.error('Failed to verify form uniqueness.')
+          Toast.error('Failed to verify form uniqueness.');
         }
       );
     }
@@ -432,10 +434,15 @@
         vm.queueGroupBase = { name: 'Queue Group Base', values: []};
         vm.currentKapp.attributes.push(vm.queueGroupBase);
       }
-      vm.queueResponseServer = _.find(vm.currentKapp.attributes, {name: 'Queue Response Server'});
-      if(_.isEmpty(vm.queueResponseServer)) {
-        vm.queueResponseServer = { name: 'Queue Response Server', values: []};
-        vm.currentKapp.attributes.push(vm.queueResponseServer);
+      // vm.queueResponseServer = _.find(vm.currentKapp.attributes, {name: 'Response Server Url'});
+      // if(_.isEmpty(vm.queueResponseServer)) {
+      //   vm.queueResponseServer = { name: 'Response Server Url', values: []};
+      //   vm.currentKapp.attributes.push(vm.queueResponseServer);
+      // }
+      vm.descriptionAttribute = _.find(vm.currentKapp.attributes, {name: 'Description'});
+      if(_.isEmpty(vm.descriptionAttribute)) {
+        vm.descriptionAttribute = { name: 'Description', values: []};
+        vm.currentKapp.attributes.push(vm.description);
       }
       vm.queueFilterAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Filters'});
       if(_.isEmpty(vm.queueFilterAttribute)) {

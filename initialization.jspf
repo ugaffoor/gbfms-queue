@@ -53,6 +53,11 @@
    request.setAttribute("footerPath", space.getBundleBase() + "/" + footerBundlePath);
    request.setAttribute("footerLocation", contextPath + space.getBundleBase() + "/" + footerBundlePath);
 
-   String responseServerPath = kapp != null && kapp.hasAttribute("Queue Response Server") ? kapp.getAttributeValue("Queue Response Server") : "";
-   request.setAttribute("responseServerPath", responseServerPath);
+   String responseServerUrl = "";
+   if(kapp != null && kapp.hasAttribute("Response Server Url")) {
+     responseServerUrl = kapp.getAttributeValue("Response Server Url");
+   } else if(space.hasAttribute("Response Server Url")) {
+     responseServerUrl = space.getAttributeValue("Response Server Url");
+   }
+   request.setAttribute("responseServerUrl", responseServerUrl);
 %>

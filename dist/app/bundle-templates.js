@@ -478,26 +478,19 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <button type="button" data-ng-click="queue.showList()" class="btn btn-primary btn-xs visible-xs"><span class="fa fa-mail-forward"></span></button>\n' +
     '    <div class="form-group">\n' +
     '      <label><strong>Team:</strong></label><br/>\n' +
-    '      <div uib-dropdown="" class="btn-group">\n' +
+    '      <div uib-dropdown="" style="width: 100%;" class="btn-group">\n' +
     '        <button type="button" uib-dropdown-toggle="" class="btn btn-default">{{queue.filterName || \'Choose Team\'}}&nbsp;<span class="caret"></span></button>\n' +
     '        <ul uib-dropdown-menu="uib-dropdown-menu" role="menu" class="dropdown-menu">\n' +
     '          <li role="menuitem" data-ng-repeat="filter in queue.filters"><a href="" data-ui-sref="queue.by({filterName: filter.name, filterType: \'Open\'})" data-ui-sref-opts="{reload:true}">{{filter.name}}</a></li>\n' +
     '        </ul>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '      <label><strong>Filter:</strong></label><br/>\n' +
-    '      <div uib-dropdown="" class="btn-group">\n' +
-    '        <button type="button" uib-dropdown-toggle="" class="btn btn-default">{{queue.filterType || \'Open\'}}&nbsp;<span class="caret"></span></button>\n' +
-    '        <ul uib-dropdown-menu="uib-dropdown-menu" role="menu" class="dropdown-menu">\n' +
-    '          <li role="menuitem"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})" data-ui-sref-opts="{reload:true}">Open</a><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})" data-ui-sref-opts="{reload:true}">Due Today</a><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Backlog\'})" data-ui-sref-opts="{reload:true}">Backlog</a><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Day\'})" data-ui-sref-opts="{reload:true}">Recent Day</a></li>\n' +
-    '        </ul>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '    <ul class="list-unstyled">\n' +
-    '      <li>Backlog&nbsp;<span class="badge">{{queue.stats.backlog}}</span></li>\n' +
-    '      <li>Due Today&nbsp;<span class="badge">{{queue.stats.dueToday}}</span></li>\n' +
-    '      <li>Total Open&nbsp;<span class="badge">{{queue.stats.totalOpen}}</span></li>\n' +
+    '    <ul data-ng-if="queue.filterName" class="nav nav-pills nav-stacked">\n' +
+    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
+    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Backlog\'})">Backlog&nbsp;<span class="pull-right badge">{{queue.stats.backlog}}</span></a></li>\n' +
+    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +
+    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a></li>\n' +
+    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Day\'})" data-ui-sref-opts="{reload:true}">Recent Day</a></li>\n' +
     '    </ul>\n' +
     '    <div data-ng-if="queue.shouldShowTeams()" class="teams-container">\n' +
     '      <hr/>\n' +
@@ -507,7 +500,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <li>Active Members:&nbsp;<span class="badge">2</span></li>\n' +
     '      </ul>\n' +
     '    </div>\n' +
-    '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-success">New </button>\n' +
+    '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-success">New</button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-sm-10">\n' +
     '    <div data-ui-view=""></div>\n' +
@@ -649,8 +642,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div class="col-xs-6">\n' +
     '      <div class="form-group">\n' +
-    '        <label class="control-label">Queue Response Server</label>\n' +
-    '        <input type="text" data-ng-model="vm.queueResponseServer.values[0]" placeholder="The URL of the Response Server that Queue will use for converations." class="form-control"/>\n' +
+    '        <label class="control-label">Kapp Description</label>\n' +
+    '        <textarea rows="3" data-ng-model="vm.descriptionAttributes.values[0]" placeholder="The description of the Kapp for display in the catalog and other bundles." class="form-control"></textarea>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -828,9 +821,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <uib-tabset active="active">\n' +
     '        <uib-tab heading="Details">\n' +
     '          <div data-ng-include="\'queue/setup/_queue.setup.details.tpl.html\'"></div>\n' +
-    '        </uib-tab>\n' +
-    '        <uib-tab heading="Filters">\n' +
-    '          <div data-ng-include="\'queue/setup/_queue.setup.filters.tpl.html\'"></div>\n' +
     '        </uib-tab>\n' +
     '        <uib-tab heading="Form Generator">\n' +
     '          <div data-ng-include="\'queue/setup/_queue.setup.form.tpl.html\'"></div>\n' +
