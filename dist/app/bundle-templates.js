@@ -318,7 +318,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div data-ng-class="{\'col-md-4\': vm.isFormLoaded()}" class="col-xs-12">\n' +
     '    <div class="list-group"><a href="" data-ng-repeat="form in vm.forms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
     '        <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
-    '        <p data-ng-if="form.description" class="list-group-item-text">{{form.description}}</p></a></div>\n' +
+    '        <p data-ng-if="form.description">{{form.description}}</p></a></div>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-md-8">\n' +
     '    <h3>{{vm.loadedForm.name}}</h3>\n' +
@@ -486,11 +486,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <ul data-ng-if="queue.filterName" class="nav nav-pills nav-stacked">\n' +
-    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
-    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Backlog\'})">Backlog&nbsp;<span class="pull-right badge">{{queue.stats.backlog}}</span></a></li>\n' +
-    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +
-    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a></li>\n' +
-    '      <li><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Day\'})" data-ui-sref-opts="{reload:true}">Recent Day</a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Open\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Backlog\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Backlog\'})">Backlog&nbsp;<span class="pull-right badge">{{queue.stats.backlog}}</span></a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Due Today\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Recent Hour\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Recent Day\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Day\'})" data-ui-sref-opts="{reload:true}">Recent Day</a></li>\n' +
     '    </ul>\n' +
     '    <div data-ng-if="queue.shouldShowTeams()" class="teams-container">\n' +
     '      <hr/>\n' +

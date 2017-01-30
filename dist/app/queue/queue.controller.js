@@ -7,7 +7,8 @@
 
   /* @ngInject */
   function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
-    var STATE_MATCH = /queue\.by\./;
+    var STATE_MATCH_DETAILS = /queue\.by\./;
+    var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
     queue.currentKapp = currentKapp;
     queue.filters = filters;
@@ -39,6 +40,7 @@
     queue.imagePath = imagePath;
     queue.filterChangeCount = filterChangeCount;
     queue.isChildState = isChildState;
+    queue.isFilterActive = isFilterActive;
 
     queue.shouldShowFilters = shouldShowFilters;
     queue.shouldShowList = shouldShowList;
@@ -59,9 +61,14 @@
       return item.values[queueDetailsValue] || '';
     }
 
-    function isChildState() {
+    function isChildState(matcher) {
+      matcher = matcher || STATE_MATCH_DETAILS;
       var currentState = $state.current.name;
-      return currentState.match(STATE_MATCH) !== null;
+      return currentState.match(matcher) !== null;
+    }
+
+    function isFilterActive(filterType) {
+      return (isChildState(STATE_MATCH_LIST) && queue.filterType === filterType);
     }
 
     function shouldShowFilters() {

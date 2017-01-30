@@ -13,18 +13,18 @@
           li(role="menuitem",data-ng-repeat="filter in queue.filters")
             a(href="",data-ui-sref="queue.by({filterName: filter.name, filterType: 'Open'})", data-ui-sref-opts="{reload:true}") {{filter.name}}
     ul.nav.nav-pills.nav-stacked(data-ng-if="queue.filterName")
-      li
+      li(data-ng-class="{'active': queue.isFilterActive('Open')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Open'})") Open&nbsp;
           span.pull-right.badge {{queue.stats.totalOpen}}
-      li
+      li(data-ng-class="{'active': queue.isFilterActive('Backlog')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Backlog'})") Backlog&nbsp;
           span.pull-right.badge {{queue.stats.backlog}}
-      li
+      li(data-ng-class="{'active': queue.isFilterActive('Due Today')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Due Today'})") Due Today&nbsp;
           span.pull-right.badge {{queue.stats.dueToday}}
-      li
+      li(data-ng-class="{'active': queue.isFilterActive('Recent Hour')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Hour'})", data-ui-sref-opts="{reload:true}") Recent Hour
-      li
+      li(data-ng-class="{'active': queue.isFilterActive('Recent Day')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Day'})", data-ui-sref-opts="{reload:true}") Recent Day
     .teams-container(data-ng-if="queue.shouldShowTeams()")
       hr
