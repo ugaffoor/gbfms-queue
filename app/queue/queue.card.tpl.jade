@@ -22,22 +22,22 @@ div
         span(data-time-ago="queue.friendlyDueDate(queueItem)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(queueItem))}")
     //- Person info for non-list views.
     .row(data-ng-if="!isSummary() && !isListView()")
-      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
     //- Person info for small list views
     .row.hidden-md.hidden-lg(data-ng-if="!isSummary() && isListView()")
-      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
     //- Person info large list views.
     .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
-      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedGroup(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}}
     //- Person info large list views.
     .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
       .col-xs-12

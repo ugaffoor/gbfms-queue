@@ -6,17 +6,17 @@
     .service('AssignmentService', AssignmentService);
 
   /* @ngInject */
-  function AssignmentService(Submission, $q) {
+  function AssignmentService(TeamModel, Submission, md5, $q) {
     var service = {
       // Actions
       grabIt: grabIt,
 
       // Helpers
-      getGroups: getGroups,
-      getAllGroups: getAllGroups,
+      getTeams: getTeams,
+      getAllTeams: getAllTeams,
       getMembers: getMembers,
-      getAssignedGroups: getAssignedGroups,
-      isGroupLeaf: isGroupLeaf,
+      getAssignedTeams: getAssignedTeams,
+      isTeamLeaf: isTeamLeaf,
       withoutRoot: withoutRoot,
       withRoot: withRoot,
       setAdminKapp: setAdminKapp,
@@ -24,7 +24,7 @@
     };
 
     var adminKapp = null;
-    var rootGroup = null;
+    var rootTeam = null;
 
     return service;
 
@@ -32,52 +32,52 @@
       adminKapp = adminKappSlug;
     }
 
-    function setAssignmentBase(assignmentBaseGroup) {
-      rootGroup = assignmentBaseGroup;
+    function setAssignmentBase(assignmentBaseTeam) {
+      rootTeam = assignmentBaseTeam;
     }
 
-    function withoutRoot(group) {
-      if(_.isEmpty(rootGroup)) return group;
+    function withoutRoot(team) {
+      if(_.isEmpty(rootTeam)) return team;
 
-      if(_.startsWith(group, rootGroup + '::')) {
-        return group.slice(rootGroup.length + 2);
-      } else if(group === rootGroup) {
+      if(_.startsWith(team, rootTeam + '::')) {
+        return team.slice(rootTeam.length + 2);
+      } else if(team === rootTeam) {
         return '';
       } else {
-        return group;
+        return team;
       }
     }
 
-    function withRoot(group) {
-      if(_.isEmpty(rootGroup)) return group;
+    function withRoot(team) {
+      if(_.isEmpty(rootTeam)) return team;
 
-      var groupWithRoot = group;
-      if(!_.startsWith(group, rootGroup)) {
-        if(_.isEmpty(group)) {
-          groupWithRoot = rootGroup;
+      var teamWithRoot = team;
+      if(!_.startsWith(team, rootTeam)) {
+        if(_.isEmpty(team)) {
+          teamWithRoot = rootTeam;
         } else {
-          groupWithRoot = rootGroup + '::' + group;
+          teamWithRoot = rootTeam + '::' + team;
         }
       }
 
-      return groupWithRoot;
+      return teamWithRoot;
     }
 
-    function getAssignedGroups(item) {
-      var group = withoutRoot(item.values['Assigned Group']);
-      var groups = [];
-      if(!_.isEmpty(group)) {
-        groups = group.split('::');
+    function getAssignedTeams(item) {
+      var team = withoutRoot(item.values['Assigned Team']);
+      var teams = [];
+      if(!_.isEmpty(team)) {
+        teams = team.split('::');
       }
 
-      return groups;
+      return teams;
     }
 
-    function isGroupLeaf(item) {
+    function isTeamLeaf(item) {
       var deferred = $q.defer();
-      getGroups(withRoot(item.values['Assigned Group'])).then(
-        function(groups) {
-          if(groups.length < 1) {
+      getTeams(withRoot(item.values['Assigned Team'])).then(
+        function(teams) {
+          if(teams.length < 1) {
             //vm.state.showMembersButton = _.isEmpty(vm.memberId);
             deferred.resolve(true);
           } else {
@@ -91,26 +91,27 @@
       return deferred.promise;
     }
 
-    function grabIt(currentUser, currentGroup, item) {
+    function grabIt(currentUser, currentTeam, item) {
       var deferred = $q.defer();
 
       // First we need to determine if the current user is a member of the currently
-      // assigned group in order for them to "grab it".
-      getMembers(currentGroup).then(
+      // assigned team in order for them to "grab it".
+      getMembers(currentTeam).then(
         function(members) {
-          var association = _.find(members, function(member) {
-            if(member.values['Group Name'] === withRoot(currentGroup) &&
-               member.values['Username'] === currentUser) {
-              return true;
-            }
-            return false;
+          var membership = _.find(members, function(member) {
+            return member.username === currentUser;
+            // if(member.values['Team Name'] === withRoot(currentTeam) &&
+            //    member.values['Username'] === currentUser) {
+            //   return true;
+            // }
+            // return false;
           });
 
           // Check to see if the user we're assigning had an association
-          // with the currently assigned group.
-          if(typeof association !== 'undefined') {
-            item.values['Assigned Individual'] = currentUser;
-            item.values['Assigned Individual Display Name'] = currentUser;
+          // with the currently assigned team.
+          if(typeof membership !== 'undefined') {
+            item.values['Assigned Individual'] = membership.username;
+            item.values['Assigned Individual Display Name'] = membership.displayName;
 
             // We get currentPage in a different format than the server and we
             // don't actually care about sending it since we don't want to change
@@ -130,7 +131,7 @@
               }
             );
           } else {
-            deferred.reject('Current user is not a member of the currently assigned group.');
+            deferred.reject('Current user is not a member of the currently assigned team.');
           }
 
         },
@@ -143,17 +144,14 @@
       return deferred.promise;
     }
 
-    function getAllGroups() {
-      return Submission.search(adminKapp, 'group')
-        .eq('values[Status]', 'active')
-          .include('values')
-          .execute();
+    function getAllTeams() {
+      return TeamModel.build().getList();
     }
 
-    function getGroups(parent) {
+    function getTeams(parent) {
       parent = withRoot(parent);
 
-      return Submission.search(adminKapp, 'group')
+      return Submission.search(adminKapp, 'team')
         .eq('values[Parent]', parent)
         .coreState('Draft')
         .include('values')
@@ -161,15 +159,18 @@
 
     }
 
-    function getMembers(group) {
-      group = withRoot(group);
+    function getMembers(team) {
+      team = withRoot(team);
 
-      return Submission.search(adminKapp, 'group-membership')
-        .eq('values[Group Name]', group)
-        .coreState('Draft')
-        .include('values')
-        .execute();
-
+      return TeamModel
+        .build()
+        .one(md5.createHash(team))
+        .get({include:'memberships,memberships.user'})
+        .then(function(team) {
+          return _.map(team.memberships, function(membership) {
+            return membership.user;
+          });
+        });
     }
   }
 }());

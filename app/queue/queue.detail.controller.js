@@ -48,7 +48,7 @@
     }
 
     function grabIt() {
-      AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Group'], item).then(
+      AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Team'], item).then(
         function() {
           Toast.success('Grabbed item.');
           $state.go('.', {}, {reload:true});

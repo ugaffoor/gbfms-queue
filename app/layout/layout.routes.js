@@ -55,7 +55,7 @@
           return KappModel.build().one(kappSlug).get({include:'details,attributes'});
         },
         currentUser: function($http, $q, Bundle) {
-          return $http.get(Bundle.apiLocation() + '/me?include=attributes,profileAttributes').then(
+          return $http.get(Bundle.apiLocation() + '/me?include=attributes,profileAttributes,memberships,memberships.team').then(
             function(response) {
               return response.data;
             }

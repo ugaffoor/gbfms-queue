@@ -76,24 +76,25 @@
             }
           ];
 
-          var groupAttribute = _.find(currentUser.attributes, {name: 'Group'});
-          var groupOrder = filters.length;
-          if(groupAttribute) {
-            _.each(groupAttribute.values, function(group) {
-              var groupFilter = {
-                name: group,
-                order: groupOrder,
-                qualifications: [
-                  {
-                    field: 'values[Assigned Group]',
-                    value: group
-                  }
-                ]
-              };
-              filters.push(groupFilter);
-              groupOrder++;
-            });
-          }
+          var teamOrder = 0;
+          var teams = _.map(currentUser.memberships, function(membership) {
+            return membership.team.name;
+          });
+
+          _.each(teams, function(team) {
+            var teamFilter = {
+              name: team,
+              order: teamOrder,
+              qualifications: [
+                {
+                  field: 'values[Assigned Team]',
+                  value: team
+                }
+              ]
+            };
+            filters.push(teamFilter);
+            teamOrder++;
+          });
 
           if(currentUser.spaceAdmin) {
             filters.push({
@@ -161,6 +162,9 @@
         },
         forms: function(currentKapp, Form) {
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});
+        },
+        teams: function(TeamModel) {
+          return TeamModel.build().getList();
         }
       },
 

@@ -1,12 +1,12 @@
 (function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "$interval", "$rootScope", "$scope", "$state"];
+  QueueController.$inject = ["currentKapp", "teams", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, $interval, $rootScope, $scope, $state) {
+  function QueueController(currentKapp, teams, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state) {
     var STATE_MATCH_DETAILS = /queue\.by\./;
     var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
@@ -28,7 +28,7 @@
 
     queue.changeFilter = changeFilter;
     queue.friendlyAssignedName = friendlyAssignedName;
-    queue.friendlyAssignedGroup = friendlyAssignedGroup;
+    queue.friendlyAssignedTeam = friendlyAssignedTeam;
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
     queue.friendlyCompleted = friendlyCompleted;
@@ -124,11 +124,11 @@
       return friendlyName;
     }
 
-    function friendlyAssignedGroup(item) {
+    function friendlyAssignedTeam(item) {
       var friendlyName = 'Unassigned';
-      var assignedGroup = AssignmentService.withoutRoot(item.values['Assigned Group']);
-      if(!_.isEmpty(assignedGroup)) {
-        friendlyName = assignedGroup;
+      var assignedTeam = AssignmentService.withoutRoot(item.values['Assigned Team']);
+      if(!_.isEmpty(assignedTeam)) {
+        friendlyName = assignedTeam;
       }
 
       return friendlyName;
@@ -162,7 +162,9 @@
       queue.stats = {
         backlog: 0,
         dueToday: 0,
-        totalOpen: queue.openItems.length
+        totalOpen: queue.openItems.length,
+        teamMembers: 0,
+        activeMembers: 0
       };
 
       _.each(queue.openItems, function(item) {
@@ -177,6 +179,21 @@
           }
         }
       });
+
+      if(shouldShowTeams()) {
+        TeamModel.build().one(md5.createHash(queue.filterName)).get({include:'memberships,memberships.user'}).then(function(team) {
+          queue.stats.teamMembers = team.memberships.length;
+        });
+
+        var recentItems = _.filter(queue.openItems, function(item) {
+          return moment().diff(item.updatedAt, 'minutes') <= 30;
+        });
+        var recentMembers = _.map(recentItems, function(item) {
+          return item.updatedBy;
+        });
+        var members = _.uniq(recentMembers);
+        queue.stats.activeMembers = members.length;
+      }
     }
 
     function activate() {

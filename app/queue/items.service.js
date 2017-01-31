@@ -25,8 +25,9 @@
           });
           searcher.end();
         } else if(qualification.value === '${myGroups}') {
-          var groupsAttribute = _.find(user.attributes, { name: 'Group'});
-          var groups = (groupsAttribute ? groupsAttribute.values : []);
+          var groups = _.map(user.memberships, function(membership) {
+            return membership.team.name;
+          });
 
           if(groups.length > 0) {
             searcher.or();

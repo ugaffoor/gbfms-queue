@@ -223,18 +223,18 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="col-xs-12"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
-    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row hidden-md hidden-lg">\n' +
-    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
-    '      <div data-uib-tooltip="{{queue.friendlyAssignedGroup(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedGroup(queueItem)}}</div>\n' +
+    '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
@@ -369,12 +369,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-12"><span class="fa fa-fw fa-users"></span><span data-ng-if="!vm.isAssigningGroup" class="ellipsis">&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startGroupAssignment()">{{queue.friendlyAssignedGroup(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedGroup(vm.item)}}</span></span>\n' +
-    '        <div data-ng-if="vm.isAssigningGroup" class="selection"><a href="" data-ng-click="vm.stopGroupAssignment()">Cancel</a>\n' +
-    '          <input id="group-selector" type="text" ng-model="selected" uib-typeahead="group.label for group in vm.allGroups | filter:$viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.groupSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-users"></span><span data-ng-if="!vm.isAssigningTeam" class="ellipsis">&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startTeamAssignment()">{{queue.friendlyAssignedTeam(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedTeam(vm.item)}}</span></span>\n' +
+    '        <div data-ng-if="vm.isAssigningTeam" class="selection"><a href="" data-ng-click="vm.stopTeamAssignment()">Cancel</a>\n' +
+    '          <input id="team-selector" type="text" ng-model="selected" uib-typeahead="team.label for team in vm.allTeams | filter:$viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.teamSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>&gt;&nbsp;<span data-ng-if="!vm.isAssigningMember" class="ellipsis"><a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startMemberAssignment()">{{queue.friendlyAssignedName(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedName(vm.item)}}</span></span>\n' +
     '        <div data-ng-if="vm.isAssigningMember" class="selection"><a href="" data-ng-click="vm.stopMemberAssignment()">Cancel</a>\n' +
-    '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member || \'Unassign\' for member in vm.membersForGroup | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
+    '          <input id="member-selector" type="text" data-ng-model="selected" uib-typeahead="member.displayName for member in vm.membersForTeam | filter: $viewValue | limitTo:8" typeahead-min-length="0" typeahead-editable="false" typeahead-on-select="vm.memberSelected($item)" data-ng-disabled="vm.isLoading" class="form-control"/>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -496,8 +496,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <hr/>\n' +
     '      <h5>Teams</h5>\n' +
     '      <ul class="list-unstyled">\n' +
-    '        <li>Team Members:&nbsp;<span class="badge">8</span></li>\n' +
-    '        <li>Active Members:&nbsp;<span class="badge">2</span></li>\n' +
+    '        <li>Team Members:&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></li>\n' +
+    '        <li>Active Members:&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></li>\n' +
     '      </ul>\n' +
     '    </div>\n' +
     '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-success">New</button>\n' +

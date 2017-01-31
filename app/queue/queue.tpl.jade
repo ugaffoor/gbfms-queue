@@ -33,10 +33,10 @@
       ul.list-unstyled
         li
           | Team Members:&nbsp;
-          span.badge 8
+          span.badge {{queue.stats.teamMembers}}
         li
           | Active Members:&nbsp;
-          span.badge 2
+          span.badge {{queue.stats.activeMembers}}
     button.btn.btn-block.btn-success(type="button",data-ui-sref="queue.create") New
   .col-xs-12.col-sm-10
     div(data-ui-view="")

@@ -53,6 +53,7 @@
     <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/user.model.js"></script>
+    <script src="${bundle.location}/dist/app/core/models/team.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/submission.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/space.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/kapp.model.js"></script>

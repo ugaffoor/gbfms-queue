@@ -29,18 +29,18 @@
     .row
       .col-xs-12
         span.fa.fa-fw.fa-users
-        span.ellipsis(data-ng-if="!vm.isAssigningGroup")
+        span.ellipsis(data-ng-if="!vm.isAssigningTeam")
           | &nbsp;
-          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startGroupAssignment()") {{queue.friendlyAssignedGroup(vm.item)}}
-          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedGroup(vm.item)}}
-        .selection(data-ng-if="vm.isAssigningGroup")
-          a(href="",data-ng-click="vm.stopGroupAssignment()") Cancel
-          input.form-control#group-selector(
+          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startTeamAssignment()") {{queue.friendlyAssignedTeam(vm.item)}}
+          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedTeam(vm.item)}}
+        .selection(data-ng-if="vm.isAssigningTeam")
+          a(href="",data-ng-click="vm.stopTeamAssignment()") Cancel
+          input.form-control#team-selector(
             type="text",ng-model="selected",
-            uib-typeahead="group.label for group in vm.allGroups | filter:$viewValue | limitTo:8",
+            uib-typeahead="team.label for team in vm.allTeams | filter:$viewValue | limitTo:8",
             typeahead-min-length="0",
             typeahead-editable="false",
-            typeahead-on-select="vm.groupSelected($item)",
+            typeahead-on-select="vm.teamSelected($item)",
             data-ng-disabled="vm.isLoading")
         | &gt;&nbsp;
         span.ellipsis(data-ng-if="!vm.isAssigningMember")
@@ -51,7 +51,7 @@
           input.form-control#member-selector(
             type="text",
             data-ng-model="selected",
-            uib-typeahead="member || 'Unassign' for member in vm.membersForGroup | filter: $viewValue | limitTo:8",
+            uib-typeahead="member.displayName for member in vm.membersForTeam | filter: $viewValue | limitTo:8",
             typeahead-min-length="0",
             typeahead-editable="false",
             typeahead-on-select="vm.memberSelected($item)",

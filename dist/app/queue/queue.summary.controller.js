@@ -16,10 +16,10 @@
     vm.item = item;
     vm.notes = notes;
     vm.relatedItems = relatedItems;
-    vm.isAssigningGroup = false;
+    vm.isAssigningTeam = false;
     vm.isAssigningMember = false;
     vm.isLoading = false;
-    vm.membersForGroup = [];
+    vm.membersForTeam = [];
     vm.subtasks = subtasks;
     vm.showNotes = false;
     vm.responseServer = queueResponseServer;
@@ -29,9 +29,9 @@
     vm.startMemberAssignment = startMemberAssignment;
     vm.stopMemberAssignment = stopMemberAssignment;
     vm.memberSelected = memberSelected;
-    vm.startGroupAssignment = startGroupAssignment;
-    vm.stopGroupAssignment = stopGroupAssignment;
-    vm.groupSelected = groupSelected;
+    vm.startTeamAssignment = startTeamAssignment;
+    vm.stopTeamAssignment = stopTeamAssignment;
+    vm.teamSelected = teamSelected;
 
     vm.inWorkOrReview = inWorkOrReview;
     vm.inSubtask = inSubtask;
@@ -47,18 +47,16 @@
     function activate() {}
 
     function startMemberAssignment() {
-      if(vm.isAssigningGroup) return;
-      if(_.isEmpty(AssignmentService.withoutRoot(vm.item.values['Assigned Group']))) {
-        vm.startGroupAssignment();
+      if(vm.isAssigningTeam) return;
+      if(_.isEmpty(AssignmentService.withoutRoot(vm.item.values['Assigned Team']))) {
+        vm.startTeamAssignment();
         return;
       }
 
-      AssignmentService.getMembers(vm.item.values['Assigned Group']).then(
+      AssignmentService.getMembers(vm.item.values['Assigned Team']).then(
         function success(members) {
-          vm.membersForGroup = _.map(members, function(member) {
-            return member.values['Username'];
-          });
-          vm.membersForGroup.unshift('');
+          vm.membersForTeam = members;
+          vm.membersForTeam.unshift({username: '', displayName: 'Unassigned'});
           vm.isAssigningMember = true;
 
           $timeout(function() {
@@ -66,7 +64,7 @@
           }, 100);
         },
         function failure() {
-          Toast.error('There was a problem retrieving members for the current group!');
+          Toast.error('There was a problem retrieving members for the current team!');
         });
     }
 
@@ -79,8 +77,8 @@
       vm.isLoading = true;
       delete vm.item.currentPage;
       delete vm.item.coreState;
-      vm.item.values['Assigned Individual'] = member;
-      vm.item.values['Assigned Individual Display Name'] = member;
+      vm.item.values['Assigned Individual'] = member.username;
+      vm.item.values['Assigned Individual Display Name'] = member.displayName;
 
       vm.item.put().then(
         function success() {
@@ -91,57 +89,56 @@
         });
     }
 
-    function startGroupAssignment() {
+    function startTeamAssignment() {
       if(vm.isAssigningMember) return;
 
-      AssignmentService.getAllGroups().then(
-        function success(groups) {
-          vm.isAssigningGroup = true;
-          vm.allGroups = _.map(groups, function(group) {
-            var groupName = AssignmentService.withoutRoot(group.values['Name']);
-            return { label: groupName, group: groupName };
+      AssignmentService.getAllTeams().then(
+        function success(teams) {
+          vm.isAssigningTeam = true;
+          vm.allTeams = _.map(teams, function(team) {
+            var teamName = AssignmentService.withoutRoot(team.name);
+            return { label: teamName, team: teamName };
           });
-          vm.allGroups.unshift({label: 'Unassign', group: ''});
+          vm.allTeams.unshift({label: 'Unassign', team: ''});
 
-          // Focus on the group selector.
+          // Focus on the team selector.
           $timeout(function() {
-            document.getElementById('group-selector').focus();
+            document.getElementById('team-selector').focus();
           }, 100);
         },
         function failure() {
-          Toast.error('Failed to retrieve group information - assignment disabled.');
+          Toast.error('Failed to retrieve team information - assignment disabled.');
         });
-
     }
 
-    function stopGroupAssignment() {
-      vm.isAssigningGroup = false;
+    function stopTeamAssignment() {
+      vm.isAssigningTeam = false;
     }
 
-    function groupSelected(group) {
+    function teamSelected(team) {
       vm.isLoading = true;
 
       delete vm.item.currentPage;
       delete vm.item.coreState;
-      vm.item.values['Assigned Group'] = AssignmentService.withRoot(group.group);
+      vm.item.values['Assigned Team'] = AssignmentService.withRoot(team.team);
       vm.item.values['Assigned Individual'] = '';
       vm.item.values['Assigned Individual Display Name'] = '';
 
       vm.item.put().then(
         function success() {
-          Toast.success("Changed assigned group!");
+          Toast.success("Changed assigned team!");
           vm.isLoading = false;
-          vm.isAssigningGroup = false;
+          vm.isAssigningTeam = false;
           $state.go('queue.by.details.summary', {}, {reload:true});
         },
         function failure() {
-          Toast.error('There was a problem reassigning the group!');
+          Toast.error('There was a problem reassigning the team!');
           $state.go('.', {}, {reload:true});
         });
     }
 
     function grabIt() {
-      AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Group'], item).then(
+      AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Team'], item).then(
         function() {
           Toast.success('Grabbed item.');
           $state.go('.', {}, {reload:true});
@@ -149,8 +146,8 @@
         function(error) {
           // Display the error information to the user.
           Toast.error(error);
-          // And then start group assignment.
-          vm.startGroupAssignment();
+          // And then start team assignment.
+          vm.startTeamAssignment();
         }
       );
     }
