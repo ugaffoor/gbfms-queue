@@ -30,12 +30,20 @@
       hr
       h5 Teams
 
-      ul.list-unstyled
+      ul.list-unstyled(data-ng-if="queue.hasTeamsKapp()")
         li
-          | Team Members:&nbsp;
+          a(href="{{queue.getTeamLink()}}",target="_blank") Team Members&nbsp;
+            span.badge {{queue.stats.teamMembers}}
+        li
+          a(href="{{queue.getTeamLink()}}",target="_blank") Active Members&nbsp;
+            span.badge {{queue.stats.activeMembers}}
+
+      ul.list-unstyled(data-ng-if="!queue.hasTeamsKapp()")
+        li
+          | Team Members&nbsp;
           span.badge {{queue.stats.teamMembers}}
         li
-          | Active Members:&nbsp;
+          | Active Members&nbsp;
           span.badge {{queue.stats.activeMembers}}
     button.btn.btn-block.btn-success(type="button",data-ui-sref="queue.create") New
   .col-xs-12.col-sm-10

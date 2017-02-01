@@ -64,6 +64,13 @@
           AssignmentService.setAdminKapp(adminKapp.values[0]);
           return adminKapp.values[0];
         }],
+        teamsKapp: ["spaceConfigResolver", function(spaceConfigResolver) {
+          var teamsKapp = spaceConfigResolver('Teams Kapp Slug', false);
+          if(angular.isUndefined(teamsKapp)) {
+            return '';
+          }
+          return teamsKapp.values[0];
+        }],
         filters: ["kappConfigResolver", "currentUser", function(kappConfigResolver, currentUser) {
           var filters = [
             {

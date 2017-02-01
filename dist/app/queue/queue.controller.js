@@ -1,12 +1,12 @@
-(function() {
+( function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "teams", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state"];
+  QueueController.$inject = ["currentKapp", "teams", "teamsKapp", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, teams, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state) {
+  function QueueController(currentKapp, teams, teamsKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state) {
     var STATE_MATCH_DETAILS = /queue\.by\./;
     var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
@@ -29,11 +29,15 @@
     queue.changeFilter = changeFilter;
     queue.friendlyAssignedName = friendlyAssignedName;
     queue.friendlyAssignedTeam = friendlyAssignedTeam;
+    queue.friendlyAssignedUsername = friendlyAssignedUsername;
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
     queue.friendlyCompleted = friendlyCompleted;
     queue.hasCompleted = hasCompleted;
     queue.hasDetails = hasDetails;
+    queue.hasTeamsKapp = hasTeamsKapp;
+    queue.getTeamLink = getTeamLink;
+    queue.getUserLink = getUserLink;
     queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
@@ -99,6 +103,20 @@
       return !_.isEmpty(item.values[queueDetailsValue]);
     }
 
+    function hasTeamsKapp() {
+      return !_.isEmpty(teamsKapp);
+    }
+
+    function getTeamLink(team) {
+      team = team || queue.filterType;
+      var teamHash = md5.createHash(team);
+      return Bundle.spaceLocation() + '/' + teamsKapp + '?page=team&team=' + teamHash;
+    }
+
+    function getUserLink(username) {
+      return Bundle.spaceLocation() + '/' + teamsKapp + '?page=user&username=' + username;
+    }
+
     function friendlyCompleted(item) {
       return item.values[queueCompletedValue] || '';
     }
@@ -122,6 +140,10 @@
         friendlyName = assignedId;
       }
       return friendlyName;
+    }
+
+    function friendlyAssignedUsername(item) {
+      return item.values['Assigned Individual'] || '';
     }
 
     function friendlyAssignedTeam(item) {
