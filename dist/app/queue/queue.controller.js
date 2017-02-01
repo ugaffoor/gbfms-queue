@@ -17,7 +17,7 @@
     queue.FILTER_TYPES = [
       'Open',
       'Due Today',
-      'Backlog',
+      'Past Due',
       'Recent Hour',
       'Recent Day'
     ];
@@ -160,7 +160,7 @@
 
     function populateStats() {
       queue.stats = {
-        backlog: 0,
+        pastDue: 0,
         dueToday: 0,
         totalOpen: queue.openItems.length,
         teamMembers: 0,
@@ -175,7 +175,7 @@
           if(dueDate.isSame(today.startOf('day'), 'd')) {
             queue.stats.dueToday++;
           } else if(dueDate.isBefore(today.startOf('day'))) {
-            queue.stats.backlog++;
+            queue.stats.pastDue++;
           }
         }
       });

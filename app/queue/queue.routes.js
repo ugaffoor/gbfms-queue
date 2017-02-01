@@ -216,7 +216,7 @@
               }
 
               var today = moment();
-              if(filterType === 'Backlog') {
+              if(filterType === 'Past Due') {
                 return $q.resolve(
                   _.filter(openItems, function(item) {
                     var dueDate = moment(item.values['Due Date']);
