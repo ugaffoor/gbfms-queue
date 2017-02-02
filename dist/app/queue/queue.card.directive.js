@@ -25,6 +25,14 @@
       scope.isListView = isListView;
       scope.isResponse = isResponse;
 
+      scope.shouldTeamLink = function() {
+        return scope.queue.hasTeamsKapp() && scope.queue.friendlyAssignedTeam(scope.queueItem) !== 'Unassigned';
+      };
+
+      scope.shouldUserLink = function() {
+        return scope.queue.hasTeamsKapp() && scope.queue.friendlyAssignedUsername(scope.queueItem) !== '';
+      };
+
       function isListView() {
         return !_.isEmpty(attributes.listView);
       }

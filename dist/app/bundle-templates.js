@@ -224,33 +224,27 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users">{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</span></div>\n' +
-    '        <div data-ng-if="queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<a href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row hidden-md hidden-lg">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users">{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</span></div>\n' +
-    '        <div data-ng-if="queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<a href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}}</div>\n' +
-    '        <div data-ng-if="queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<a href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
-    '        <div data-ng-if="queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="isSummary()" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div data-ng-if="!queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
-    '        <div data-ng-if="queue.hasTeamsKapp()" class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<a href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
@@ -502,8 +496,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <hr/>\n' +
     '      <h5>Teams</h5>\n' +
     '      <ul data-ng-if="queue.hasTeamsKapp()" class="list-unstyled">\n' +
-    '        <li><a href="{{queue.getTeamLink()}}" target="_blank">Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></a></li>\n' +
-    '        <li><a href="{{queue.getTeamLink()}}" target="_blank">Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></a></li>\n' +
+    '        <li><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></a></li>\n' +
+    '        <li><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></a></li>\n' +
     '      </ul>\n' +
     '      <ul data-ng-if="!queue.hasTeamsKapp()" class="list-unstyled">\n' +
     '        <li>Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></li>\n' +
