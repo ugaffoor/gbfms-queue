@@ -52,7 +52,7 @@
           return queueGroupBase.values[0];
         },
         queueResponseServer: function(kappConfigResolver) {
-          var queueResponseServer = kappConfigResolver('Queue Response Server', false);
+          var queueResponseServer = spaceConfigResolver('Response Server Url', false);
           if(angular.isUndefined(queueResponseServer)) {
             return '';
           }
