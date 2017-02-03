@@ -1,0 +1,8 @@
+.row
+  .col-xs-3
+    button.btn.btn-primary(type="button",data-ui-sref="queue.by.details.summary")
+      span.fa.fa-reply
+
+.row(data-ng-if="queue.hasDiscussion(vm.item)")
+  .col-xs-12
+    response-issue-view(response-server="{{vm.responseServer}}", current-issue-id="{{queue.responseGuid(vm.item)}}", embed-padding="70")

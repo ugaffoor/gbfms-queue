@@ -220,7 +220,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary()" class="row">\n' +
-    '      <div class="col-xs-12"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(queueItem)" time-ago-prefix="Due" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}"></span></div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
@@ -267,6 +267,21 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div fixed-height="" fh-bottom-pad="70" class="queue-details">\n' +
     '  <div data-ui-view=""></div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('queue/queue.discuss.tpl.html',
+    '\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-3">\n' +
+    '    <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary"><span class="fa fa-reply"></span></button>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<div data-ng-if="queue.hasDiscussion(vm.item)" class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <response-issue-view response-server="{{vm.responseServer}}" current-issue-id="{{queue.responseGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
+    '  </div>\n' +
     '</div>');
 }]);
 
@@ -421,8 +436,19 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div class="well well-details">{{queue.friendlyCompleted(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div data-ng-if="!details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
+    '    <div data-ng-if="queue.hasDiscussion(vm.item)" class="rows row-cards">\n' +
     '      <div class="col-xs-12">\n' +
+    '        <h5 class="item-header">Discussion</h5>\n' +
+    '        <response-server base="vm.responseServer" watch-issue="vm.item.values[\'Response GUID\']">\n' +
+    '          <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser" no-title="true"></issue-summary>\n' +
+    '        </response-server>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div data-ng-if="!details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
+    '      <div data-ng-if="queue.canDiscuss(vm.item)" class="col-xs-6">\n' +
+    '        <button type="button" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block">Discuss It</button>\n' +
+    '      </div>\n' +
+    '      <div data-ng-class="{\'col-xs-6\': queue.canDiscuss(vm.item), \'col-xs-12\': !queue.canDiscuss(vm.item)}">\n' +
     '        <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -432,17 +458,19 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
-    '      <div data-ng-class="{\'col-xs-9\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-12\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
+    '      <div data-ng-if="queue.canDiscuss(vm.item)" data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
+    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block">\n' +
+    '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Discuss It</div>\n' +
+    '        </button>\n' +
+    '      </div>\n' +
+    '      <div data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; queue.canDiscuss(vm.item)), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen()) &amp;&amp; queue.canDiscuss(vm.item), \'col-xs-12\': !queue.canDiscuss(vm.item) &amp;&amp; (!details.canHaveSubtasks() || !details.isOpen()), \'col-xs-10\': details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; !queue.canDiscuss(vm.item)}">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
     '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Work It</div>\n' +
     '        </button>\n' +
     '      </div>\n' +
-    '      <div data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" class="col-xs-3">\n' +
+    '      <div data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" class="col-xs-2">\n' +
     '        <div uib-dropdown="">\n' +
-    '          <button id="subtasks" type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle">\n' +
-    '             \n' +
-    '            Add&nbsp;<span class="caret"></span>\n' +
-    '          </button>\n' +
+    '          <button id="subtasks" type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle">Add&nbsp;<span class="caret"></span></button>\n' +
     '          <ul uib-dropdown-menu="" role="menu" aria-labelledby="subtasks" class="dropdown-menu dropdown-menu-right dropdown-mobile">\n' +
     '            <li role="menuitem" data-ng-repeat="task in vm.subtasks"><a data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})">{{task.name}}</a></li>\n' +
     '          </ul>\n' +
@@ -450,7 +478,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!details.isOpen()" class="row">\n' +
-    '      <div class="col-xs-12">\n' +
+    '      <div class="col-xs-6">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">Review It</button>\n' +
     '      </div>\n' +
     '    </div>\n' +

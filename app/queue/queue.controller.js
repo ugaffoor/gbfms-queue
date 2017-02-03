@@ -34,6 +34,9 @@
     queue.friendlyCompleted = friendlyCompleted;
     queue.hasCompleted = hasCompleted;
     queue.hasDetails = hasDetails;
+    queue.hasDiscussion = hasDiscussion;
+    queue.canDiscuss = canDiscuss;
+    queue.responseGuid = responseGuid;
     queue.hasTeamsKapp = hasTeamsKapp;
     queue.getTeamLink = getTeamLink;
     queue.getUserLink = getUserLink;
@@ -104,6 +107,19 @@
 
     function hasTeamsKapp() {
       return !_.isEmpty(teamsKapp);
+    }
+
+
+    function canDiscuss(item) {
+      return Object.keys(item.values).indexOf('Response GUID') !== -1;
+    }
+
+    function responseGuid(item) {
+      return item.values['Response GUID'];
+    }
+
+    function hasDiscussion(item) {
+      return canDiscuss(item) ? !_.isEmpty(item.values['Response GUID']) : false;
     }
 
     function getTeamLink(team) {

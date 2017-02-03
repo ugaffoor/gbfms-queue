@@ -92,27 +92,39 @@
       .col-xs-12
         h5.item-header Resolution
         .well.well-details {{queue.friendlyCompleted(vm.item)}}
-    .row(data-ng-if="!details.isMine() && details.isOpen()")
+    .rows.row-cards(data-ng-if="queue.hasDiscussion(vm.item)")
       .col-xs-12
+        h5.item-header Discussion
+        response-server(base="vm.responseServer", watch-issue="vm.item.values['Response GUID']")
+          issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true")
+    .row(data-ng-if="!details.isMine() && details.isOpen()")
+      .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
+        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss") Discuss It
+      div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
     .row
       .col-xs-12
         div(data-ui-view="")
     .row(data-ng-if="details.isMine() && details.isOpen()")
-      div(data-ng-class="{'col-xs-9': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-12': (!details.canHaveSubtasks() || !details.isOpen())}")
+      div(data-ng-if="queue.canDiscuss(vm.item)",data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen())}")
+        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.discuss")
+          div(data-ng-if="details.isMine() && details.isOpen()") Discuss It
+      div(data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen() && queue.canDiscuss(vm.item)), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen()) && queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item) && (!details.canHaveSubtasks() || !details.isOpen()), 'col-xs-10': details.canHaveSubtasks() && details.isOpen() && !queue.canDiscuss(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="details.isMine() && details.isOpen()") Work It
-      .col-xs-3(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
+      .col-xs-2(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
         div(uib-dropdown="")
-          button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",uib-dropdown-toggle="") 
+          button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",uib-dropdown-toggle="")
             | Add&nbsp;
             span.caret
           ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
     .row(data-ng-if="!details.isOpen()")
-      .col-xs-12
+      .col-xs-6
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work") Review It
+
+
 .row.row-cards(data-ng-if="vm.relatedItems.length > 0")
   .col-xs-12
     h5.item-header Related Items

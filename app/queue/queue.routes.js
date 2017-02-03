@@ -288,6 +288,16 @@
       }
     });
 
+    $stateProvider.state('queue.by.details.discuss', {
+      url: '/discuss',
+      views: {
+        '': {
+          controller: 'QueueDiscussionController as vm',
+          templateUrl: 'queue/queue.discuss.tpl.html'
+        }
+      }
+    });
+
     $stateProvider.state('queue.by.details.summary', {
       url: '/summary',
 

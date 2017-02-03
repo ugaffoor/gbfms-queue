@@ -75,6 +75,7 @@
     <script src="${bundle.location}/dist/app/queue/queue.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.new.item.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.list.controller.js"></script>
+    <script src="${bundle.location}/dist/app/queue/queue.discussion.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.detail.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.card.directive.js"></script>
@@ -96,11 +97,11 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>

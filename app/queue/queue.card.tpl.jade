@@ -19,7 +19,7 @@ div
       .col-xs-12
         span.fa.fa-fw.fa-clock-o
         | &nbsp;
-        span(data-time-ago="queue.friendlyDueDate(queueItem)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(queueItem))}")
+        span(data-time-ago="queue.friendlyDueDate(queueItem)",time-ago-prefix="Due",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(queueItem))}")
     //- Person info for non-list views.
     .row(data-ng-if="!isSummary() && !isListView()")
       .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
