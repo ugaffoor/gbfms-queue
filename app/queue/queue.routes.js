@@ -51,7 +51,7 @@
           AssignmentService.setAssignmentBase(queueGroupBase.values[0]);
           return queueGroupBase.values[0];
         },
-        queueResponseServer: function(kappConfigResolver) {
+        queueResponseServer: function(spaceConfigResolver) {
           var queueResponseServer = spaceConfigResolver('Response Server Url', false);
           if(angular.isUndefined(queueResponseServer)) {
             return '';
