@@ -99,7 +99,9 @@
           issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true")
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
-        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss") Discuss It
+        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss")
+          span(data-ng-if="queue.hasDiscussion(vm.item)") Join It
+          span(data-ng-if="!queue.hasDiscussion(vm.item)") Discuss It
       div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
     .row
