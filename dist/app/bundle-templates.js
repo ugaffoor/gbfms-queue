@@ -1,4 +1,33 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/kinetic.header.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
+    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
+    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
+    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '        <li><a href="">{{header.currentUser.username}}\n' +
+    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -62,35 +91,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/kinetic.header.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
-    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
-    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
-    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '        <li><a href="">{{header.currentUser.username}}\n' +
-    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -273,14 +273,18 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.discuss.tpl.html',
     '\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-3">\n' +
-    '    <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary"><span class="fa fa-reply"></span></button>\n' +
+    '<div class="panel panel-primary">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h5 class="panel-title">\n' +
+    '      <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}}<span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '    </h5>\n' +
     '  </div>\n' +
-    '</div>\n' +
-    '<div data-ng-if="queue.hasDiscussion(vm.item)" class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <response-issue-view response-server="{{vm.responseServer}}" current-issue-id="{{queue.responseGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
+    '  <div class="panel-body">\n' +
+    '    <div data-ng-if="queue.hasDiscussion(vm.item)" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <response-issue-view response-server="{{vm.responseServer}}" current-issue-id="{{queue.responseGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '  </div>\n' +
     '</div>');
 }]);
@@ -459,9 +463,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
     '      <div data-ng-if="queue.canDiscuss(vm.item)" data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
-    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block">\n' +
-    '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Discuss It</div>\n' +
-    '        </button>\n' +
+    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block"><span data-ng-if="queue.hasDiscussion(vm.item)">Join It</span><span data-ng-if="!queue.hasDiscussion(vm.item)">Discuss It</span></button>\n' +
     '      </div>\n' +
     '      <div data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; queue.canDiscuss(vm.item)), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen()) &amp;&amp; queue.canDiscuss(vm.item), \'col-xs-12\': !queue.canDiscuss(vm.item) &amp;&amp; (!details.canHaveSubtasks() || !details.isOpen()), \'col-xs-10\': details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; !queue.canDiscuss(vm.item)}">\n' +
     '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
