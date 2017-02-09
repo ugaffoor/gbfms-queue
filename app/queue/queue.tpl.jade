@@ -28,17 +28,11 @@
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Day'})", data-ui-sref-opts="{reload:true}") Recent Day
     .teams-container(data-ng-if="queue.shouldShowTeams()")
       hr
-      h5 Teams
+      h5(data-ng-if="!queue.hasTeamsKapp()") {{queue.filterName}} Team
+      h5(data-ng-if="queue.hasTeamsKapp()")
+        a(href="{{queue.getTeamLink(queue.filterName)}}",target="_blank") {{queue.filterName}} Team
 
-      ul.list-unstyled(data-ng-if="queue.hasTeamsKapp()")
-        li
-          a(href="{{queue.getTeamLink(queue.filterName)}}",target="_blank") Team Members&nbsp;
-            span.badge {{queue.stats.teamMembers}}
-        li
-          a(href="{{queue.getTeamLink(queue.filterName)}}",target="_blank") Active Members&nbsp;
-            span.badge {{queue.stats.activeMembers}}
-
-      ul.list-unstyled(data-ng-if="!queue.hasTeamsKapp()")
+      ul.list-unstyled
         li
           | Team Members&nbsp;
           span.badge {{queue.stats.teamMembers}}

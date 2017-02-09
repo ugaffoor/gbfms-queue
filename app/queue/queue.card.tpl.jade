@@ -23,51 +23,32 @@ div
     //- Person info for non-list views.
     .row(data-ng-if="!isSummary() && !isListView()")
       .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
-        //-.ellipsis(data-ng-if="!queue.hasTeamsKapp()")
-          span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;
-          span(data-ng-if="!shouldTeamLink()") {{queue.friendlyAssignedTeam(queueItem)}}
-          a(data-ng-if="shouldTeamLink()",href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}",data-ng-click="$event.stopPropagation()") {{queue.friendlyAssignedTeam(queueItem)}}
-          | &nbsp;>&nbsp;
-          span(data-ng-if="!shouldUserLink()") {{queue.friendlyAssignedName(queueItem)}}
-          a(data-ng-if="shouldUserLink()",href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}",data-ng-click="$event.stopPropagation()",target="_blank") {{queue.friendlyAssignedName(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
     //- Person info for small list views
     .row.hidden-md.hidden-lg(data-ng-if="!isSummary() && isListView()")
       .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;
-          span(data-ng-if="!shouldTeamLink()") {{queue.friendlyAssignedTeam(queueItem)}}
-          a(data-ng-if="shouldTeamLink()",href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}",data-ng-click="$event.stopPropagation()") {{queue.friendlyAssignedTeam(queueItem)}}
-          | &nbsp;>&nbsp;
-          span(data-ng-if="!shouldTeamLink()") {{queue.friendlyAssignedName(queueItem)}}
-          a(data-ng-if="shouldTeamLink()",href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}",data-ng-click="$event.stopPropagation()",target="_blank") {{queue.friendlyAssignedName(queueItem)}}
-    //- Team info large list views (not a summary and a list view).
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+    //- Person info large list views.
     .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
       .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
         .ellipsis
           span.fa.fa-fw.fa-users
-          | &nbsp;
-          span(data-ng-if="!shouldTeamLink()") {{queue.friendlyAssignedTeam(queueItem)}}
-          a(data-ng-if="shouldTeamLink()",href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}",data-ng-click="$event.stopPropagation()") {{queue.friendlyAssignedTeam(queueItem)}}
-    //- Person info large list views (not a summary and a list view).
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}}
+    //- Person info large list views.
     .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
       .col-xs-12
         .ellipsis
           span.fa.fa-fw.fa-user
-          | &nbsp;
-          span(data-ng-if="!shouldUserLink()") {{queue.friendlyAssignedName(queueItem)}}
-          a(data-ng-if="shouldUserLink()",href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}",data-ng-click="$event.stopPropagation()",target="_blank") {{queue.friendlyAssignedName(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedName(queueItem)}}
     .row(data-ng-if="isSummary()")
       .col-xs-12
         .ellipsis
           span.fa.fa-fw.fa-user
-          | &nbsp;
-          span(data-ng-if="!shouldUserLink()") {{queue.friendlyAssignedName(queueItem)}}
-          a(data-ng-if="shouldUserLink()",href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}",data-ng-click="$event.stopPropagation()",target="_blank") {{queue.friendlyAssignedName(queueItem)}}
+          | &nbsp;{{queue.friendlyAssignedName(queueItem)}}
     .row
       .col-xs-12
         p.well-details {{queue.friendlySummary(queueItem)}}

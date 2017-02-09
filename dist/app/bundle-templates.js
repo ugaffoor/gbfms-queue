@@ -1,33 +1,4 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/kinetic.header.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
-    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
-    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
-    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '        <li><a href="">{{header.currentUser.username}}\n' +
-    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -94,6 +65,62 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container-fluid"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/kinetic.header.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
+    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
+    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
+    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '        <li><a href="">{{header.currentUser.username}}\n' +
+    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('errors/error.layout.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -148,33 +175,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container-fluid"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.assignment.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -224,27 +224,27 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; !isListView()" class="row">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row hidden-md hidden-lg">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a>&nbsp;>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;<span data-ng-if="!shouldTeamLink()">{{queue.friendlyAssignedTeam(queueItem)}}</span><a data-ng-if="shouldTeamLink()" href="{{queue.getTeamLink(queue.friendlyAssignedTeam(queueItem))}}" data-ng-click="$event.stopPropagation()">{{queue.friendlyAssignedTeam(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!isSummary() &amp;&amp; isListView()" class="row visible-md visible-lg">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="isSummary()" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;<span data-ng-if="!shouldUserLink()">{{queue.friendlyAssignedName(queueItem)}}</span><a data-ng-if="shouldUserLink()" href="{{queue.getUserLink(queue.friendlyAssignedUsername(queueItem))}}" data-ng-click="$event.stopPropagation()" target="_blank">{{queue.friendlyAssignedName(queueItem)}}</a></div>\n' +
+    '        <div class="ellipsis"><span class="fa fa-fw fa-user"></span>&nbsp;{{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
@@ -524,12 +524,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </ul>\n' +
     '    <div data-ng-if="queue.shouldShowTeams()" class="teams-container">\n' +
     '      <hr/>\n' +
-    '      <h5>Teams</h5>\n' +
-    '      <ul data-ng-if="queue.hasTeamsKapp()" class="list-unstyled">\n' +
-    '        <li><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></a></li>\n' +
-    '        <li><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></a></li>\n' +
-    '      </ul>\n' +
-    '      <ul data-ng-if="!queue.hasTeamsKapp()" class="list-unstyled">\n' +
+    '      <h5 data-ng-if="!queue.hasTeamsKapp()">{{queue.filterName}} Team</h5>\n' +
+    '      <h5 data-ng-if="queue.hasTeamsKapp()"><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">{{queue.filterName}} Team</a></h5>\n' +
+    '      <ul class="list-unstyled">\n' +
     '        <li>Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></li>\n' +
     '        <li>Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></li>\n' +
     '      </ul>\n' +
