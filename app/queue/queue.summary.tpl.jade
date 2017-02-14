@@ -118,8 +118,10 @@
       .col-xs-2(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
         div(uib-dropdown="")
           button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",uib-dropdown-toggle="")
-            | Add&nbsp;
-            span.caret
+            span.hidden-xs Add&nbsp;
+            span.hidden-xs.caret
+            span.visible-xs
+              span.fa.fa-fw.fa-plus
           ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}

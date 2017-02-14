@@ -472,7 +472,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '      <div data-ng-if="details.isOpen() &amp;&amp; details.canHaveSubtasks()" class="col-xs-2">\n' +
     '        <div uib-dropdown="">\n' +
-    '          <button id="subtasks" type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle">Add&nbsp;<span class="caret"></span></button>\n' +
+    '          <button id="subtasks" type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" uib-dropdown-toggle="" class="btn btn-warning btn-block dropdown-toggle"><span class="hidden-xs">Add&nbsp;</span><span class="hidden-xs caret"></span><span class="visible-xs"><span class="fa fa-fw fa-plus"></span></span></button>\n' +
     '          <ul uib-dropdown-menu="" role="menu" aria-labelledby="subtasks" class="dropdown-menu dropdown-menu-right dropdown-mobile">\n' +
     '            <li role="menuitem" data-ng-repeat="task in vm.subtasks"><a data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})">{{task.name}}</a></li>\n' +
     '          </ul>\n' +
