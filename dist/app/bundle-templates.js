@@ -65,33 +65,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container-fluid"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('core/kinetic.header.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -172,6 +145,33 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="alert alert-warning"> \n' +
     '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container-fluid"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -298,13 +298,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '</div>\n' +
     '<div class="row">\n' +
-    '  <div data-ng-if="list.items.length &lt; 1" class="row"> \n' +
+    '  <div data-ng-if="list.items.length &lt; 1 &amp;&amp; queue.filterName !== \'__show__\'" class="row">\n' +
     '    <div class="col-xs-12 center-items">\n' +
     '      <div><img data-ng-src="{{queue.imagePath(\'happy-wally.png\')}}"/></div>\n' +
     '      <div><strong>An empty queue is a happy queue.</strong></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0" data-ng-class="{\'hidden-xs\': !queue.shouldShowList(), \'hidden-sm\': !queue.shouldShowList() }" fixed-height="" fh-bottom-pad="70" class="col-sm-12 col-md-4">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\'" data-ng-class="{\'hidden-xs\': !queue.shouldShowList(), \'hidden-sm\': !queue.shouldShowList() }" fixed-height="" fh-bottom-pad="70" class="col-sm-12 col-md-4">\n' +
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <queue-card data-queue-item="item" list-view="true"></queue-card></a>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -315,7 +315,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0" class="col-sm-12 col-md-8">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\'" class="col-sm-12 col-md-8">\n' +
     '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': queue.shouldShowList(), \'hidden-sm\': queue.shouldShowList() }">\n' +
     '      <div class="row">\n' +
     '        <div class="col-xs-12 center-items">\n' +
@@ -508,12 +508,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <button type="button" data-ng-click="queue.showList()" class="btn btn-primary btn-xs visible-xs"><span class="fa fa-mail-forward"></span></button>\n' +
     '    <div class="form-group">\n' +
     '      <label><strong>Team:</strong></label><br/>\n' +
-    '      <div uib-dropdown="" style="width: 100%;" class="btn-group">\n' +
-    '        <button type="button" uib-dropdown-toggle="" class="btn btn-default">{{queue.filterName || \'Choose Team\'}}&nbsp;<span class="caret"></span></button>\n' +
-    '        <ul uib-dropdown-menu="uib-dropdown-menu" role="menu" class="dropdown-menu">\n' +
-    '          <li role="menuitem" data-ng-repeat="filter in queue.filters"><a href="" data-ui-sref="queue.by({filterName: filter.name, filterType: \'Open\'})" data-ui-sref-opts="{reload:true}">{{filter.name}}</a></li>\n' +
-    '        </ul>\n' +
-    '      </div>\n' +
+    '      <select data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control">\n' +
+    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose Team</option>\n' +
+    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'__show__\'" value="__show__">Choose Team</option>\n' +
+    '        <option data-ng-repeat="filter in queue.filters | filter:{visible: true}" ng-selected="queue.isSelectedFilter(filter)" value="{{filter.name}}">{{filter.name}}</option>\n' +
+    '      </select>\n' +
     '    </div>\n' +
     '    <ul data-ng-if="queue.filterName" class="nav nav-pills nav-stacked">\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Open\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +

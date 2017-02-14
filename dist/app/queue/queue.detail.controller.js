@@ -27,6 +27,9 @@
     function activate() {
       queue.showDetails();
       list.activeItem = item.id;
+      if(queue.filterName === '__show__') {
+        list.items = [item];
+      }
     }
 
     function isOpen() {

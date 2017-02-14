@@ -47,6 +47,8 @@
     queue.filterChangeCount = filterChangeCount;
     queue.isChildState = isChildState;
     queue.isFilterActive = isFilterActive;
+    queue.isSelectedFilter = isSelectedFilter;
+    queue.filterIsSelectable = filterIsSelectable;
 
     queue.shouldShowFilters = shouldShowFilters;
     queue.shouldShowList = shouldShowList;
@@ -60,7 +62,18 @@
     activate();
 
     function changeFilter() {
-      $state.go('queue.by', {filterName:queue.filterName}, {reload:true});
+      $state.go('queue.by', {filterName:queue.filterName, filterType: 'Open'}, {reload:true});
+    }
+
+    function filterIsSelectable() {
+      return queue.filterName && queue.filterName !== '__show__';
+    }
+
+    function isSelectedFilter(filter) {
+      if(filter.name !== '__show__') {
+        return filter.name === queue.filterName;
+      }
+      return false;
     }
 
     function friendlyDetails(item) {
@@ -86,7 +99,12 @@
     }
 
     function shouldShowTeams() {
-      return queue.filterName && queue.filterName !== 'Mine' && queue.filterName !== 'All';
+      var invalid_teams = [
+        'Mine',
+        'All',
+        '__show__'
+      ];
+      return queue.filterName && invalid_teams.indexOf(queue.filterName) === -1;
     }
 
     function showList() {

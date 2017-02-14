@@ -80,7 +80,8 @@
                   field: 'values[Assigned Individual]',
                   value: '${me}'
                 }
-              ]
+              ],
+              visible: true
             }
           ];
 
@@ -98,7 +99,8 @@
                   field: 'values[Assigned Team]',
                   value: team
                 }
-              ]
+              ],
+              visible: true
             };
             filters.push(teamFilter);
             teamOrder++;
@@ -108,10 +110,17 @@
             filters.push({
               name: 'All',
               order: filters.length,
-              qualifications: [
-              ]
+              qualifications: [],
+              visible: true
             });
           }
+
+          filters.push({
+            name: '__show__',
+            order: filters.length,
+            qualifications: [],
+            visible: false
+          });
 
           return filters;
 
@@ -204,7 +213,10 @@
             filter: ["filters", "filterName", function(filters, filterName) {
               return _.find(filters, {name: filterName});
             }],
-            openItems: ["Submission", "ItemsService", "currentKapp", "currentUser", "filter", function(Submission, ItemsService, currentKapp, currentUser, filter) {
+            openItems: ["Submission", "ItemsService", "currentKapp", "currentUser", "filter", "$q", function(Submission, ItemsService, currentKapp, currentUser, filter, $q) {
+              if(filter.name === '__show__') {
+                return $q.resolve([]);
+              }
               var openQualification = {
                 field: 'values[Status]',
                 value: '${openStatuses}'
