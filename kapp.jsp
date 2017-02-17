@@ -7,6 +7,7 @@
     <!-- Specify content width scale for mobile devices and let the magic begin -->
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 
+    <!-- Kinops Favicons -->
     <!-- Chrome Toolbar Color -->
     <meta content='#ff7700' name='theme-color'>
     <meta content='yes' name='mobile-web-app-capable'>
@@ -28,7 +29,7 @@
     <meta content='#ff7700' name='msapplication-TileColor'>
     <meta content='no' name='msapplication-tap-highlight'>
     <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
-    
+
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="${bundle.location}/dist/vendors/vendors.css">
     <!-- endinject -->
@@ -103,6 +104,7 @@
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
     <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
@@ -116,7 +118,6 @@
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>
