@@ -32,12 +32,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/foo.html',
-    '\n' +
-    '<h1>lksjdflksjflksjf</h1>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -151,7 +145,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('layout/layout.protected.tpl.html',
     '\n' +
     '<main>\n' +
-    '  <div data-ui-view="" class="container-fluid"></div>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
     '</main>');
 }]);
 
