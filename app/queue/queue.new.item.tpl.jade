@@ -1,9 +1,13 @@
+h3 Create New Queue Item
+
+.alert.alert-warning
+  | #[strong Warning!] This list is just temporary.
 .row
   .col-xs-12(data-ng-class="{'col-md-4': vm.isFormLoaded()}")
     .list-group
       a.list-group-item(href="",data-ng-repeat="form in vm.forms",data-ng-click="vm.loadForm(form)")
         h4.list-group-item-heading {{form.name}}
-        p.list-group-item-text {{form.description || 'A ' + vm.queueType + ' form.'}}
+        p(data-ng-if="form.description") {{form.description}}
   .col-xs-12.col-md-8
     h3 {{vm.loadedForm.name}}
     #formContainer

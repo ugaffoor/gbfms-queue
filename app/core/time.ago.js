@@ -1,9 +1,12 @@
 (function() {
   'use strict';
 
-  angular
-    .module('kd.core')
-    .directive('timeAgo', timeAgo);
+  // If Response is not enabled, then include this directive, since the names collide right now.
+  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.response)) {
+    angular
+      .module('kd.core')
+      .directive('timeAgo', timeAgo);
+  }
 
   /* @ngInject */
   function timeAgo(moment, $interval) {
@@ -21,14 +24,19 @@
 
     // The link function sets the text of the element to the '2 days ago' format and sets up the
     // bootstrap tooltip that shows the actual date/time string.
-    function link(scope, element) {
+    function link(scope, element, attributes) {
       var applyTimeAgo = function() {
+        var prefixText = 'Due';
+        if(!_.isEmpty(attributes.timeAgoPrefix)) {
+          prefixText = attributes.timeAgoPrefix;
+        }
+
         if(typeof scope.timeAgo === 'undefined' || scope.timeAgo === null) {
           element.text('N/A');
         } else {
           var m = moment(scope.timeAgo);
-          element.text('Due ' + m.fromNow());
-          element.attr('title', m.format('MMMM Do YYYY, h:mm:ss A'));
+          element.text(prefixText + ' ' + m.fromNow());
+          element.attr('title', prefixText + ' ' + m.format('MMMM Do YYYY, h:mm:ss A'));
           element.attr('data-toggle', 'tooltip');
           $(element).tooltip();
         }

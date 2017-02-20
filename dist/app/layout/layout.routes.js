@@ -13,11 +13,11 @@
 
       // Only resolve items which can be accessed anonymously.
       resolve: {
-        kappSlug: ["ConfigStore", function(ConfigStore) {
-          return ConfigStore.get('kappSlug');
+        kappSlug: ["Bundle", function(Bundle) {
+          return Bundle.kappSlug();
         }],
-        kappName: ["ConfigStore", function(ConfigStore) {
-          return ConfigStore.get('kappName');
+        kappName: ["Bundle", function(Bundle) {
+          return Bundle.kappSlug();
         }]
       },
 
@@ -55,26 +55,23 @@
         currentKapp: ["KappModel", "kappSlug", function(KappModel, kappSlug) {
           return KappModel.build().one(kappSlug).get({include:'details,attributes'});
         }],
-        currentUser: ["$http", "$q", "ConfigStore", function($http, $q, ConfigStore) {
-          var deferred = $q.defer();
-
-          $http.get(ConfigStore.get('apiBaseUrl') + '/me').then(
+        currentUser: ["$http", "$q", "Bundle", function($http, $q, Bundle) {
+          return $http.get(Bundle.apiLocation() + '/me?include=attributes,profileAttributes,memberships,memberships.team').then(
             function(response) {
-              deferred.resolve(response.data);
-            },
-            function(error) {
-              deferred.reject(error);
+              return response.data;
             }
           );
-
-          return deferred.promise;
         }],
 
         // These helpers are used by the "setup" in the kapp feature.
         spaceConfigResolver: ["currentUser", "currentSpace", "$state", function(currentUser, currentSpace, $state) {
-          return function(attributeKey) {
+          return function(attributeKey, shouldFail) {
+            if(typeof shouldFail !== 'boolean') {
+              shouldFail = true;
+            }
+
             var attribute = _.find(currentSpace.attributes, {name:attributeKey});
-            if(_.isEmpty(attribute)) {
+            if(shouldFail && _.isEmpty(attribute)) {
               if(currentUser.spaceAdmin) {
                 $state.go('setup');
               } else {
@@ -86,10 +83,15 @@
           };
         }],
         kappConfigResolver: ["currentUser", "currentKapp", "$state", function(currentUser, currentKapp, $state) {
-          return function(attributeKey) {
+          return function(attributeKey, shouldFail) {
+            if(typeof shouldFail !== 'boolean') {
+              shouldFail = true;
+            }
+
             var attribute = _.find(currentKapp.attributes, {name:attributeKey});
-            if(_.isEmpty(attribute) || _.isEmpty(attribute.values)) {
+            if(shouldFail && (_.isEmpty(attribute) || _.isEmpty(attribute.values))) {
               if(currentUser.spaceAdmin) {
+                console.log('Missing attribute: ' + attributeKey)
                 $state.go('setup');
               } else {
                 $state.go('error.setup');

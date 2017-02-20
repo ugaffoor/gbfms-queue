@@ -1,36 +1,139 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title {{vm.item.label}}
+    h5.panel-title.visible-sm.visible-xs 
+      button.btn.btn-primary.btn-xs(href="",data-ng-click="queue.showList()")
+        span.fa.fa-fw.fa-reply
+      | &nbsp;{{vm.item.label}} 
+      span.pull-right ({{queue.friendlyStatus(vm.item)}})
+    h5.panel-title.hidden-sm.hidden-xs 
+      | &nbsp;{{vm.item.label}} 
+      span.pull-right ({{queue.friendlyStatus(vm.item)}})
   .panel-body
     .row
-      .col-xs-6
-        span.fa.fa-fw.fa-flag
-        | &nbsp;{{queue.friendlyStatus(vm.item)}}
-      .col-xs-6
-        .ellipsis
-          span.fa.fa-fw.fa-users
-          | &nbsp;{{queue.friendlyAssignedGroup(vm.item)}}
-    .row
-      .col-xs-6
+      .col-xs-12
         span.fa.fa-fw.fa-calendar
         | &nbsp;
-        span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}")
+        span(data-time-ago="vm.item.createdAt",time-ago-prefix="Created")
+        a.btn.btn-xs.btn-default.pull-right(data-ng-if="vm.showQueueIcon()",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") Q
+        a.btn.btn-xs.btn-default.pull-right(data-ng-if="vm.showRequestIcon()",href="{{vm.originLink()}}",target="_blank") K
+    .row
+      .col-xs-12
+        span.fa.fa-fw.fa-calendar
+        | &nbsp;
+        span(data-time-ago="vm.item.updatedAt",time-ago-prefix="Updated")
+    .row
       .col-xs-6
-        .ellipsis
-          span.fa.fa-fw.fa-user
-          | &nbsp;{{queue.friendlyAssignedName(vm.item)}}
+        span.fa.fa-fw.fa-clock-o
+        | &nbsp;
+        span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}")
+    .row
+      .col-xs-12
+        span.fa.fa-fw.fa-users
+        span.ellipsis(data-ng-if="!vm.isAssigningTeam")
+          | &nbsp;
+          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startTeamAssignment()") {{queue.friendlyAssignedTeam(vm.item)}}
+          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedTeam(vm.item)}}
+        .selection(data-ng-if="vm.isAssigningTeam")
+          a(href="",data-ng-click="vm.stopTeamAssignment()") Cancel
+          input.form-control#team-selector(
+            type="text",ng-model="selected",
+            uib-typeahead="team.label for team in vm.allTeams | filter:$viewValue | limitTo:8",
+            typeahead-min-length="0",
+            typeahead-editable="false",
+            typeahead-on-select="vm.teamSelected($item)",
+            data-ng-disabled="vm.isLoading")
+        | &gt;&nbsp;
+        span.ellipsis(data-ng-if="!vm.isAssigningMember")
+          a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startMemberAssignment()") {{queue.friendlyAssignedName(vm.item)}}
+          span(data-ng-if="!details.isOpen(vm.item)") {{queue.friendlyAssignedName(vm.item)}}
+        .selection(data-ng-if="vm.isAssigningMember")
+          a(href="",data-ng-click="vm.stopMemberAssignment()") Cancel
+          input.form-control#member-selector(
+            type="text",
+            data-ng-model="selected",
+            uib-typeahead="member.displayName for member in vm.membersForTeam | filter: $viewValue | limitTo:8",
+            typeahead-min-length="0",
+            typeahead-editable="false",
+            typeahead-on-select="vm.memberSelected($item)",
+            data-ng-disabled="vm.isLoading")
+    .row
+      .col-xs-12(data-ng-if="vm.notes.length > 0")
+        span.fa.fa-fw.fa-comment-o
+        a(href="",data-ng-click="vm.toggleNotes()")
+          | &nbsp;Notes ({{vm.notes.length}})
+          span.fa.fa-fw(data-ng-class="{'fa-caret-right': !vm.showNotes, 'fa-caret-down': vm.showNotes}")
+        .row.row-note(data-ng-if="vm.showNotes",data-ng-repeat="note in vm.notes | orderBy:'-updatedAt'")
+          .col-xs-1
+            gravatar.center-block.img-circle(email="{{note.createdBy}}",width="30",height="30")
+          .col-xs-11
+            .row
+              .col-xs-12
+                span
+                  strong {{note.submittedBy}}&nbsp;
+                span(data-time-ago="note.createdAt",time-ago-prefix="-")
+            .row
+              .col-xs-12
+                | {{queue.friendlySummary(note)}}
+          //.row
+            .col-xs-6
+              | {{note.submittedBy}}
+            .col-xs-6
+              span(data-time-ago="note.createdAt",time-ago-prefix="Posted")
+          //.row
+            .col-xs-12
+              | {{queue.friendlySummary(note)}}
+    .row
+      .col-xs-12
+        .well-details {{queue.friendlySummary(vm.item)}}
     .row(data-ng-if="queue.hasDetails(vm.item)")
       .col-xs-12
         .well.well-details {{queue.friendlyDetails(vm.item)}}
-.row(data-ng-if="details.isMine()")
-  .col-xs-6
-    button.btn.btn-primary.btn-block(data-ui-sref="queue.by.details.work") Work It
-  .col-xs-6
-    button.btn.btn-warning.btn-block(data-ui-sref="queue.by.details.assignment") Reassign It
-.row(data-ng-if="!details.isMine()")
-  .col-xs-6
-    button.btn.btn-primary.btn-block(data-ng-click="details.grabIt()") Grab It
-  .col-xs-6
-    button.btn.btn-warning.btn-block(data-ui-sref="queue.by.details.assignment") Assign It
-  
-    
+    .row(data-ng-if="queue.hasCompleted(vm.item) && !details.isOpen()")
+      .col-xs-12
+        h5.item-header Resolution
+        .well.well-details {{queue.friendlyCompleted(vm.item)}}
+    .rows.row-cards(data-ng-if="queue.hasDiscussion(vm.item)")
+      .col-xs-12
+        h5.item-header Discussion
+        response-server(base="vm.responseServer", watch-issue="vm.item.values['Response GUID']")
+          issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true")
+    .row(data-ng-if="!details.isMine() && details.isOpen()")
+      .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
+        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss")
+          span(data-ng-if="queue.hasDiscussion(vm.item)") Join It
+          span(data-ng-if="!queue.hasDiscussion(vm.item)") Discuss It
+      div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
+        button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
+    .row
+      .col-xs-12
+        div(data-ui-view="")
+    .row(data-ng-if="details.isMine() && details.isOpen()")
+      div(data-ng-if="queue.canDiscuss(vm.item)",data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen())}")
+        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.discuss")
+          span(data-ng-if="queue.hasDiscussion(vm.item)") Join It
+          span(data-ng-if="!queue.hasDiscussion(vm.item)") Discuss It
+      div(data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen() && queue.canDiscuss(vm.item)), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen()) && queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item) && (!details.canHaveSubtasks() || !details.isOpen()), 'col-xs-10': details.canHaveSubtasks() && details.isOpen() && !queue.canDiscuss(vm.item)}")
+        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
+          div(data-ng-if="details.isMine() && details.isOpen()") Work It
+      .col-xs-2(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
+        div(uib-dropdown="")
+          button.btn.btn-warning.btn-block.dropdown-toggle#subtasks(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",uib-dropdown-toggle="")
+            span.hidden-xs Add&nbsp;
+            span.hidden-xs.caret
+            span.visible-xs
+              span.fa.fa-fw.fa-plus
+          ul.dropdown-menu.dropdown-menu-right.dropdown-mobile(uib-dropdown-menu="",role="menu",aria-labelledby="subtasks")
+            li(role="menuitem",data-ng-repeat="task in vm.subtasks")
+              a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
+    .row(data-ng-if="!details.isOpen()")
+      .col-xs-6
+        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work") Review It
+
+
+.row.row-cards(data-ng-if="vm.relatedItems.length > 0")
+  .col-xs-12
+    h5.item-header Related Items
+    .row(data-ng-repeat="child in vm.relatedItems | orderBy:'-updatedAt'")
+      .col-xs-12
+        .panel.panel-card
+          queue-card(data-queue-item="child", data-response-server="vm.responseServer")

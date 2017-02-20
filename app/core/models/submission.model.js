@@ -10,7 +10,8 @@
     $log.info('{Model} Defining "Submission" model.');
     var factory = {
       search: search,
-      build: build
+      build: build,
+      save: save
     };
     return factory;
 
@@ -30,6 +31,34 @@
     function search(kapp, form) {
       var searcher = new SubmissionSearch(kapp, form);
       return searcher;
+    }
+
+    function save(submission) {
+      var SUBFORMS = ['Subtasks', 'Notes'];
+      var DONT_SEND = ['children', 'closedAt', 'closedBy', 'coreState', 'createdAt', 'createdBy', 'currentPage', 'id',
+                       'label', 'origin', 'parent', 'sessionToken', 'submittedAt', 'submittedBy', 'type', 'updatedAt', 'updatedBy'];
+      var id = submission.id;
+      var page = submission.currentPage;
+
+      _.each(SUBFORMS, function(fieldName) {
+        var value = submission.values[fieldName];
+
+        if(value === null) {
+          value = [];
+        }
+
+        if(value instanceof Array) {
+          value = JSON.stringify(value);
+        }
+        submission.values[fieldName] = value;
+      });
+
+      // Cull off the fields that submission's cannot have:
+      _.each(DONT_SEND, function(fieldName) {
+        delete submission[fieldName];
+      });
+
+      return submission.customPOST(submission, id, {'page':page,'staged':true});
     }
 
     function SubmissionSearch(kapp, form) {
@@ -75,7 +104,7 @@
         return doCompileQueryString(self.query, '', true);
       };
 
-      var doCompileQueryString = function(queryContext, queryString, and) {
+      function doCompileQueryString(queryContext, queryString, and) {
         and = !!and;
         for(var i=0; i<queryContext.length;i++) {
           var op = queryContext[i];
@@ -84,7 +113,11 @@
           }
           switch(op.op) {
             case 'eq':
-              queryString += op.lvalue + ' = "' + op.rvalue + '"';
+              if(typeof op.rvalue === 'string' && op.rvalue === '') {
+                queryString += op.lvalue + ' = null';
+              } else {
+                queryString += op.lvalue + ' = "' + op.rvalue + '"';
+              }
               break;
             case 'in':
               queryString += op.lvalue + ' IN (';
@@ -200,7 +233,7 @@
 
       self.sortDirection = function(direction) {
         validateOuter('Sorting cannot be nested.');
-        if(direction !== 'ASC' || direction !== 'DESC') {
+        if(direction !== 'ASC' && direction !== 'DESC') {
           throw new Error('Invalid sort direction: ' + direction);
         }
 
@@ -218,6 +251,22 @@
         validateOuter('Core State cannot be nested');
         self.searchMeta.coreState = coreState;
         return self;
+      };
+
+      self.startDate = function(startDate) {
+        validateOuter('Start Date cannot be nested.');
+        if(!(startDate instanceof Date)) {
+          throw new Error('Start Date must be a Date object.');
+        }
+        self.searchMeta.start = startDate.toISOString();
+      };
+
+      self.endDate = function(endDate) {
+        validateOuter('End Date cannot be nested.');
+        if(!(endDate instanceof Date)) {
+          throw new Error('End Date must be a Date object.');
+        }
+        self.searchMeta.end = endDate.toISOString();
       };
 
       self.limit = function(limit) {

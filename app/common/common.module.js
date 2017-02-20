@@ -8,6 +8,7 @@
     'ui.bootstrap',
     'restangular',
     'ngLetterAvatar',
+    'angular-md5',
     'dndLists'
   ]);
 })();

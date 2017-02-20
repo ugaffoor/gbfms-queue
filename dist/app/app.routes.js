@@ -17,7 +17,7 @@
           controller: ["AuthenticationService", "$state", function(AuthenticationService, $state) {
             AuthenticationService.retrieveCurrentUser().then(
               function() {
-                $state.go('queue.by', {filterName: '__default__'});
+                $state.go('queue.by', {filterName: '__default__', filterType: 'Open'});
               },
               function() {
                 $state.go('login');

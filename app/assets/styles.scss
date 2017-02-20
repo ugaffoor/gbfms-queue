@@ -1,6 +1,10 @@
 // Pad the top of the body so that the navbar doesn't overlap it.
 body {
-  padding-top: 80px;
+  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+}
+
+.app-container {
+  padding-top: 1em;
 }
 
 .filter-name-edit {
@@ -9,6 +13,11 @@ body {
 
 .queue-pager {
   margin: 0px;
+}
+
+
+.kapp-name {
+  padding-left: 4px;
 }
 
 @import "scss/draggables";

@@ -1,8 +1,7 @@
-.panel.panel-primary
+.panel.panel-default.row-cards
   .panel-heading
-    h5.panel-title {{vm.item.label}}
+    | {{vm.isReviewing() ? 'Reviewing' : 'Working'}}&hellip;
+    button.pull-right.btn.btn-xs.btn-default(data-ui-sref="queue.by.details.summary")
+      span.fa.fa-fw.fa-times
   .panel-body
-    div(data-ng-if="!details.isMine()")
-      h4 Current {{queue.queueType}} is not assigned to you.
-      a.btn.btn-block.btn-primary(data-ng-click="details.grabIt()") Grab It
     #workContainer

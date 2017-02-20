@@ -1,0 +1,47 @@
+nav.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      //-a.navbar-brand(data-ui-sref="queue.by({filterName: '__default__'})",data-ui-sref-opts="{reload:true}") {{layout.kapp.name}}
+      a.navbar-brand(href="{{header.kappUrl(header.kapp)}}") 
+        span.fa.fa-fa.fa-home
+        | &nbsp;{{header.kapp.name}}
+    div.navbar-collapse.collapse#navbar
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href="")
+            span.fa.fa-fw.fa-folder-open-o
+        li
+          a(href="")
+            span.fa.fa-fw.fa-envelope-o
+        li
+          a(href="")
+            span.fa.fa-fw.fa-bell-o
+        li.dropdown
+          a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")
+            i.hidden-xs.fa.fa-fw.fa-ellipsis-h
+            i.visible-xs Kapps
+          ul.dropdown-menu
+            li(data-ng-repeat="kapp in header.kapps")
+              a.kapp-select(href="{{header.kappUrl(kapp)}}")
+                span.fa.fa-fw(data-ng-class="header.kappIcon(kapp)")
+                span.kapp-name {{kapp.name}}
+            li.divider(data-ng-if="header.isSpaceAdmin()")
+            li(data-ng-repeat="adminLink in header.adminLinks")
+              a(data-ng-if="adminLink.visibility()",href="",data-ui-sref="{{adminLink.sref}}")
+                span.fa.fa-fw.fa-wrench
+                span {{adminLink.title}}
+            li
+              a(data-ng-if="header.isSpaceAdmin()",href="{{header.managementUrl()}}",target="_blank")
+                span.fa.fa-fw.fa-dashboard
+                span Management Console
+        li
+          a(href="")
+            | {{header.currentUser.username}}
+            gravatar(email="{{header.currentUser.email}}")
+
+  
