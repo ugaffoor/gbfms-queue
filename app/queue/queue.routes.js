@@ -48,8 +48,9 @@
         },
         queueGroupBase: function(kappConfigResolver, AssignmentService) {
           var queueGroupBase = kappConfigResolver('Queue Group Base', false);
-          AssignmentService.setAssignmentBase(queueGroupBase.values[0]);
-          return queueGroupBase.values[0];
+          var groupBaseValue = angular.isDefined(queueGroupBase) ? queueGroupBase.values[0] : '';
+          AssignmentService.setAssignmentBase(groupBaseValue);
+          return groupBaseValue;
         },
         queueResponseServer: function(spaceConfigResolver) {
           var queueResponseServer = spaceConfigResolver('Response Server Url', false);
