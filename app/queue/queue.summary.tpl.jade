@@ -1,13 +1,13 @@
 .panel.panel-primary
   .panel-heading
-    h5.panel-title.visible-sm.visible-xs 
+    h5.panel-title.visible-sm.visible-xs
       button.btn.btn-primary.btn-xs(href="",data-ng-click="queue.showList()")
         span.fa.fa-fw.fa-reply
       | &nbsp;{{vm.item.label}} 
-      span.pull-right ({{queue.friendlyStatus(vm.item)}})
+      small.pull-right.text-muted ({{queue.friendlyStatus(vm.item)}})
     h5.panel-title.hidden-sm.hidden-xs 
       | &nbsp;{{vm.item.label}} 
-      span.pull-right ({{queue.friendlyStatus(vm.item)}})
+      small.pull-right.text-muted ({{queue.friendlyStatus(vm.item)}})
   .panel-body
     .row
       .col-xs-12

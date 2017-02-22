@@ -206,7 +206,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </response-server>\n' +
     '  </div>\n' +
     '  <div data-ng-if="!isResponse()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
-    '    <h5>{{queueItem.label}}&nbsp;<span data-ng-if="!isSummary()" class="pull-right">({{queue.friendlyStatus(queueItem)}})</span></h5>\n' +
+    '    <h5>{{queueItem.label}}&nbsp;<small data-ng-if="!isSummary()" class="pull-right">({{queue.friendlyStatus(queueItem)}})</small></h5>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.createdAt" time-ago-prefix="Created"></span></div>\n' +
     '    </div>\n' +
@@ -270,7 +270,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title">\n' +
-    '      <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}}<span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '      <button type="button" data-ui-sref="queue.by.details.summary" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}}<small class="pull-right">({{queue.friendlyStatus(vm.item)}})</small>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -363,12 +363,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title visible-sm visible-xs"> \n' +
-    '      <button href="" data-ng-click="queue.showList()" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}} <span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '    <h5 class="panel-title visible-sm visible-xs">\n' +
+    '      <button href="" data-ng-click="queue.showList()" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.label}} <small class="pull-right text-muted">({{queue.friendlyStatus(vm.item)}})</small>\n' +
     '    </h5>\n' +
     '    <h5 class="panel-title hidden-sm hidden-xs">\n' +
     '       \n' +
-    '      &nbsp;{{vm.item.label}} <span class="pull-right">({{queue.friendlyStatus(vm.item)}})</span>\n' +
+    '      &nbsp;{{vm.item.label}} <small class="pull-right text-muted">({{queue.friendlyStatus(vm.item)}})</small>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -508,7 +508,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <option data-ng-repeat="filter in queue.filters | filter:{visible: true}" ng-selected="queue.isSelectedFilter(filter)" value="{{filter.name}}">{{filter.name}}</option>\n' +
     '      </select>\n' +
     '    </div>\n' +
-    '    <ul data-ng-if="queue.filterName" class="nav nav-pills nav-stacked">\n' +
+    '    <ul data-ng-if="queue.filterName" class="nav nav-stacked">\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Open\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Past Due\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Past Due\'})">Past Due&nbsp;<span class="pull-right badge">{{queue.stats.pastDue}}</span></a></li>\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Due Today\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +

@@ -5,6 +5,14 @@ body{
 .navbar-default{
   background-color: #fff;
 }
+
+.btn {
+  background-color: $tertiary;
+  border-width: 0;
+  &:hover {
+    text-decoration: none;
+  }
+}
 .setup-tab {
   margin-top: 1em;
 }
@@ -13,8 +21,8 @@ body{
 .list-group-item:last-child{
 border-radius: 0;
 }
-.active-item {
-  border-left: 2px solid #337ab7;
+.active-item.list-group-item {
+  border-left: 2px solid #313E47;
   background-color: #F0F0F0;
 }
 .dropdown-mobile {
@@ -53,6 +61,26 @@ select, select.form-control{
   padding-left: 1em;
 }
 
+.panel-primary{
+  border: none;
+  background-color: $white;
+  box-shadow: 0 1px 2px rgba($primary,0.14);
+  > .panel-heading{
+    background-color: #f0f3f5;
+    border-color: rgba($lightgray, 0.5);
+    color: $primary;
+    > .panel-title{
+        > a,
+        > small,
+        > .small,
+        > small > a,
+        > .small > a{
+          color: $gray;
+        }
+    }
+  }
+
+}
 .panel-card {
   padding: 0.5em;
   cursor: pointer;
@@ -80,7 +108,7 @@ select, select.form-control{
 }
 
 .item-header {
-  color: #337ab7;
+  color: $primary;
   padding-bottom: 8px;
   border-bottom-style: solid;
   border-bottom-width: 2px;
@@ -90,4 +118,15 @@ select, select.form-control{
   padding-top: 5px;
   padding-bottom: 5px;
   border-bottom: 1px inset;
+}
+.nav-stacked{
+  margin-bottom: 1em;
+  > li.active{
+    text-decoration: none;
+    background-color: $white;
+    border-bottom: 1px solid $lightgray;
+  }
+  > li > a:hover, > li > a:focus{
+    background-color: $white;
+  }
 }

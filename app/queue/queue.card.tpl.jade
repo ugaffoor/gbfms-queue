@@ -4,7 +4,7 @@ div
       issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser")
   div(data-ng-if="!isResponse()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
     h5 {{queueItem.label}}&nbsp;
-      span.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
+      small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
     .row
       .col-xs-12
         span.fa.fa-fw.fa-calendar
