@@ -142,33 +142,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.assignment.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -524,7 +497,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <li>Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></li>\n' +
     '      </ul>\n' +
     '    </div>\n' +
-    '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-success">New</button>\n' +
+    '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-tertiary">New</button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-sm-10">\n' +
     '    <div data-ui-view=""></div>\n' +
@@ -543,6 +516,33 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
