@@ -32,6 +32,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('catalog/foo.html',
+    '\n' +
+    '<h1>lksjdflksjflksjf</h1>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -139,6 +145,33 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="alert alert-warning"> \n' +
     '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -298,16 +331,44 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.new.item.tpl.html',
     '\n' +
-    '<h3>Create New Queue Item</h3>\n' +
-    '<div class="alert alert-warning"><strong>Warning!</strong> This list is just temporary.</div>\n' +
-    '<div class="row">\n' +
-    '  <div data-ng-class="{\'col-md-4\': vm.isFormLoaded()}" class="col-xs-12">\n' +
-    '    <div class="list-group"><a href="" data-ng-repeat="form in vm.forms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
-    '        <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
-    '        <p data-ng-if="form.description">{{form.description}}</p></a></div>\n' +
+    '<div class="list-group"><a href="" data-ng-repeat="form in vm.filteredForms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
+    '    <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
+    '    <p data-ng-if="form.description">{{form.description}}</p></a>\n' +
+    '  <div data-ng-if="vm.filteredForms.length &lt; 1 &amp;&amp; vm.activeTeam === \'\'" class="list-group-item">\n' +
+    '    <h4 class="list-group-item-heading">Select a team</h4>\n' +
+    '    <p>Once you select a team you will see a list of work items available.</p>\n' +
     '  </div>\n' +
-    '  <div class="col-xs-12 col-md-8">\n' +
-    '    <h3>{{vm.loadedForm.name}}</h3>\n' +
+    '  <div data-ng-if="vm.filteredForms.length &lt; 1 &amp;&amp; vm.activeTeam !== \'\'" class="list-group-item">\n' +
+    '    <h4 class="list-group-item-heading">No work items available.</h4>\n' +
+    '    <p>The currently selected team does not have any work items available.</p>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('queue/queue.new.list.tpl.html',
+    '\n' +
+    '<h3 data-ng-if="!createList.isFormLoaded()">Start new work item</h3>\n' +
+    '<h3 data-ng-if="createList.isFormLoaded()">{{createList.loadedForm.name}}\n' +
+    '  <button href="" data-ng-click="createList.unloadForm()" class="btn btn-xs btn-link"><small>Cancel</small></button>\n' +
+    '</h3>\n' +
+    '<div class="row">\n' +
+    '  <div data-ng-hide="createList.isFormLoaded()" class="col-sm-3 col-xs-12">\n' +
+    '    <ul class="nav nav-pills nav-stacked">\n' +
+    '      <li data-ng-repeat="team in createList.myTeams" data-ui-sref-active="active"><a href="" data-ui-sref="queue.create.team({activeTeam: team})">{{team}}</a></li>\n' +
+    '    </ul>\n' +
+    '  </div>\n' +
+    '  <div data-ng-hide="createList.isFormLoaded()" class="col-sm-9 col-xs-12">\n' +
+    '    <div data-ui-view="">\n' +
+    '      <div class="list-group">\n' +
+    '        <div class="list-group-item">\n' +
+    '          <h4 class="list-group-item-heading">Select a team</h4>\n' +
+    '          <p>Once you select a team you will see a list of work items available.</p>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '  <div class="col-xs-12">\n' +
     '    <div id="formContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
@@ -516,33 +577,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {

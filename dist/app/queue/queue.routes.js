@@ -388,10 +388,31 @@
       url: '/create',
       views: {
         '': {
-          templateUrl: 'queue/queue.new.item.tpl.html',
-          controller: 'QueueNewItemController as vm'
+          templateUrl: 'queue/queue.new.list.tpl.html',
+          controller: 'QueueNewListController as createList'
         }
       }
     });
-  }
+
+    $stateProvider.state('queue.create.team', {
+      url: '/{activeTeam}',
+      views: {
+        '': {
+          templateUrl: 'queue/queue.new.item.tpl.html',
+          controller: 'QueueNewItemController as vm',
+          resolve: {
+            activeTeam: ["$stateParams", function($stateParams) {
+              return $stateParams.activeTeam;
+            }],
+            formsByTeam: ["activeTeam", "forms", function(activeTeam, forms) {
+              return _.filter(forms, function(form) {
+                var serviceOwnerTeam = _.find(form.attributes, {name: 'Service Owner Team'});
+                return angular.isDefined(serviceOwnerTeam) ? serviceOwnerTeam.values.indexOf(activeTeam) !== -1 : false;
+              });
+            }]
+          }
+        }
+      }
+    });
+  };
 }());
