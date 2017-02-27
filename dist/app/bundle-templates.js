@@ -553,11 +553,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <hr/>\n' +
     '      <h5 data-ng-if="!queue.hasTeamsKapp()">{{queue.filterName}} Team</h5>\n' +
     '      <h5 data-ng-if="queue.hasTeamsKapp()"><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">{{queue.filterName}} Team</a></h5>\n' +
-    '      <ul class="list-unstyled">\n' +
-    '        <li>Team Members&nbsp;<span class="badge">{{queue.stats.teamMembers}}</span></li>\n' +
-    '        <li>Active Members&nbsp;<span class="badge">{{queue.stats.activeMembers}}</span></li>\n' +
+    '      <ul class="list-unstyled team-memberships">\n' +
+    '        <li>Team Members&nbsp;<span class="pull-right badge">{{queue.stats.teamMembers}}</span></li>\n' +
+    '        <li>Active Members&nbsp;<span class="pull-right badge">{{queue.stats.activeMembers}}</span></li>\n' +
     '      </ul>\n' +
     '    </div>\n' +
+    '    <hr/>\n' +
     '    <button type="button" data-ui-sref="queue.create" class="btn btn-block btn-tertiary">New</button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-sm-10">\n' +

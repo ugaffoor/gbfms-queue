@@ -130,3 +130,9 @@ select, select.form-control{
     background-color: $white;
   }
 }
+
+.team-memberships{
+  > li{
+    padding: 10px 15px;
+  }
+}

@@ -145,6 +145,9 @@ select, select.form-control {
   .nav-stacked > li > a:hover, .nav-stacked > li > a:focus {
     background-color: #ffffff; }
 
+.team-memberships > li {
+  padding: 10px 15px; }
+
 /* Form Button Styles
  *-------------------------------------- */
 button, input[type='submit'], input[type='button'], .btn, .btn-primary, .btn-primary-complement, .btn-secondary, .btn-secondary-complement, .btn-tertiary, .btn-tertiary-complement, .btn-link, .btn-success {

@@ -29,13 +29,14 @@
       h5(data-ng-if="queue.hasTeamsKapp()")
         a(href="{{queue.getTeamLink(queue.filterName)}}",target="_blank") {{queue.filterName}} Team
 
-      ul.list-unstyled
+      ul.list-unstyled.team-memberships
         li
           | Team Members&nbsp;
-          span.badge {{queue.stats.teamMembers}}
+          span.pull-right.badge {{queue.stats.teamMembers}}
         li
           | Active Members&nbsp;
-          span.badge {{queue.stats.activeMembers}}
+          span.pull-right.badge {{queue.stats.activeMembers}}
+    hr
     button.btn.btn-block.btn-tertiary(type="button",data-ui-sref="queue.create") New
   .col-xs-12.col-sm-10
     div(data-ui-view="")
