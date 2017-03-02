@@ -175,6 +175,12 @@ button[data-button-type=submit-page] {
     .btn.btn-subtle:hover, .btn-subtle.btn-primary:hover, .btn-subtle.btn-primary-complement:hover, .btn-subtle.btn-secondary:hover, .btn-subtle.btn-secondary-complement:hover, .btn-subtle.btn-tertiary:hover, .btn-subtle.btn-tertiary-complement:hover, .btn-subtle.btn-link:hover, .btn-subtle.btn-success:hover {
       color: #4b4c4e; }
 
+.btn.btn-xs, .btn-xs.btn-primary, .btn-xs.btn-primary-complement, .btn-xs.btn-secondary, .btn-xs.btn-secondary-complement, .btn-xs.btn-tertiary, .btn-xs.btn-tertiary-complement, .btn-xs.btn-link, .btn-xs.btn-success {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px; }
+
 .btn[disabled], [disabled].btn-primary, [disabled].btn-primary-complement, [disabled].btn-secondary, [disabled].btn-secondary-complement, [disabled].btn-tertiary, [disabled].btn-tertiary-complement, [disabled].btn-link, [disabled].btn-success {
   background-color: #7e8083;
   color: #d5d6d7;
