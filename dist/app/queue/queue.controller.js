@@ -1,12 +1,12 @@
 ( function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "teams", "teamsKapp", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state"];
+  QueueController.$inject = ["currentKapp", "currentUser", "forms", "teams", "teamsKapp", "filters", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state", "$uibModal"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, teams, teamsKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state) {
+  function QueueController(currentKapp, currentUser, forms, teams, teamsKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state, $uibModal) {
     var STATE_MATCH_DETAILS = /queue\.by\./;
     var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
@@ -59,6 +59,7 @@
     queue.showDetails = showDetails;
 
     queue.populateStats = populateStats;
+    queue.newItemModal = newItemModal;
 
     activate();
 
@@ -251,6 +252,31 @@
         queue.stats.activeMembers = members.length;
       }
     }
+
+    function newItemModal() {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'queue/queue.new.item.modal.html',
+        controller: 'QueueNewItemModalController as vm',
+        keyboard: false,
+        backdrop: 'static',
+        resolve: {
+          currentUser: function() {
+            return currentUser;
+          },
+          activeTeam: function() {
+            return queue.filterName;
+          },
+          formsForTeam: function() {
+            var activeTeam = queue.filterName;
+            return _.filter(forms, function(form) {
+              var serviceOwnerTeam = _.find(form.attributes, {name: 'Service Owner Team'});
+              return angular.isDefined(serviceOwnerTeam) ? serviceOwnerTeam.values.indexOf(activeTeam) !== -1 : false;
+            });
+          }
+        }
+      })
+    }
+
 
     function activate() {
       // The queue list controller will broadcast that it changed the filter.

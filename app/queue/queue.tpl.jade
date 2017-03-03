@@ -37,6 +37,6 @@
           | Active Members&nbsp;
           span.pull-right.badge {{queue.stats.activeMembers}}
     hr
-    button.btn.btn-block.btn-tertiary(type="button",data-ui-sref="queue.create") New
+    button.btn.btn-block.btn-tertiary(type="button",data-ng-if="queue.shouldShowTeams()",data-ng-click="queue.newItemModal()") New
   .col-xs-12.col-sm-10
     div(data-ui-view="")

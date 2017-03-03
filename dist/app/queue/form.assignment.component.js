@@ -71,13 +71,12 @@
             }
           }).then(
             function success(response) {
-              console.log(response);
               self.membersForTeam = _.map(response.data.team.memberships, function(membership) {
                 return membership.user;
               });
               self.membersForTeam.unshift({username: '', displayName: 'Unassigned'});
               self.assigningMember = true;
-
+F
               $timeout(function() {
                 document.getElementById('form-member-selector').focus();
               }, 100);
@@ -102,7 +101,6 @@
         };
 
         this.selectMember = function(member) {
-          console.log(member);
           $window.K('field[Assigned Individual]').value(member.username);
           this.assigningMember = false;
         };

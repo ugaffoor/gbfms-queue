@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  QueueWorkController.$inject = ["item", "$window", "$scope", "$state", "$timeout", "AssignmentService", "Bundle", "Toast"];
+  QueueWorkController.$inject = ["item", "$compile", "$window", "$document", "$scope", "$state", "$timeout", "AssignmentService", "Bundle", "Toast"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueWorkController', QueueWorkController);
 
   /* @ngInject */
-  function QueueWorkController(item, $window, $scope, $state, $timeout, AssignmentService, Bundle, Toast) {
+  function QueueWorkController(item, $compile, $window, $document, $scope, $state, $timeout, AssignmentService, Bundle, Toast) {
     var vm = this;
     vm.item = item;
     vm.isLoading = true;
@@ -37,6 +37,9 @@
         path: itemPath,
         loaded: function() {
           $timeout(function() {
+            // We need to compile the loaded form.
+            var element = angular.element($document[0].querySelector('#workContainer'));
+            $compile(element)($scope);
             vm.isLoading = false;
           });
         },
