@@ -16,14 +16,13 @@
     vm.close = function() {
       if(vm.loadedForm !== null) {
         vm.loadedForm.close();
-        $uibModalInstance.dismiss();
       }
+      $uibModalInstance.dismiss();
     }
 
     vm.loadForm = function(form) {
-      var formPath = Bundle.kappLocation() + '/' + form.slug + '?values[Assigned%20Team]='+vm.activeTeam;
+      var formPath = Bundle.kappLocation() + '/' + form.slug + '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
       var K = $window.K;
-      /* vm.loadedForm = form;*/
 
       K.load({
         container: '#formContainer',

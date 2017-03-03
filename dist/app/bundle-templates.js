@@ -41,6 +41,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('catalog/foo.html',
+    '\n' +
+    '<h1>lksjdflksjflksjf</h1>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -351,7 +357,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div data-ng-if="vm.formLoaded" class="modal-title">{{vm.loadedForm.name()}}\n' +
     '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-times"></span></button>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="!vm.formLoaded" class="modal-title">Choose an item</div>\n' +
+    '  <div data-ng-if="!vm.formLoaded" class="modal-title">Choose an item\n' +
+    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-times"></span></button>\n' +
+    '  </div>\n' +
     '</div>\n' +
     '<div class="modal-body">\n' +
     '  <div data-ng-if="!vm.formLoaded" class="list-group"><a href="" data-ng-repeat="form in vm.filteredForms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
