@@ -76,7 +76,7 @@
               });
               self.membersForTeam.unshift({username: '', displayName: 'Unassigned'});
               self.assigningMember = true;
-F
+
               $timeout(function() {
                 document.getElementById('form-member-selector').focus();
               }, 100);
@@ -106,7 +106,7 @@ F
         };
 
         this.canEdit = function() {
-          return true;
+          return !$window.K('form').reviewMode();
         };
 
         this.assignedTeamName = function() {
