@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  QueueSubtaskController.$inject = ["item", "currentKapp", "subtask", "Bundle", "Form", "Submission", "Toast", "$window", "$scope", "$state", "$timeout"];
+  QueueSubtaskController.$inject = ["item", "currentKapp", "subtask", "Bundle", "Form", "Submission", "Toast", "$window", "$scope", "$state", "$timeout", "$document", "$compile"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueSubtaskController', QueueSubtaskController);
 
   /* @ngInject */
-  function QueueSubtaskController(item, currentKapp, subtask, Bundle, Form, Submission, Toast, $window, $scope, $state, $timeout) {
+  function QueueSubtaskController(item, currentKapp, subtask, Bundle, Form, Submission, Toast, $window, $scope, $state, $timeout, $document, $compile) {
     var details = $scope.details;
     var vm = this;
 
@@ -38,6 +38,9 @@
         path: itemPath,
         loaded: function() {
           $timeout(function() {
+            // We need to compile the loaded form.
+            var element = angular.element($document[0].querySelector('#workContainer'));
+            $compile(element)($scope);
             vm.isLoading = false;
           });
         },
