@@ -124,8 +124,8 @@
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
     .row(data-ng-if="!details.isOpen()")
-      .col-xs-6(data-ng-if="queue.hasDiscussion()")
-        button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+      .col-xs-6(data-ng-if="queue.hasDiscussion(vm.item)")
+        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss") Join It
       div(data-ng-class="{'col-xs-6': queue.hasDiscussion(vm.item), 'col-xs-12': !queue.hasDiscussion(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work") Review It
 
