@@ -15,6 +15,7 @@
         this.assigningMember = false;
         this.allTeams = [];
         this.membersForTeam = [];
+        this.K = $window.K;
 
         this.isAssigningTeam = function() {
           return this.assigningTeam;
@@ -113,28 +114,44 @@
         };
 
         this.selectTeam = function(team) {
-          $window.K('field[Assigned Team]').value(team.team);
-          $window.K('field[Assigned Individual]').value('');
+          this.K('field[Assigned Team]').value(team.team);
+          this.K('field[Assigned Individual]').value('');
 
           this.assigningTeam = false;
         };
 
         this.selectMember = function(member) {
-          $window.K('field[Assigned Individual]').value(member.username);
+          this.K('field[Assigned Individual]').value(member.username);
           this.assigningMember = false;
         };
 
         this.canEdit = function() {
-          return !$window.K('form').reviewMode();
+          if(this.hasValidForm()) {
+            return !this.K('form').reviewMode();
+          }
+
+          return false;
         };
 
+        this.hasValidForm = function() {
+          return this.K('form') instanceof KD.Form
+        }
+
         this.assignedTeamName = function() {
-          var name = $window.K('field[Assigned Team]').value();
+          var name = '';
+          if(this.hasValidForm()) {
+            var field = this.K('field[Assigned Team]');
+            name = field ? field.value() : '';
+          }
           return _.isEmpty(name) ? 'Unassigned' : name;
         };
 
         this.assignedIndividualName = function() {
-          var name = $window.K('field[Assigned Individual]').value();
+          var name = '';
+          if(this.hasValidForm()) {
+            var field = this.K('field[Assigned Individual]');
+            name = field ? field.value() : '';
+          }
           return _.isEmpty(name) ? 'Unassigned' : name;
         };
       }]
