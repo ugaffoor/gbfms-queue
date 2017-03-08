@@ -3,7 +3,10 @@
     button.btn.btn-primary.btn-xs.visible-xs(type="button",data-ng-click="queue.showList()")
       span.fa.fa-mail-forward
     .form-group
-      label #[strong Team:]
+      strong Team:
+      button.btn.btn-xs.btn-default.pull-right(data-ng-click="queue.refresh()")
+        span.fa.fa-fw.fa-refresh
+
       br
       select.form-control(data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
         option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose Team

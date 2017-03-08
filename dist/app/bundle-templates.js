@@ -48,7 +48,29 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
-    '');
+    '\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-6"></div>\n' +
+    '</div>\n' +
+    '<div class="row">\n' +
+    '  <div class="col-xs-12">\n' +
+    '    <div class="panel panel-primary">\n' +
+    '      <div class="panel-heading">\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-xs-8">\n' +
+    '            <h4 class="panel-title">{{vm.form.name}}</h4>\n' +
+    '          </div>\n' +
+    '          <div class="col-xs-4">\n' +
+    '            <div class="btn-group pull-right"><a data-ui-sref="catalog" class="btn btn-sm btn-primary">Back</a><a data-ui-sref="catalog.form({formSlug: vm.form.slug})" data-ui-sref-opts="{reload:true}" class="btn btn-sm btn-primary">Restart</a></div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="panel-body">\n' +
+    '        <div id="formContainer"></div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -559,8 +581,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="row">\n' +
     '  <div data-ng-class="{\'hidden-xs\': !queue.shouldShowFilters()}" fixed-height="" fh-bottom-pad="70" class="col-sm-2 col-xs-12">\n' +
     '    <button type="button" data-ng-click="queue.showList()" class="btn btn-primary btn-xs visible-xs"><span class="fa fa-mail-forward"></span></button>\n' +
-    '    <div class="form-group">\n' +
-    '      <label><strong>Team:</strong></label><br/>\n' +
+    '    <div class="form-group"><strong>Team:</strong>\n' +
+    '      <button data-ng-click="queue.refresh()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-refresh"></span></button><br/>\n' +
     '      <select data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control">\n' +
     '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose Team</option>\n' +
     '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'__show__\'" value="__show__">Choose Team</option>\n' +

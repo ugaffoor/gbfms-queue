@@ -25,6 +25,7 @@
     queue.hideFiltersOnXS = true;
     queue.xsView = 'details';
 
+    queue.refresh = refresh;
     queue.changeFilter = changeFilter;
     queue.friendlyAssignedName = friendlyAssignedName;
     queue.friendlyAssignedTeam = friendlyAssignedTeam;
@@ -61,6 +62,10 @@
     queue.newItemModal = newItemModal;
 
     activate();
+
+    function refresh() {
+      $state.go('.', {}, {reload: true});
+    }
 
     function changeFilter() {
       $state.go('queue.by', {filterName:queue.filterName, filterType: 'Open'}, {reload:true});
