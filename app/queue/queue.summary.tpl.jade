@@ -99,9 +99,8 @@
           issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true")
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
-        button.btn.btn-primary.btn-block(type="button",data-ui-sref="queue.by.details.discuss")
-          span(data-ng-if="queue.hasDiscussion(vm.item)") Join It
-          span(data-ng-if="!queue.hasDiscussion(vm.item)") Discuss It
+        button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+        button.btn.btn-primary.btn-block(type="button",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
       div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
     .row
@@ -109,9 +108,8 @@
         div(data-ui-view="")
     .row(data-ng-if="details.isMine() && details.isOpen()")
       div(data-ng-if="queue.canDiscuss(vm.item)",data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen())}")
-        button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.discuss")
-          span(data-ng-if="queue.hasDiscussion(vm.item)") Join It
-          span(data-ng-if="!queue.hasDiscussion(vm.item)") Discuss It
+        button.btn.btn-primary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+        button.btn.btn-primary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
       div(data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen() && queue.canDiscuss(vm.item)), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen()) && queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item) && (!details.canHaveSubtasks() || !details.isOpen()), 'col-xs-10': details.canHaveSubtasks() && details.isOpen() && !queue.canDiscuss(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="details.isMine() && details.isOpen()") Work It
@@ -126,7 +124,9 @@
             li(role="menuitem",data-ng-repeat="task in vm.subtasks")
               a(data-ui-sref="queue.by.details.summary.task({subtaskSlug: task.slug})") {{task.name}}
     .row(data-ng-if="!details.isOpen()")
-      .col-xs-6
+      .col-xs-6(data-ng-if="queue.hasDiscussion()")
+        button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+      div(data-ng-class="{'col-xs-6': queue.hasDiscussion(vm.item), 'col-xs-12': !queue.hasDiscussion(vm.item)}")
         button.btn.btn-primary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work") Review It
 
 

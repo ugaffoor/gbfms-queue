@@ -28,7 +28,6 @@
         container: '#formContainer',
         path: formPath,
         loaded: function(form) {
-          console.log(form);
           vm.loadedForm = form;
 
           var footerSection = angular.element(form.find('section[data-element-name=Footer]')[0]);
