@@ -95,7 +95,22 @@
       AssignmentService.getAllTeams().then(
         function success(teams) {
           vm.isAssigningTeam = true;
-          vm.allTeams = _.map(teams, function(team) {
+          var validTeams = _.filter(teams, function(team) {
+            // Find the Assignable attribute.
+            var assignable = _.find(team.attributes, function(attribute) {
+              return attribute.name === 'Assignable';
+            });
+
+            // Check the Assignable attribute - teams are only assignable if they are explicitly set
+            // to TRUE or YES. Otherwise it is assumed they are unassignable.
+            var isValid = false;
+            if(!_.isEmpty(assignable) && ['YES', 'TRUE'].indexOf(assignable.values[0].toUpperCase()) !== -1) {
+              isValid = true;
+            }
+
+            return isValid;
+          });
+          vm.allTeams = _.map(validTeams, function(team) {
             var teamName = AssignmentService.withoutRoot(team.name);
             return { label: teamName, team: teamName };
           });

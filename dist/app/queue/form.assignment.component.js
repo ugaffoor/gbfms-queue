@@ -33,12 +33,31 @@
           var teamsPath = $window.bundle.apiLocation() + '/teams';
           $http({
             method: 'GET',
-            url: teamsPath
+            url: teamsPath,
+            params: {
+              include: 'attributes'
+            }
           }).then(
             function success(response) {
               self.isLoading = false;
+              var validTeams = _.filter(response.data.teams, function(team) {
+                // Find the Assignable attribute.
+                var assignable = _.find(team.attributes, function(attribute) {
+                  return attribute.name === 'Assignable';
+                });
+
+                // Check the Assignable attribute - teams are only assignable if they are explicitly set
+                // to TRUE or YES. Otherwise it is assumed they are unassignable.
+                var isValid = false;
+                if(!_.isEmpty(assignable) && ['YES', 'TRUE'].indexOf(assignable.values[0].toUpperCase()) !== -1) {
+                  isValid = true;
+                }
+
+                return isValid;
+              });
+
               self.assigningTeam = true;
-              self.allTeams = _.map(response.data.teams, function(team) {
+              self.allTeams = _.map(validTeams, function(team) {
                 return { label: team.name, team: team.name };
               });
               self.allTeams.unshift({label: 'Unassign', team: ''});

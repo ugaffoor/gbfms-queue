@@ -86,7 +86,23 @@
           ];
 
           var teamOrder = 0;
-          var teams = _.map(currentUser.memberships, function(membership) {
+          var validMemberships = _.filter(currentUser.memberships, function(membership) {
+            // Find the Assignable attribute.
+            var assignable = _.find(membership.team.attributes, function(attribute) {
+              return attribute.name === 'Assignable';
+            });
+
+            // Check the Assignable attribute - teams are only assignable if they are explicitly set
+            // to TRUE or YES. Otherwise it is assumed they are unassignable.
+            var isValid = false;
+            if(!_.isEmpty(assignable) && ['YES', 'TRUE'].indexOf(assignable.values[0].toUpperCase()) !== -1) {
+              isValid = true;
+            }
+
+            return isValid;
+          });
+
+          var teams = _.map(validMemberships, function(membership) {
             return membership.team.name;
           });
 
@@ -124,64 +140,12 @@
 
           return filters;
 
-          // // Fetch the attribute
-          // var queueFilterAttribute = kappConfigResolver('Queue Filters');
-          // // If it's not defined we want it to work as if there are no filters.
-          // if(typeof queueFilterAttribute === 'undefined') {
-          //   queueFilterAttribute = {
-          //     name: 'Queue Filters',
-          //     values: []
-          //   };
-          // }
-
-          // queueFilterAttribute.values = _.map(queueFilterAttribute.values, function(filter) {
-          //   if(typeof filter === 'string') {
-          //       return JSON.parse(filter);
-          //   }
-          //   return filter;
-          // });
-
-          // queueFilterAttribute.values = _.sortBy(queueFilterAttribute.values, 'order');
-
-          // var filters = _.cloneDeep(queueFilterAttribute.values);
-          // var groupAttribute = _.find(currentUser.attributes, {name: 'Group'});
-          // var groupOrder = filters.length;
-          // if(groupAttribute) {
-          //   _.each(groupAttribute.values, function(group) {
-          //     var groupFilter = {
-          //       name: group,
-          //       order: groupOrder,
-          //       qualifications: [
-          //         {
-          //           field: 'values[Status]',
-          //           value: '${openStatuses}'
-          //         },
-          //         {
-          //           field: 'values[Assigned Group]',
-          //           value: group
-          //         }
-          //       ]
-          //     };
-          //     filters.push(groupFilter);
-          //     groupOrder++;
-          //   });
-          // }
-
-          // if(currentUser.spaceAdmin) {
-          //   filters.push({
-          //     name: 'All',
-          //     order: filters.length,
-          //     qualifications: [
-          //     ]
-          //   });
-          // }
-          // return filters;
         },
         forms: function(currentKapp, Form) {
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});
         },
-        teams: function(TeamModel) {
-          return TeamModel.build().getList();
+        teams: function(AssignmentService) {
+          return AssignmentService.getAllTeams();
         }
       },
 
@@ -267,8 +231,6 @@
               var effectiveFilter = _.cloneDeep(filter);
               effectiveFilter.startDate = startDate;
               effectiveFilter.endDate = endDate;
-
-              console.log(effectiveFilter);
 
               // TODO use the filterType here.
               return ItemsService.filter(currentKapp.slug, currentUser, effectiveFilter);

@@ -145,7 +145,26 @@
     }
 
     function getAllTeams() {
-      return TeamModel.build().getList();
+      return TeamModel.build().getList({include: 'attributes'}).then(
+        function success(teams) {
+          var validTeams = _.filter(teams, function(team) {
+            // Find the Assignable attribute.
+            var assignable = _.find(team.attributes, function(attribute) {
+              return attribute.name === 'Assignable';
+            });
+
+            // Check the Assignable attribute - teams are only assignable if they are explicitly set
+            // to TRUE or YES. Otherwise it is assumed they are unassignable.
+            var isValid = false;
+            if(!_.isEmpty(assignable) && ['YES', 'TRUE'].indexOf(assignable.values[0].toUpperCase()) !== -1) {
+              isValid = true;
+            }
+
+            return isValid;
+          });
+          return validTeams;
+        }
+      );
     }
 
     function getTeams(parent) {

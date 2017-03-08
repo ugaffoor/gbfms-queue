@@ -48,29 +48,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
-    '\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-6"></div>\n' +
-    '</div>\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <div class="panel panel-primary">\n' +
-    '      <div class="panel-heading">\n' +
-    '        <div class="row">\n' +
-    '          <div class="col-xs-8">\n' +
-    '            <h4 class="panel-title">{{vm.form.name}}</h4>\n' +
-    '          </div>\n' +
-    '          <div class="col-xs-4">\n' +
-    '            <div class="btn-group pull-right"><a data-ui-sref="catalog" class="btn btn-sm btn-primary">Back</a><a data-ui-sref="catalog.form({formSlug: vm.form.slug})" data-ui-sref-opts="{reload:true}" class="btn btn-sm btn-primary">Restart</a></div>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '      <div class="panel-body">\n' +
-    '        <div id="formContainer"></div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
+    '');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
