@@ -1,13 +1,4 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form.assignment.html',
-    '\n' +
-    '<div class="form-assignment">\n' +
-    '  <h1>Hello Form</h1>\n' +
-    '  <p>{{$ctrl.hello}}</p>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -41,12 +32,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/foo.html',
-    '\n' +
-    '<h1>lksjdflksjflksjf</h1>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
     '\n' +
     '<div class="row">\n' +
@@ -70,89 +55,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/kinetic.header.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
-    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
-    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
-    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '        <li><a href="">{{header.currentUser.username}}\n' +
-    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.layout.tpl.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '      span.sr-only Toggle navigation\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      span.icon-bar\n' +
-    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
-    '    </div>\n' +
-    '    <!--div.navbar-collapse.collapse#navbar\n' +
-    '    ul.nav.navbar-nav\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
-    '        a(data-ui-sref="queue.by({filterName: \'__default__\', filterType: \'Open\'})") Queue\n' +
-    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
-    '        a(data-ui-sref="catalog") Catalog\n' +
-    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
-    '        a(data-ui-sref="setup") Queue Setup\n' +
-    '    ul.nav.navbar-nav.navbar-right\n' +
-    '      li.dropdown\n' +
-    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
-    '          i.fa.fa-fw.fa-th\n' +
-    '        ul.dropdown-menu\n' +
-    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
-    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
-    '    -->\n' +
-    '  </div>\n' +
-    '</nav>\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.setup.tpl.html',
-    '\n' +
-    '<h1>Kapp Configuration</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('errors/error.system.tpl.html',
-    '\n' +
-    '<h1>System Error</h1>\n' +
-    '<div class="alert alert-warning"> \n' +
-    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
 }]);
 
@@ -587,7 +489,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div data-ng-class="{\'hidden-xs\': !queue.shouldShowFilters()}" fixed-height="" fh-bottom-pad="70" class="col-sm-2 col-xs-12">\n' +
     '    <button type="button" data-ng-click="queue.showList()" class="btn btn-primary btn-xs visible-xs"><span class="fa fa-mail-forward"></span></button>\n' +
     '    <div class="form-group"><strong>Team:</strong>\n' +
-    '      <button data-ng-click="queue.refresh()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-refresh"></span></button><br/>\n' +
+    '      <button data-ng-click="queue.refresh()" class="btn btn-xs btn-link pull-right"><span class="fa fa-fw fa-refresh"></span></button><br/>\n' +
     '      <select data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control">\n' +
     '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose Team</option>\n' +
     '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'__show__\'" value="__show__">Choose Team</option>\n' +
@@ -630,6 +532,89 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div id="workContainer"></div>\n' +
     '  </div>\n' +
     '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.layout.tpl.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <!--button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '      span.sr-only Toggle navigation\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      span.icon-bar\n' +
+    '      --><a href="" class="navbar-brand">Oh no!</a>\n' +
+    '    </div>\n' +
+    '    <!--div.navbar-collapse.collapse#navbar\n' +
+    '    ul.nav.navbar-nav\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
+    '        a(data-ui-sref="queue.by({filterName: \'__default__\', filterType: \'Open\'})") Queue\n' +
+    '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
+    '        a(data-ui-sref="catalog") Catalog\n' +
+    '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
+    '        a(data-ui-sref="setup") Queue Setup\n' +
+    '    ul.nav.navbar-nav.navbar-right\n' +
+    '      li.dropdown\n' +
+    '        a.dropdown-toggle(href="",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false")\n' +
+    '          i.fa.fa-fw.fa-th\n' +
+    '        ul.dropdown-menu\n' +
+    '          li(data-ng-repeat="kapp in layout.kapps")\n' +
+    '            a(href="{{layout.kappUrl(kapp)}}") {{kapp.name}}\n' +
+    '    -->\n' +
+    '  </div>\n' +
+    '</nav>\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.setup.tpl.html',
+    '\n' +
+    '<h1>Kapp Configuration</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>This kapp has not been configured, please have a space administrator configure it before attempting to use it.</h5>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('errors/error.system.tpl.html',
+    '\n' +
+    '<h1>System Error</h1>\n' +
+    '<div class="alert alert-warning"> \n' +
+    '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/kinetic.header.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
+    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
+    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
+    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '        <li><a href="">{{header.currentUser.username}}\n' +
+    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -694,22 +679,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</section>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/toast/error.html',
-    '\n' +
-    '<div>\n' +
-    '  <p>{{options.message}}</p>\n' +
-    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
-    '  <div data-ng-if="data.errors">\n' +
-    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
-    '      <ul>\n' +
-    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -937,6 +906,22 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <div data-ng-include="\'queue/setup/_queue.setup.form.tpl.html\'"></div>\n' +
     '        </uib-tab>\n' +
     '      </uib-tabset>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/toast/error.html',
+    '\n' +
+    '<div>\n' +
+    '  <p>{{options.message}}</p>\n' +
+    '  <p data-ng-if="data.error &amp;&amp; !options.overwrite">{{data.error}}</p>\n' +
+    '  <div data-ng-if="data.errors">\n' +
+    '    <div data-ng-repeat="(name, errors) in data.errors">\n' +
+    '      <ul>\n' +
+    '        <li data-ng-repeat="error in errors">{{error}}</li>\n' +
+    '      </ul>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
