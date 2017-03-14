@@ -16,14 +16,18 @@ body{
 .setup-tab {
   margin-top: 1em;
 }
-
+.list-group .list-group-item{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  margin: 0 0 .5rem 0;
+}
 .list-group-item:first-child,
 .list-group-item:last-child{
 border-radius: 0;
 }
 .active-item.list-group-item {
   border-left: 2px solid #313E47;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
+
 }
 .dropdown-mobile {
   max-width: 290px;

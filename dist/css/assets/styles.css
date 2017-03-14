@@ -53,13 +53,17 @@ body {
 .setup-tab {
   margin-top: 1em; }
 
+.list-group .list-group-item {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  margin: 0 0 .5rem 0; }
+
 .list-group-item:first-child,
 .list-group-item:last-child {
   border-radius: 0; }
 
 .active-item.list-group-item {
   border-left: 2px solid #313E47;
-  background-color: #F0F0F0; }
+  background-color: #f0f0f0; }
 
 .dropdown-mobile {
   max-width: 290px; }
@@ -165,8 +169,7 @@ button[data-button-type=submit-page] {
   border-radius: .4rem;
   border-width: 0;
   color: #ffffff;
-  cursor: pointer;
-  font-size: inherit; }
+  cursor: pointer; }
   .btn:hover, .btn-primary:hover, .btn-primary-complement:hover, .btn-secondary:hover, .btn-secondary-complement:hover, .btn-tertiary:hover, .btn-tertiary-complement:hover, .btn-link:hover, .btn-success:hover {
     text-decoration: none; }
   .btn.btn-subtle, .btn-subtle.btn-primary, .btn-subtle.btn-primary-complement, .btn-subtle.btn-secondary, .btn-subtle.btn-secondary-complement, .btn-subtle.btn-tertiary, .btn-subtle.btn-tertiary-complement, .btn-subtle.btn-link, .btn-subtle.btn-success {
