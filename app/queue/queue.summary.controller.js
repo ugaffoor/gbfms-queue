@@ -191,7 +191,7 @@
       AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Team'], item).then(
         function() {
           Toast.success('Grabbed item.');
-          $state.go('.', {}, {reload:true});
+          $state.go('queue.by.details.summary.work', {}, {reload:true});
         },
         function(error) {
           // Display the error information to the user.
