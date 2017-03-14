@@ -102,7 +102,7 @@
         button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
         button.btn.btn-primary.btn-block(type="button",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
       div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
-        button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt()") Grab It
+        button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt($event)") Grab It
     .row
       .col-xs-12
         div(data-ui-view="")

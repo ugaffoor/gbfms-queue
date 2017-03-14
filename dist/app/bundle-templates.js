@@ -529,7 +529,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <button type="button" data-ng-if="!queue.hasDiscussion(vm.item)" data-ng-click="vm.startNewDiscussion()" class="btn btn-primary btn-block">Discuss It</button>\n' +
     '      </div>\n' +
     '      <div data-ng-class="{\'col-xs-6\': queue.canDiscuss(vm.item), \'col-xs-12\': !queue.canDiscuss(vm.item)}">\n' +
-    '        <button data-ng-click="vm.grabIt()" class="btn btn-primary btn-block">Grab It</button>\n' +
+    '        <button data-ng-click="vm.grabIt($event)" class="btn btn-primary btn-block">Grab It</button>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +

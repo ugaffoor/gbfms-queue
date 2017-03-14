@@ -195,11 +195,16 @@
         });
     }
 
-    function grabIt() {
+    function grabIt($event) {
+      var grabItLocation = '.';
+      if($event.shiftKey) {
+        grabItLocation = 'queue.by.details.summary.work';
+      }
+
       AssignmentService.grabIt(layout.currentUser.username, item.values['Assigned Team'], item).then(
         function() {
           Toast.success('Grabbed item.');
-          $state.go('queue.by.details.summary.work', {}, {reload:true});
+          $state.go(grabItLocation, {}, {reload:true});
         },
         function(error) {
           // Display the error information to the user.
