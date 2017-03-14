@@ -460,7 +460,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}"></span></div>\n' +
+    '      <div class="col-xs-6"><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span data-time-ago="queue.friendlyDueDate(vm.item)" data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(vm.item))}" data-time-ago-prefix="Due"></span></div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12"><span class="fa fa-fw fa-users"></span><span data-ng-if="!vm.isAssigningTeam" class="ellipsis">&nbsp;<a data-ng-if="details.isOpen(vm.item)" href="" data-ng-click="vm.startTeamAssignment()">{{queue.friendlyAssignedTeam(vm.item)}}</a><span data-ng-if="!details.isOpen(vm.item)">{{queue.friendlyAssignedTeam(vm.item)}}</span></span>\n' +

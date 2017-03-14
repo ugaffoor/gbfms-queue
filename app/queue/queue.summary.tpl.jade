@@ -25,7 +25,7 @@
       .col-xs-6
         span.fa.fa-fw.fa-clock-o
         | &nbsp;
-        span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}")
+        span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}",data-time-ago-prefix="Due")
     .row
       .col-xs-12
         span.fa.fa-fw.fa-users
