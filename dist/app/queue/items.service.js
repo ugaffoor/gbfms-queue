@@ -19,7 +19,7 @@
 
       _.each(itemFilter.qualifications, function(qualification) {
         if(qualification.value === '${openStatuses}') {
-          var openStatuses = ['Open', 'In Progress'];
+          var openStatuses = ['Open', 'In Progress', 'Pending'];
           searcher.or();
           _.each(openStatuses, function(status) {
             searcher.eq(qualification.field, status);
