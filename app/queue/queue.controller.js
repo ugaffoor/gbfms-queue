@@ -221,6 +221,8 @@
 
     function populateStats() {
       queue.stats = {
+        mine: 0,
+        unassigned: 0,
         pastDue: 0,
         dueToday: 0,
         totalOpen: queue.openItems.length,
@@ -238,6 +240,16 @@
           } else if(dueDate.isBefore(today.startOf('day'))) {
             queue.stats.pastDue++;
           }
+        }
+
+        // Check if it is mine.
+        if(item.values['Assigned Individual'] === currentUser.username) {
+          queue.stats.mine++;
+        }
+
+        // Check if it is unassigned.
+        if(_.isEmpty(item.values['Assigned Individual'])) {
+          queue.stats.unassigned++;
         }
       });
 

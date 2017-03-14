@@ -596,6 +596,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <ul data-ng-if="queue.filterName" class="nav nav-stacked">\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Open\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Mine\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Mine\'})">Mine&nbsp;<span class="pull-right badge">{{queue.stats.mine}}</span></a></li>\n' +
+    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Unassigned\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Unassigned\'})">Unassigned&nbsp;<span class="pull-right badge">{{queue.stats.unassigned}}</span></a></li>\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Past Due\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Past Due\'})">Past Due&nbsp;<span class="pull-right badge">{{queue.stats.pastDue}}</span></a></li>\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Due Today\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +
     '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Recent Hour\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a></li>\n' +

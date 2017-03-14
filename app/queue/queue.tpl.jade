@@ -16,6 +16,12 @@
       li(data-ng-class="{'active': queue.isFilterActive('Open')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Open'})") Open&nbsp;
           span.pull-right.badge {{queue.stats.totalOpen}}
+      li(data-ng-class="{'active': queue.isFilterActive('Mine')}")
+        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Mine'})") Mine&nbsp;
+          span.pull-right.badge {{queue.stats.mine}}
+      li(data-ng-class="{'active': queue.isFilterActive('Unassigned')}")
+        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Unassigned'})") Unassigned&nbsp;
+          span.pull-right.badge {{queue.stats.unassigned}}
       li(data-ng-class="{'active': queue.isFilterActive('Past Due')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Past Due'})") Past Due&nbsp;
           span.pull-right.badge {{queue.stats.pastDue}}

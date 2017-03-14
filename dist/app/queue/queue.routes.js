@@ -200,6 +200,24 @@
                 return $q.resolve(openItems);
               }
 
+              // If the filter type is 'Mine' then filter down to just the ones assigned to the current user.
+              if(filterType === 'Mine') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    return item.values['Assigned Individual'] === currentUser.username;
+                  })
+                );
+              }
+
+              // If the filter type is 'Unassigned' then filte down to just the ones where the assigned individual is empty.
+              if(filterType === 'Unassigned') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    return _.isEmpty(item.values['Assigned Individual']);
+                  })
+                );
+              }
+
               var today = moment();
               if(filterType === 'Past Due') {
                 return $q.resolve(
