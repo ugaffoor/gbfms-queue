@@ -18,11 +18,27 @@
         vm.loadedForm.close();
       }
       $uibModalInstance.dismiss();
-    }
+    };
 
     vm.loadForm = function(form) {
       var formPath = Bundle.kappLocation() + '/' + form.slug + '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
       var K = $window.K;
+
+      var responseHandler = function(data, actions) {
+        var itemId = data.submission.id;
+        var assignedIndividual = data.submission.values['Assigned Individual'];
+
+        $timeout(function() {
+          Toast.success('Started new work item.');
+          if(assignedIndividual === currentUser.username) {
+            $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+          } else {
+            $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+          }
+          actions.close();
+          $uibModalInstance.dismiss();
+        }, 1000);
+      };
 
       K.load({
         container: '#formContainer',
@@ -43,23 +59,10 @@
 
           $timeout(function() { vm.formLoaded = true; });
         },
-        updated: function(data, actions) {
-          var itemId = data.submission.id;
-          var assignedIndividual = data.submission.values['Assigned Individual'];
-
-          $timeout(function() {
-            Toast.success('Started new work item.');
-            if(assignedIndividual === currentUser.username) {
-              $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
-            } else {
-              $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
-            }
-            actions.close();
-            $uibModalInstance.dismiss();
-          }, 1000);
-        }
+        created: responseHandler,
+        updated: responseHandler
       });
-    }
+    };
   }
 
 })();
