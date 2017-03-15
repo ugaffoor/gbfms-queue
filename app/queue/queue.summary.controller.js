@@ -228,7 +228,7 @@
 
     function showQueueIcon() {
       // If the parent isn't null, and there is an origin and the parent is not the same as the origin.
-      if(vm.item.origin !== null) {
+      if(vm.item.origin !== null && vm.item.origin.form.kapp.slug !== Bundle.kappSlug()) {
         return vm.item.parent !== null && vm.item.origin.id !== vm.item.parent.id;
       }
       return vm.item.parent !== null;
@@ -236,7 +236,7 @@
 
     function showRequestIcon() {
       // if the origin isn't null and the parent is the same.
-      if(vm.item.origin !== null) {
+      if(vm.item.origin !== null && vm.item.origin.form.kapp.slug !== Bundle.kappSlug()) {
         return vm.item.parent !== null && vm.item.origin.id === vm.item.parent.id;
       }
       return false;

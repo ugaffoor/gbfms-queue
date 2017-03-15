@@ -265,7 +265,7 @@
           return $stateParams.itemId;
         },
         item: function(Submission, currentKapp, itemId) {
-          return Submission.build().one(itemId).get({include:'details,form,form.attributes,values,origin,parent,parent.values,parent.details,parent.form,parent.form.attributes,children,children.details,children.form,children.form.attributes,children.values'}).then(
+          return Submission.build().one(itemId).get({include:'details,form,form.attributes,values,origin,origin.form,origin.form.kapp,parent,parent.values,parent.details,parent.form,parent.form.attributes,children,children.details,children.form,children.form.attributes,children.values'}).then(
             function success(submission) {
               return submission;
             }
