@@ -37,7 +37,7 @@
           }
           actions.close();
           $uibModalInstance.dismiss();
-        }, 1000);
+        });
       };
 
       K.load({
