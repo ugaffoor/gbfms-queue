@@ -95,7 +95,7 @@
     .row.row-cards(data-ng-if="queue.hasDiscussion(vm.item) && !vm.isStartingDiscussion")
       .col-xs-12
         h5.item-header Discussion
-        discussion-server(base="vm.discussionServer", watch-issue="vm.item.values['Discussion Id']")
+        response-server(base="vm.discussionServer", watch-issue="vm.item.values['Discussion Id']")
           issue-summary(summary-issue="$parent.discussion.issue", current-user="$parent.discussion.currentUser", no-title="true")
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
