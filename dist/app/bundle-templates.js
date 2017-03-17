@@ -519,7 +519,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      <div class="col-xs-12">\n' +
     '        <h5 class="item-header">Discussion</h5>\n' +
     '        <response-server base="vm.discussionServer" watch-issue="vm.item.values[\'Discussion Id\']">\n' +
-    '          <issue-summary summary-issue="$parent.discussion.issue" current-user="$parent.discussion.currentUser" no-title="true"></issue-summary>\n' +
+    '          <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser" no-title="true"></issue-summary>\n' +
     '        </response-server>\n' +
     '      </div>\n' +
     '    </div>\n' +
