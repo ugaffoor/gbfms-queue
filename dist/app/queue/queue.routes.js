@@ -53,12 +53,12 @@
           AssignmentService.setAssignmentBase(groupBaseValue);
           return groupBaseValue;
         }],
-        queueResponseServer: ["spaceConfigResolver", function(spaceConfigResolver) {
-          var queueResponseServer = spaceConfigResolver('Response Server Url', false);
-          if(angular.isUndefined(queueResponseServer)) {
+        queueDiscussionServer: ["spaceConfigResolver", function(spaceConfigResolver) {
+          var queueDiscussionServer = spaceConfigResolver('Discussion Server Url', false);
+          if(angular.isUndefined(queueDiscussionServer)) {
             return '';
           }
-          return queueResponseServer.values[0];
+          return queueDiscussionServer.values[0];
         }],
         adminKapp: ["spaceConfigResolver", "AssignmentService", function(spaceConfigResolver, AssignmentService) {
           var adminKapp = spaceConfigResolver('Admin Kapp Slug');

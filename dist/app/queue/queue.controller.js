@@ -38,7 +38,7 @@
     queue.hasDetails = hasDetails;
     queue.hasDiscussion = hasDiscussion;
     queue.canDiscuss = canDiscuss;
-    queue.responseGuid = responseGuid;
+    queue.discussionGuid = discussionGuid;
     queue.hasTeamsKapp = hasTeamsKapp;
     queue.getTeamLink = getTeamLink;
     queue.getUserLink = getUserLink;
@@ -136,15 +136,15 @@
 
 
     function canDiscuss(item) {
-      return Object.keys(item.values).indexOf('Response GUID') !== -1;
+      return Object.keys(item.values).indexOf('Discussion Id') !== -1;
     }
 
-    function responseGuid(item) {
-      return item.values['Response GUID'];
+    function discussionGuid(item) {
+      return item.values['Discussion Id'];
     }
 
     function hasDiscussion(item) {
-      return canDiscuss(item) ? !_.isEmpty(item.values['Response GUID']) : false;
+      return canDiscuss(item) ? !_.isEmpty(item.values['Discussion Id']) : false;
     }
 
     function getTeamLink(team) {

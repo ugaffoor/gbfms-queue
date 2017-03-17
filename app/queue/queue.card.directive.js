@@ -12,7 +12,7 @@
       replace: true,
       scope: {
         queueItem: '=',
-        responseServer: '='
+        discussionServer: '='
       },
       link: link,
       templateUrl: 'queue/queue.card.tpl.html'
@@ -23,7 +23,7 @@
       scope.queue = scope.$parent.queue;
       scope.isSummary = isSummary;
       scope.isListView = isListView;
-      scope.isResponse = isResponse;
+      scope.isDiscussion = isDiscussion;
 
       scope.shouldTeamLink = function() {
         return scope.queue.hasTeamsKapp() && scope.queue.friendlyAssignedTeam(scope.queueItem) !== 'Unassigned';
@@ -37,19 +37,19 @@
         return !_.isEmpty(attributes.listView);
       }
 
-      function isResponse() {
-        // Don't render the Response card in the list view.
+      function isDiscussion() {
+        // Don't render the Discussion card in the list view.
         if(isListView()) {
           return false;
         }
 
         // If there's no valid server then don't render it.
-        if(_.isEmpty(scope.responseServer)) {
+        if(_.isEmpty(scope.discussionServer)) {
           return false;
         }
 
-        var responseSubtaskAttribute = _.find(scope.queueItem.form.attributes, {name: 'Response Subtask'});
-        return angular.isDefined(responseSubtaskAttribute) && responseSubtaskAttribute.values[0].toUpperCase() === 'TRUE';
+        var discussionSubtaskAttribute = _.find(scope.queueItem.form.attributes, {name: 'Discussion Subtask'});
+        return angular.isDefined(discussionSubtaskAttribute) && discussionSubtaskAttribute.values[0].toUpperCase() === 'TRUE';
       }
 
       function isSummary() {

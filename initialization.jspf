@@ -53,11 +53,11 @@
    request.setAttribute("footerPath", space.getBundleBase() + "/" + footerBundlePath);
    request.setAttribute("footerLocation", contextPath + space.getBundleBase() + "/" + footerBundlePath);
 
-   String responseServerUrl = "";
-   if(kapp != null && kapp.hasAttribute("Response Server Url")) {
-     responseServerUrl = kapp.getAttributeValue("Response Server Url");
-   } else if(space.hasAttribute("Response Server Url")) {
-     responseServerUrl = space.getAttributeValue("Response Server Url");
+   String discussionServerUrl = "";
+   if(kapp != null && kapp.hasAttribute("Discussion Server Url")) {
+     discussionServerUrl = kapp.getAttributeValue("Discussion Server Url");
+   } else if(space.hasAttribute("Discussion Server Url")) {
+     discussionServerUrl = space.getAttributeValue("Discussion Server Url");
    }
-   request.setAttribute("responseServerUrl", responseServerUrl);
+   request.setAttribute("discussionServerUrl", discussionServerUrl);
 %>

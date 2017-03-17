@@ -1,8 +1,8 @@
 div
-  div(data-ng-if="isResponse()", style="margin: 1em;")
-    response-server(base="responseServer", watch-issue="queueItem.values['Response GUID']")
-      issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser")
-  div(data-ng-if="!isResponse()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
+  div(data-ng-if="isDiscussion()", style="margin: 1em;")
+    discussion-server(base="discussionServer", watch-issue="queueItem.values['Discussion GUID']")
+      issue-summary(summary-issue="$parent.discussion.issue", current-user="$parent.discussion.currentUser")
+  div(data-ng-if="!isDiscussion()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
     h5 {{queueItem.label}}&nbsp;
       small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
     .row

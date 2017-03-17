@@ -51,12 +51,12 @@
 
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
-    <c:if test="${not empty responseServerUrl}">
-      <script src="${responseServerUrl}/assets/response_bundle.js"></script>
+    <c:if test="${not empty discussionServerUrl}">
+      <script src="${discussionServerUrl}/assets/response_bundle.js"></script>
       <script>
        bundle = bundle || {};
        bundle.config = bundle.config || {};
-       bundle.config.queue = { response: true }
+       bundle.config.queue = { discussion: true }
       </script>
     </c:if>
 
@@ -106,8 +106,6 @@
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
@@ -117,6 +115,8 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>

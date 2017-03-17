@@ -47,12 +47,12 @@
 
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
-    <c:if test="${not empty responseServerUrl}">
-      <script src="${responseServerUrl}/assets/response_bundle.js"></script>
+    <c:if test="${not empty discussionServerUrl}">
+      <script src="${discussionServerUrl}/assets/response_bundle.js"></script>
       <script>
        bundle = bundle || {};
        bundle.config = bundle.config || {};
-       bundle.config.queue = { response: true }
+       bundle.config.queue = { discussion: true }
       </script>
     </c:if>
 

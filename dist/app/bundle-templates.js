@@ -22,22 +22,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.tpl.html',
-    '\n' +
-    '<div class="container">\n' +
-    '  <div data-ng-if="!vm.isChildActive()" class="row">\n' +
-    '    <div data-ng-repeat="form in vm.forms" class="col-xs-s12 col-md-6">\n' +
-    '      <div data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '  <div class="row">\n' +
-    '    <div data-ng-if="vm.isChildActive()" class="col-xs-3">\n' +
-    '      <div data-ng-repeat="form in vm.forms" data-ng-include="\'catalog/catalog.card.tpl.html\'"></div>\n' +
-    '    </div>\n' +
-    '    <div class="col-xs-9">\n' +
-    '      <div data-ui-view=""></div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
+    '');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -48,29 +33,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/form.tpl.html',
-    '\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-6"></div>\n' +
-    '</div>\n' +
-    '<div class="row">\n' +
-    '  <div class="col-xs-12">\n' +
-    '    <div class="panel panel-primary">\n' +
-    '      <div class="panel-heading">\n' +
-    '        <div class="row">\n' +
-    '          <div class="col-xs-8">\n' +
-    '            <h4 class="panel-title">{{vm.form.name}}</h4>\n' +
-    '          </div>\n' +
-    '          <div class="col-xs-4">\n' +
-    '            <div class="btn-group pull-right"><a data-ui-sref="catalog" class="btn btn-sm btn-primary">Back</a><a data-ui-sref="catalog.form({formSlug: vm.form.slug})" data-ui-sref-opts="{reload:true}" class="btn btn-sm btn-primary">Restart</a></div>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '      <div class="panel-body">\n' +
-    '        <div id="formContainer"></div>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</div>');
+    '');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -228,12 +191,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
   $templateCache.put('queue/queue.card.tpl.html',
     '\n' +
     '<div>\n' +
-    '  <div data-ng-if="isResponse()" style="margin: 1em;">\n' +
-    '    <response-server base="responseServer" watch-issue="queueItem.values[\'Response GUID\']">\n' +
-    '      <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser"></issue-summary>\n' +
-    '    </response-server>\n' +
+    '  <div data-ng-if="isDiscussion()" style="margin: 1em;">\n' +
+    '    <discussion-server base="discussionServer" watch-issue="queueItem.values[\'Discussion GUID\']">\n' +
+    '      <issue-summary summary-issue="$parent.discussion.issue" current-user="$parent.discussion.currentUser"></issue-summary>\n' +
+    '    </discussion-server>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="!isResponse()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
+    '  <div data-ng-if="!isDiscussion()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
     '    <h5>{{queueItem.label}}&nbsp;<small data-ng-if="!isSummary()" class="pull-right">({{queue.friendlyStatus(queueItem)}})</small></h5>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.createdAt" time-ago-prefix="Created"></span></div>\n' +
@@ -304,7 +267,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div class="panel-body">\n' +
     '    <div data-ng-if="queue.hasDiscussion(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <response-issue-view response-server="{{vm.responseServer}}" current-issue-id="{{queue.responseGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
+    '        <response-issue-view response-server="{{vm.discussionServer}}" current-issue-id="{{queue.discussionGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -518,9 +481,9 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div data-ng-if="queue.hasDiscussion(vm.item) &amp;&amp; !vm.isStartingDiscussion" class="row row-cards">\n' +
     '      <div class="col-xs-12">\n' +
     '        <h5 class="item-header">Discussion</h5>\n' +
-    '        <response-server base="vm.responseServer" watch-issue="vm.item.values[\'Response GUID\']">\n' +
-    '          <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser" no-title="true"></issue-summary>\n' +
-    '        </response-server>\n' +
+    '        <discussion-server base="vm.discussionServer" watch-issue="vm.item.values[\'Discussion Id\']">\n' +
+    '          <issue-summary summary-issue="$parent.discussion.issue" current-user="$parent.discussion.currentUser" no-title="true"></issue-summary>\n' +
+    '        </discussion-server>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="!details.isMine() &amp;&amp; details.isOpen()" class="row">\n' +
@@ -572,7 +535,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div data-ng-repeat="child in vm.relatedItems | orderBy:\'-updatedAt\'" class="row">\n' +
     '      <div class="col-xs-12">\n' +
     '        <div class="panel panel-card">\n' +
-    '          <queue-card data-queue-item="child" data-response-server="vm.responseServer"></queue-card>\n' +
+    '          <queue-card data-queue-item="child" data-discussion-server="vm.discussionServer"></queue-card>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
