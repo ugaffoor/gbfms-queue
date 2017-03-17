@@ -5,19 +5,33 @@ body{
 .navbar-default{
   background-color: #fff;
 }
+
+.btn {
+  background-color: $tertiary;
+  border-width: 0;
+  &:hover {
+    text-decoration: none;
+  }
+}
 .setup-tab {
   margin-top: 1em;
 }
-
+.list-group .list-group-item{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  margin: 0 0 .5rem 0;
+}
 .list-group-item:first-child,
 .list-group-item:last-child{
 border-radius: 0;
 }
-.active-item {
-  border-left: 2px solid #337ab7;
-  background-color: #F0F0F0;
-}
+.active-item.list-group-item {
+  border-left: 2px solid #313E47;
+  background-color: #f0f0f0;
 
+}
+.dropdown-mobile {
+  max-width: 290px;
+}
 .ellipsis {
   text-overflow: ellipsis;
   width: 100%;
@@ -26,6 +40,7 @@ border-radius: 0;
 }
 .well-details {
   white-space: pre-wrap;
+  margin-top: 15px;
 }
 .list-group{
   margin: 1em 0;
@@ -33,9 +48,14 @@ border-radius: 0;
 .back-queue{
   margin: 1em 0;
 }
+.queue-dropdown {
+  margin-bottom: 0.5em;
+}
+
 .queue-details{
-  padding: 1em;
-  background-color: #fff;
+  //padding: 1em;
+  //margin-top: 1em;
+  //background-color: #fff;
   .nav-pills,
   .nav-tabs{
     margin-bottom: 1em;
@@ -43,4 +63,80 @@ border-radius: 0;
 }
 select, select.form-control{
   padding-left: 1em;
+}
+
+.panel-primary{
+  border: none;
+  background-color: $white;
+  box-shadow: 0 1px 2px rgba($primary,0.14);
+  > .panel-heading{
+    background-color: #f0f3f5;
+    border-color: rgba($lightgray, 0.5);
+    color: $primary;
+    > .panel-title{
+        > a,
+        > small,
+        > .small,
+        > small > a,
+        > .small > a{
+          color: $gray;
+        }
+    }
+  }
+
+}
+.panel-card {
+  padding: 0.5em;
+  cursor: pointer;
+  min-height: 10em;
+}
+
+.row-cards {
+  margin-top: 20px;
+}
+
+.queue-list {
+  margin-top: 0;
+}
+
+.queue-item {
+  cursor: pointer;
+}
+
+.no-data {
+  padding: 1em;
+}
+
+.center-items {
+  text-align: center;
+}
+
+.item-header {
+  color: $primary;
+  padding-bottom: 8px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+
+.row-note {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px inset;
+}
+.nav-stacked{
+  margin-bottom: 1em;
+  > li.active{
+    text-decoration: none;
+    background-color: $white;
+    border-bottom: 1px solid $lightgray;
+  }
+  > li > a:hover, > li > a:focus{
+    background-color: $white;
+  }
+}
+
+.team-memberships{
+  > li{
+    padding: 10px 15px;
+  }
 }

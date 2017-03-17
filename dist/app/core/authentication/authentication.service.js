@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  AuthenticationService.$inject = ["$http", "$log", "$q", "$rootScope", "ConfigStore"];
+  AuthenticationService.$inject = ["$http", "$log", "$q", "$rootScope", "Bundle"];
   angular
     .module('kd.core.authentication')
     .service('AuthenticationService', AuthenticationService);
 
   /* @ngInject */
-  function AuthenticationService($http, $log, $q, $rootScope, ConfigStore) {
+  function AuthenticationService($http, $log, $q, $rootScope, Bundle) {
     var self = this;
     self.currentUser = {};
     self.rejectedState = {};
@@ -23,7 +23,7 @@
         deferred.resolve(self.currentUser);
       }
 
-      $http.get(ConfigStore.get('apiBaseUrl') + '/me').success(function(user) {
+      $http.get(Bundle.apiLocation() + '/me').success(function(user) {
         if(typeof user.username === 'undefined') {
           deferred.reject();
         }
@@ -39,7 +39,7 @@
     self.login = function(username, password) {
       var deferred = $q.defer();
 
-      $http.post(ConfigStore.get('loginPath'), { 'j_username': username, 'j_password': password})
+      $http.post(Bundle.spaceLocation() + '/app/login.do', { 'j_username': username, 'j_password': password})
         .success(function(data) {
           $log.debug('{AuthenticationService} Successful authentication.', data);
           // Save the user object returned by authentication.

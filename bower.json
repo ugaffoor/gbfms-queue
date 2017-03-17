@@ -31,6 +31,7 @@
     "angular-animate": "~1.5.3",
     "angular-drag-and-drop-lists": "~1.4.0",
     "moment": "~2.12.0",
-    "bootstrap-sass": "^3.3.6"
+    "bootstrap-sass": "^3.3.6",
+    "angular-md5": "^0.1.10"
   }
 }

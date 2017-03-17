@@ -10,7 +10,7 @@ nav.navbar.navbar-default.navbar-fixed-top
     //div.navbar-collapse.collapse#navbar
       ul.nav.navbar-nav
         li(data-ng-class="{'active': layout.isParentActive('queue')}")
-          a(data-ui-sref="queue.by({filterName: '__default__'})") Queue
+          a(data-ui-sref="queue.by({filterName: '__default__', filterType: 'Open'})") Queue
         li(data-ng-class="{'active': layout.isParentActive('catalog')}")
           a(data-ui-sref="catalog") Catalog
         li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{'active': layout.isParentActive('setup')}")

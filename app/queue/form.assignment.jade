@@ -1,0 +1,30 @@
+.form-assignment
+
+  span.fa.fa-fw.fa-users
+  span.ellipsis(data-ng-if="!$ctrl.isAssigningTeam()")
+    | &nbsp;
+    a(data-ng-if="$ctrl.canEdit()",href="",data-ng-click="$ctrl.startAssigningTeam()") {{$ctrl.assignedTeamName()}}
+    span(data-ng-if="!$ctrl.canEdit()") {{$ctrl.assignedTeamName()}}
+  .selection(data-ng-if="$ctrl.isAssigningTeam()")
+    a(href="",data-ng-click="$ctrl.stopAssigningTeam()") Cancel
+    input.form-control#form-team-selector(
+      type="text",ng-model="selected",
+      uib-typeahead="team.label for team in $ctrl.allTeams | filter:$viewValue | limitTo:8",
+      typeahead-min-length="0",
+      typeahead-editable="false",
+      typeahead-on-select="$ctrl.selectTeam($item)",
+      data-ng-disabled="$ctrl.isLoading")
+  | &gt;&nbsp;
+  span.ellipsis(data-ng-if="!$ctrl.isAssigningMember()")
+    a(data-ng-if="$ctrl.canEdit()",href="",data-ng-click="$ctrl.startAssigningMember()") {{$ctrl.assignedIndividualName()}}
+    span(data-ng-if="!$ctrl.canEdit()") {{$ctrl.assignedIndividualName()}}
+  .selection(data-ng-if="$ctrl.isAssigningMember()")
+    a(href="",data-ng-click="$ctrl.stopAssigningMember()") Cancel
+    input.form-control#form-member-selector(
+      type="text",
+      data-ng-model="selected",
+      uib-typeahead="member.displayName for member in $ctrl.membersForTeam | filter: $viewValue | limitTo:8",
+      typeahead-min-length="0",
+      typeahead-editable="false",
+      typeahead-on-select="$ctrl.selectMember($item)",
+      data-ng-disabled="$ctrl.isLoading")

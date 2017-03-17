@@ -1,0 +1,10 @@
+.panel.panel-default.row-cards
+  .panel-heading
+    h5.panel-title
+      | Add: {{vm.subtask.name}}
+      button.btn.btn-default.btn-xs.pull-right(data-ui-sref="queue.by.details.summary")
+        span.fa.fa-fw.fa-times
+  .panel-body
+    div(data-ng-if="!details.isMine()")
+      h4 This item is not assigned to you.
+    #workContainer

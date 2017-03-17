@@ -1,0 +1,58 @@
+div
+  div(data-ng-if="isResponse()", style="margin: 1em;")
+    response-server(base="responseServer", watch-issue="queueItem.values['Response GUID']")
+      issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser")
+  div(data-ng-if="!isResponse()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
+    h5 {{queueItem.label}}&nbsp;
+      small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
+    .row
+      .col-xs-12
+        span.fa.fa-fw.fa-calendar
+        | &nbsp;
+        span(data-time-ago="queueItem.createdAt",time-ago-prefix="Created")
+    .row(data-ng-if="!isSummary()")
+      .col-xs-12
+        span.fa.fa-fw.fa-calendar
+        | &nbsp;
+        span(data-time-ago="queueItem.updatedAt",time-ago-prefix="Updated")
+    .row(data-ng-if="!isSummary()")
+      .col-xs-12
+        span.fa.fa-fw.fa-clock-o
+        | &nbsp;
+        span(data-time-ago="queue.friendlyDueDate(queueItem)",time-ago-prefix="Due",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(queueItem))}")
+    //- Person info for non-list views.
+    .row(data-ng-if="!isSummary() && !isListView()")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+        .ellipsis
+          span.fa.fa-fw.fa-users
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+    //- Person info for small list views
+    .row.hidden-md.hidden-lg(data-ng-if="!isSummary() && isListView()")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+        .ellipsis
+          span.fa.fa-fw.fa-users
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}
+    //- Person info large list views.
+    .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
+      .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")
+        .ellipsis
+          span.fa.fa-fw.fa-users
+          | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}}
+    //- Person info large list views.
+    .row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")
+      .col-xs-12
+        .ellipsis
+          span.fa.fa-fw.fa-user
+          | &nbsp;{{queue.friendlyAssignedName(queueItem)}}
+    .row(data-ng-if="isSummary()")
+      .col-xs-12
+        .ellipsis
+          span.fa.fa-fw.fa-user
+          | &nbsp;{{queue.friendlyAssignedName(queueItem)}}
+    .row
+      .col-xs-12
+        p.well-details {{queue.friendlySummary(queueItem)}}
+    .row(data-ng-if="queue.hasCompleted(queueItem) && !isListView() && !details.isOpen()")
+      .col-xs-12
+        h5.item-header Resolution
+        .well.well-details {{queue.friendlyCompleted(queueItem)}}

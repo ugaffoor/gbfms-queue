@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  CoreAPI.$inject = ["Restangular", "ConfigStore"];
+  CoreAPI.$inject = ["Restangular", "Bundle"];
   CoreSlugAPI.$inject = ["CoreAPI"];
   CoreNameAPI.$inject = ["CoreAPI"];
   angular
@@ -11,10 +11,11 @@
     .factory('CoreNameAPI', CoreNameAPI);
 
   /* @ngInject */
-  function CoreAPI(Restangular, ConfigStore) {
+  function CoreAPI(Restangular, Bundle) {
     return Restangular.withConfig(function(RestangularConfigurer) {
       RestangularConfigurer.setDefaultHttpFields({cache: false});
-      RestangularConfigurer.setBaseUrl(ConfigStore.get('apiBaseUrl'));
+      RestangularConfigurer.setBaseUrl(Bundle.apiLocation());
+
       RestangularConfigurer.addResponseInterceptor(function(data, operation, what) {
         // Check the 'what', usually plural. Example 'kapps'.
         if(typeof data[what] === 'undefined') {

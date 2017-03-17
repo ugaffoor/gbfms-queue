@@ -14,17 +14,29 @@
 
     return service;
 
-    function filter(kappSlug, user, itemFilter, formType, pageToken) {
+    function filter(kappSlug, user, itemFilter, pageToken) {
       var searcher =  Submission.search(kappSlug);
 
       _.each(itemFilter.qualifications, function(qualification) {
         if(qualification.value === '${openStatuses}') {
-          var openStatuses = ['Open', 'In Progress'];
+          var openStatuses = ['Open', 'In Progress', 'Pending'];
           searcher.or();
           _.each(openStatuses, function(status) {
             searcher.eq(qualification.field, status);
           });
           searcher.end();
+        } else if(qualification.value === '${myGroups}') {
+          var groups = _.map(user.memberships, function(membership) {
+            return membership.team.name;
+          });
+
+          if(groups.length > 0) {
+            searcher.or();
+            _.each(groups, function(group) {
+              searcher.eq(qualification.field, group);
+            });
+            searcher.end();
+          }
         } else {
           var rval = qualification.value;
           var lval = qualification.field;
@@ -35,10 +47,10 @@
 
           if(_.startsWith(lval, 'values')) {
             searcher.eq(lval, rval);
-          } else {
-            if(lval === 'coreState') {
-              searcher.coreState(rval);
-            }
+          } else if(lval === 'coreState') {
+            searcher.coreState(rval);
+          } else if(lval === 'type') {
+            searcher.type(rval);
           }
 
         }
@@ -49,10 +61,21 @@
         searcher.pageToken(pageToken);
       }
 
+      if(itemFilter.startDate instanceof Date) {
+        console.log('start date')
+        searcher.startDate(itemFilter.startDate);
+      }
+
+      if(itemFilter.endDate instanceof Date) {
+        console.log('end date')
+        searcher.endDate(itemFilter.endDate);
+      }
+
       return searcher
-        .type(formType)
-        .limit(5)
-        .includes(['values','details,form'])
+        .sortBy('updatedAt')
+        .sortDirection('DESC')
+        .limit(1000)
+        .includes(['values,details,form,form.attributes'])
         .execute();
     }
   }

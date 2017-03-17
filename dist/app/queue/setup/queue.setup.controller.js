@@ -9,13 +9,15 @@
   function QueueSetupController(currentKapp, kapps, AttributeDefinition, SpaceModel, Form, FormTypes, Toast, Slugifier, $uibModal, $q, $scope) {
     var vm = this;
     var requiredAttributes = [
-      { name:'Queue Name', allowsMutliple: false },
-      { name: 'Queue Form Type', allowsMutliple: false },
+      { name: 'Queue Name', allowsMutliple: false },
+      { name: 'Description', allowsMutliple: false },
       { name: 'Queue Filters', allowsMutliple: true },
+      { name: 'Queue Completed Value', allowsMutliple: false },
       { name: 'Queue Details Value', allowsMutliple: false },
       { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
-      { name: 'Queue Setup Visible', allowsMultiple: false}
+      { name: 'Queue Setup Visible', allowsMultiple: false },
+      { name: 'Response Server Url', allowsMultiple: false }
     ];
 
     vm.currentKapp = currentKapp;
@@ -23,8 +25,9 @@
     vm.readyToEdit = false;
 
     vm.queueNameAttribute = {};
+    vm.descriptionAttribute = {};
     vm.queueSetupVisibleAttribute = {};
-    vm.queueTypeAttribute = {};
+    vm.queueCompletedAttribute = {};
     vm.queueDetailsAttribute = {};
     vm.queueFilterAttribute = {};
     vm.queueDefaultGroup = {};
@@ -33,6 +36,7 @@
     vm.missingAdminKapp = false;
 
     vm.formGeneratorTemplates = [];
+    vm.filterableValues = [];
 
     vm.saveKapp = saveKapp;
     vm.generateForm = generateForm;
@@ -98,10 +102,10 @@
 
     function activate() {
       preflightCheck();
-
       resetForm();
 
       // Watch the form name field and if slug hasn't been manually modified, set the slug to the new value.
+
       $scope.$watch('vm.form.name', function(name) {
         if(vm.shouldSlugify) {
           vm.form.slug = name.toLowerCase() || '';
@@ -142,9 +146,9 @@
                           function() {
                             Toast.error('Failed to retrieve existing form when creating default templates.');
                           }
-                        )
+                        );
                       }, function() {
-                        Toast.error('Creating default forms failed!')
+                        Toast.error('Creating default forms failed!');
                       }
                     );
                   }
@@ -152,13 +156,13 @@
                 function() {
                   return $q.reject();
                 }
-              )
+              );
 
             },
             function() {
-              Toast.error('Failed to determine setup status!')
+              Toast.error('Failed to determine setup status!');
             }
-          )
+          );
         },
         // If the admin kapp check fails.
         function() {
@@ -214,7 +218,7 @@
       // If there were any missing attributes...
       if(vm.missingAttributes.length > 0) {
         var promises = _.map(vm.missingAttributes, function(attributeDefinition) {
-          return createAttributeDefinition(attributeDefinition)
+          return createAttributeDefinition(attributeDefinition);
         });
         $q.all(promises).then(
           function() {
@@ -225,7 +229,7 @@
             Toast.error('Failed to create missing attribute definitions.');
             deferred.reject();
           }
-        )
+        );
       } else {
         deferred.resolve(true);
       }
@@ -270,7 +274,7 @@
             deferred.resolve();
           } else {
             var promises = _.map(templatesToCreate, function(templateSlug) {
-              return populateDefaultTemplate(templateSlug)
+              return populateDefaultTemplate(templateSlug);
             });
             $q.all(promises).then(
               function() {
@@ -279,7 +283,7 @@
               function() {
                 deferred.reject();
               }
-            )
+            );
           }
 
         },
@@ -317,7 +321,7 @@
       vm.currentKapp.put().then(
         function() {
           setupConfigurationObject();
-          addFormType().then(
+          addSubtaskType().then(
             function() {
               Toast.success('Updated Kapp configuration.');
             },
@@ -335,7 +339,7 @@
       Form.build(vm.currentKapp.slug).getList().then(
         function(forms) {
           if(_.some(forms, {slug: vm.form.slug})) {
-            Toast.error('Form "'+vm.form.slug+'" already exists!')
+            Toast.error('Form "'+vm.form.slug+'" already exists!');
           } else {
             // Next get the form we'll be cloning.
             Form.build(currentKapp.slug).one(vm.formTemplate.slug).get({include: 'details,attributes,pages,categorizations,securityPolicies,bridgedResources,customHeadContent'}).then(
@@ -343,7 +347,6 @@
                 // Update the form template with the new slug, etc.
                 formTemplate.slug = vm.form.slug;
                 formTemplate.name = vm.form.name;
-                formTemplate.type = vm.queueTypeAttribute.values[0];
 
                 // TODO: Are there other things we should be adding? Categories or something?
 
@@ -361,26 +364,26 @@
                 );
               },
               function() {
-                Toast.error('Failed to retrieve form template to clone.')
+                Toast.error('Failed to retrieve form template to clone.');
               }
             );
           }
         },
         function() {
-          Toast.error('Failed to verify form uniqueness.')
+          Toast.error('Failed to verify form uniqueness.');
         }
       );
     }
 
-    function addFormType() {
+    function addSubtaskType() {
       var deferred = $q.defer();
 
       FormTypes.build(vm.currentKapp.slug).getList().then(
         function(formTypes) {
-          if(_.some(formTypes, {name: vm.queueTypeAttribute.values[0]})) {
+          if(_.some(formTypes, {name: 'Subtask'})) {
             deferred.resolve();
           } else {
-            FormTypes.build(vm.currentKapp.slug).post({name: vm.queueTypeAttribute.values[0]}).then(
+            FormTypes.build(vm.currentKapp.slug).post({name: 'Subtask'}).then(
               function() {
                 deferred.resolve();
               },
@@ -411,10 +414,10 @@
       } else {
         vm.queueSetupVisibleAttribute.values[0] = ''+vm.queueSetupVisibleAttribute.values[0];
       }
-      vm.queueTypeAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Type'});
-      if(_.isEmpty(vm.queueTypeAttribute)) {
-        vm.queueTypeAttribute = { name: 'Queue Type', values: [''] };
-        vm.currentKapp.attributes.push(vm.queueTypeAttribute);
+      vm.queueCompletedAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Completed Value'});
+      if(_.isEmpty(vm.queueCompletedAttribute)) {
+        vm.queueCompletedAttribute = { name: 'Queue Completed Value', values: [''] };
+        vm.currentKapp.attributes.push(vm.queueCompletedAttribute);
       }
       vm.queueDetailsAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Details Value'});
       if(_.isEmpty(vm.queueDetailsAttribute)) {
@@ -430,6 +433,16 @@
       if(_.isEmpty(vm.queueGroupBase)) {
         vm.queueGroupBase = { name: 'Queue Group Base', values: []};
         vm.currentKapp.attributes.push(vm.queueGroupBase);
+      }
+      // vm.queueResponseServer = _.find(vm.currentKapp.attributes, {name: 'Response Server Url'});
+      // if(_.isEmpty(vm.queueResponseServer)) {
+      //   vm.queueResponseServer = { name: 'Response Server Url', values: []};
+      //   vm.currentKapp.attributes.push(vm.queueResponseServer);
+      // }
+      vm.descriptionAttribute = _.find(vm.currentKapp.attributes, {name: 'Description'});
+      if(_.isEmpty(vm.descriptionAttribute)) {
+        vm.descriptionAttribute = { name: 'Description', values: []};
+        vm.currentKapp.attributes.push(vm.description);
       }
       vm.queueFilterAttribute = _.find(vm.currentKapp.attributes, {name: 'Queue Filters'});
       if(_.isEmpty(vm.queueFilterAttribute)) {
