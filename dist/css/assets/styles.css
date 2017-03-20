@@ -13,6 +13,10 @@ body {
 .kapp-name {
   padding-left: 4px; }
 
+.filter-rule {
+  margin-top: 3px;
+  margin-bottom: 3px; }
+
 ul[dnd-list], ul[dnd-list] > li {
   position: relative; }
 

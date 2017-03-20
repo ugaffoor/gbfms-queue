@@ -209,6 +209,23 @@
                 );
               }
 
+              // If the filter type is 'Pending' then filter down to just the pending issues.
+              if(filterType === 'Pending') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    return item.values['Status'] === 'Pending';
+                  })
+                );
+              }
+
+              if(filterType === 'In Progress') {
+                return $q.resolve(
+                  _.filter(openItems, function(item) {
+                    return item.values['Status'] === 'In Progress';
+                  })
+                );
+              }
+
               // If the filter type is 'Unassigned' then filte down to just the ones where the assigned individual is empty.
               if(filterType === 'Unassigned') {
                 return $q.resolve(

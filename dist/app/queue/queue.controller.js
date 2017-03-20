@@ -224,6 +224,8 @@
       queue.stats = {
         mine: 0,
         unassigned: 0,
+        pending: 0,
+        inProgress: 0,
         pastDue: 0,
         dueToday: 0,
         totalOpen: queue.openItems.length,
@@ -251,6 +253,14 @@
         // Check if it is unassigned.
         if(_.isEmpty(item.values['Assigned Individual'])) {
           queue.stats.unassigned++;
+        }
+
+        if(item.values['Status'] === 'Pending') {
+          queue.stats.pending++;
+        }
+
+        if(item.values['Status'] === 'In Progress') {
+          queue.stats.inProgress++;
         }
       });
 
