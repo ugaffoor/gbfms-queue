@@ -12,7 +12,7 @@
         option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose Team
         option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === '__show__'",value="__show__") Choose Team
         option(data-ng-repeat="filter in queue.filters | filter:{visible: true}",ng-selected="queue.isSelectedFilter(filter)",value="{{filter.name}}") {{filter.name}}
-    ul.nav.nav-stacked(data-ng-if="queue.filterName")
+    ul.nav.nav-stacked(data-ng-if="queue.filterName && queue.filterName !== '__show__'")
       li(data-ng-class="{'active': queue.isFilterActive('Open')}")
         a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Open'})") Open&nbsp;
           span.pull-right.badge {{queue.stats.totalOpen}}
