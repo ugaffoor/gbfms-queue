@@ -157,7 +157,6 @@
             var teamName = AssignmentService.withoutRoot(team.name);
             return { label: teamName, team: teamName };
           });
-          vm.allTeams.unshift({label: 'Unassign', team: ''});
 
           // Focus on the team selector.
           $timeout(function() {

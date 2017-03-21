@@ -61,7 +61,6 @@
               self.allTeams = _.map(validTeams, function(team) {
                 return { label: team.name, team: team.name };
               });
-              self.allTeams.unshift({label: 'Unassign', team: ''});
 
               $timeout(function() {
                 document.getElementById('form-team-selector').focus();
