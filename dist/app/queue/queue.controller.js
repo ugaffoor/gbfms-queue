@@ -295,7 +295,10 @@
           },
           formsForTeam: function() {
             var activeTeam = queue.filterName;
-            return _.filter(forms, function(form) {
+            var workItemForms = _.filter(forms, function(form) {
+              return form.type === 'Work Item';
+            });
+            return _.filter(workItemForms, function(form) {
               var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
               return angular.isDefined(owningTeam) ? owningTeam.values.indexOf(activeTeam) !== -1 : false;
             });
