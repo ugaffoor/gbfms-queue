@@ -8,7 +8,7 @@ body{
 
 .btn {
   background-color: $tertiary;
-  border-width: 0;
+  border-color: transparent;
   &:hover {
     text-decoration: none;
   }

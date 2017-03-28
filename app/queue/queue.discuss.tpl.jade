@@ -1,8 +1,8 @@
 .panel.panel-primary
   .panel-heading
     h5.panel-title
-      button.btn.btn-primary.btn-xs(type="button",data-ui-sref="queue.by.details.summary")
-        span.fa.fa-fw.fa-reply
+      .btn.btn-link(data-ui-sref="queue.by.details.summary")
+        span.fa.fa-fw.fa-arrow-left
       | &nbsp;{{vm.item.label}}
       small.pull-right ({{queue.friendlyStatus(vm.item)}})
   .panel-body

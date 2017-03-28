@@ -50,7 +50,7 @@ body {
 
 .btn, .btn-primary, .btn-primary-complement, .btn-secondary, .btn-secondary-complement, .btn-tertiary, .btn-tertiary-complement, .btn-link, .btn-success {
   background-color: #1594C4;
-  border-width: 0; }
+  border-color: transparent; }
   .btn:hover, .btn-primary:hover, .btn-primary-complement:hover, .btn-secondary:hover, .btn-secondary-complement:hover, .btn-tertiary:hover, .btn-tertiary-complement:hover, .btn-link:hover, .btn-success:hover {
     text-decoration: none; }
 
@@ -172,7 +172,7 @@ button[data-button-type=submit-page] {
   background-color: #1594C4;
   padding: .8rem .6rem;
   border-radius: .4rem;
-  border-width: 0;
+  border-color: transparent;
   color: #ffffff;
   cursor: pointer; }
   .btn:hover, .btn-primary:hover, .btn-primary-complement:hover, .btn-secondary:hover, .btn-secondary-complement:hover, .btn-tertiary:hover, .btn-tertiary-complement:hover, .btn-link:hover, .btn-success:hover {

@@ -20,7 +20,7 @@ button[data-button-type=submit-page] {
   background-color: $tertiary;
   padding: .8rem .6rem;
   border-radius: .4rem ;
-  border-width: 0;
+  border-color: transparent;
   color: $white;
   cursor: pointer;
   &:hover {

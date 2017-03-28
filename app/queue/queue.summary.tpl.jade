@@ -109,7 +109,8 @@
     .row
       .col-xs-12
         div(data-ui-view="")
-    .row(data-ng-if="details.isMine() && details.isOpen()")
+    .row(data-ng-if="details.isMine() && details.isOpen()" style="margin-top:1rem;")
+
       div(data-ng-if="queue.canDiscuss(vm.item)",data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen())}")
         button.btn.btn-primary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
         button.btn.btn-primary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
