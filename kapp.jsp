@@ -65,8 +65,6 @@
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.routes.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/queue.setup.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/setup/filter.qualification.controller.js"></script>
-    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
-    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/models/models.module.js"></script>
     <script src="${bundle.location}/dist/app/core/models/user.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/team.model.js"></script>
@@ -76,6 +74,8 @@
     <script src="${bundle.location}/dist/app/core/models/form.types.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/form.model.js"></script>
     <script src="${bundle.location}/dist/app/core/models/attribute.definition.model.js"></script>
+    <script src="${bundle.location}/dist/app/core/core.module.js"></script>
+    <script src="${bundle.location}/dist/app/core/toast/toast.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.module.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.service.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/login.modal.controller.js"></script>
@@ -118,11 +118,11 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
-    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.routes.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.controller.js"></script>
+    <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/bundle-templates.js"></script>
     <script src="${bundle.location}/dist/app/app.routes.js"></script>
     <script src="${bundle.location}/dist/app/app.constants.js"></script>
