@@ -3,7 +3,8 @@ div
     discussion-server(base="discussionServer", watch-issue="queueItem.values['Discussion GUID']")
       issue-summary(summary-issue="$parent.discussion.issue", current-user="$parent.discussion.currentUser")
   div(data-ng-if="!isDiscussion()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
-    h5 {{queueItem.form.name}} ({{queueItem.handle}})&nbsp;
+    h5 
+      strong {{queueItem.form.name}} ({{queueItem.handle}})&nbsp;
       //small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})
       status-label.pull-right(data-ng-if="!isSummary()",data-status="queue.friendlyStatus(queueItem)")
     .row

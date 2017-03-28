@@ -1,12 +1,10 @@
 .modal-header
   .modal-title(data-ng-if="vm.formLoaded")
     | {{vm.loadedForm.name()}}
-    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()")
-      span.fa.fa-fw.fa-times
+    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()") Close
   .modal-title(data-ng-if="!vm.formLoaded")
     | Choose an item
-    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()")
-      span.fa.fa-fw.fa-times
+    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()") Close
 .modal-body
   .list-group(data-ng-if="!vm.formLoaded")
     a.list-group-item(href="",data-ng-repeat="form in vm.filteredForms",data-ng-click="vm.loadForm(form)")

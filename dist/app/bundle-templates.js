@@ -192,7 +192,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </discussion-server>\n' +
     '  </div>\n' +
     '  <div data-ng-if="!isDiscussion()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
-    '    <h5>{{queueItem.form.name}} ({{queueItem.handle}})&nbsp;\n' +
+    '    <h5> <strong>{{queueItem.form.name}} ({{queueItem.handle}})&nbsp;</strong>\n' +
     '      <!--small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})-->\n' +
     '      <status-label data-ng-if="!isSummary()" data-status="queue.friendlyStatus(queueItem)" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
@@ -267,8 +267,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
-    '    <h5 class="panel-title">\n' +
-    '      <div data-ui-sref="queue.by.details.summary" class="btn btn-link"><span class="fa fa-fw fa-arrow-left"></span></div>&nbsp;{{vm.item.label}}<small class="pull-right">({{queue.friendlyStatus(vm.item)}})</small>\n' +
+    '    <h5 class="panel-title"><a data-ui-sref="queue.by.details.summary"><span class="fa fa-fw fa-arrow-left"></span></a>&nbsp;{{vm.item.label}}\n' +
+    '      <status-label data-status="queue.friendlyStatus(vm.item)" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -325,10 +325,10 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="modal-header">\n' +
     '  <div data-ng-if="vm.formLoaded" class="modal-title">{{vm.loadedForm.name()}}\n' +
-    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-times"></span></button>\n' +
+    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right">Close</button>\n' +
     '  </div>\n' +
     '  <div data-ng-if="!vm.formLoaded" class="modal-title">Choose an item\n' +
-    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right"><span class="fa fa-fw fa-times"></span></button>\n' +
+    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right">Close</button>\n' +
     '  </div>\n' +
     '</div>\n' +
     '<div class="modal-body">\n' +
@@ -397,7 +397,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="panel panel-default row-cards">\n' +
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title">Add: {{vm.subtask.name}}\n' +
-    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-default btn-xs pull-right"><span class="fa fa-fw fa-times"></span></button>\n' +
+    '      <button data-ui-sref="queue.by.details.summary" class="btn btn-link btn-xs pull-right">Cancel</button>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -431,7 +431,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
-    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span><a data-ng-if="vm.showQueueIcon()" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="btn btn-xs btn-default pull-right">Q</a><a data-ng-if="vm.showRequestIcon()" href="{{vm.originLink()}}" target="_blank" class="btn btn-xs btn-default pull-right">K</a></div>\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.createdAt" time-ago-prefix="Created"></span><a data-ng-if="vm.showQueueIcon()" data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})" class="label label-default pull-right">Parent Task</a><a data-ng-if="vm.showRequestIcon()" href="{{vm.originLink()}}" target="_blank" class="label label-default pull-right">Originating Request</a></div>\n' +
     '    </div>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="vm.item.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
@@ -516,11 +516,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()" style="margin-top:1rem;" class="row">\n' +
     '      <div data-ng-if="queue.canDiscuss(vm.item)" data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen()), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen())}">\n' +
-    '        <button type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ng-if="queue.hasDiscussion(vm.item)" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block">Join It</button>\n' +
-    '        <button type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ng-if="!queue.hasDiscussion(vm.item)" data-ng-click="vm.startNewDiscussion()" class="btn btn-primary btn-block">Discuss It</button>\n' +
+    '        <button type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ng-if="queue.hasDiscussion(vm.item)" data-ui-sref="queue.by.details.discuss" class="btn btn-tertiary btn-block">Join It</button>\n' +
+    '        <button type="button" data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ng-if="!queue.hasDiscussion(vm.item)" data-ng-click="vm.startNewDiscussion()" class="btn btn-tertiary btn-block">Discuss It</button>\n' +
     '      </div>\n' +
     '      <div data-ng-class="{\'col-xs-5\': (details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; queue.canDiscuss(vm.item)), \'col-xs-6\': (!details.canHaveSubtasks() || !details.isOpen()) &amp;&amp; queue.canDiscuss(vm.item), \'col-xs-12\': !queue.canDiscuss(vm.item) &amp;&amp; (!details.canHaveSubtasks() || !details.isOpen()), \'col-xs-10\': details.canHaveSubtasks() &amp;&amp; details.isOpen() &amp;&amp; !queue.canDiscuss(vm.item)}">\n' +
-    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">\n' +
+    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-tertiary btn-block">\n' +
     '          <div data-ng-if="details.isMine() &amp;&amp; details.isOpen()">Work It</div>\n' +
     '        </button>\n' +
     '      </div>\n' +
@@ -535,10 +535,10 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '    <div data-ng-if="!details.isOpen()" class="row">\n' +
     '      <div data-ng-if="queue.hasDiscussion(vm.item)" class="col-xs-6">\n' +
-    '        <button type="button" data-ui-sref="queue.by.details.discuss" class="btn btn-primary btn-block">Join It</button>\n' +
+    '        <button type="button" data-ui-sref="queue.by.details.discuss" class="btn btn-tertiary btn-block">Join It</button>\n' +
     '      </div>\n' +
     '      <div data-ng-class="{\'col-xs-6\': queue.hasDiscussion(vm.item), \'col-xs-12\': !queue.hasDiscussion(vm.item)}">\n' +
-    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-primary btn-block">Review It</button>\n' +
+    '        <button data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()" data-ui-sref="queue.by.details.summary.work" class="btn btn-tertiary btn-block">Review It</button>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -607,7 +607,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '\n' +
     '<div class="panel panel-default row-cards">\n' +
     '  <div class="panel-heading">{{vm.isReviewing() ? \'Reviewing\' : \'Working\'}}&hellip;\n' +
-    '    <button data-ui-sref="queue.by.details.summary" class="pull-right btn btn-xs btn-default"><span class="fa fa-fw fa-times"></span></button>\n' +
+    '    <button data-ui-sref="queue.by.details.summary" class="pull-right btn btn-xs btn-link">Cancel</button>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
     '    <div id="workContainer"></div>\n' +

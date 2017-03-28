@@ -2,8 +2,7 @@
   .panel-heading
     h5.panel-title
       | Add: {{vm.subtask.name}}
-      button.btn.btn-default.btn-xs.pull-right(data-ui-sref="queue.by.details.summary")
-        span.fa.fa-fw.fa-times
+      button.btn.btn-link.btn-xs.pull-right(data-ui-sref="queue.by.details.summary") Cancel
   .panel-body
     div(data-ng-if="!details.isMine()")
       h4 This item is not assigned to you.

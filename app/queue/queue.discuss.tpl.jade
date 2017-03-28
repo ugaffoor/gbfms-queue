@@ -1,10 +1,10 @@
 .panel.panel-primary
   .panel-heading
     h5.panel-title
-      .btn.btn-link(data-ui-sref="queue.by.details.summary")
+      a(data-ui-sref="queue.by.details.summary")
         span.fa.fa-fw.fa-arrow-left
       | &nbsp;{{vm.item.label}}
-      small.pull-right ({{queue.friendlyStatus(vm.item)}})
+      status-label.pull-right(data-status="queue.friendlyStatus(vm.item)")
   .panel-body
     .row(data-ng-if="queue.hasDiscussion(vm.item)")
       .col-xs-12

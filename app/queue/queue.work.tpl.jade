@@ -1,7 +1,6 @@
 .panel.panel-default.row-cards
   .panel-heading
     | {{vm.isReviewing() ? 'Reviewing' : 'Working'}}&hellip;
-    button.pull-right.btn.btn-xs.btn-default(data-ui-sref="queue.by.details.summary")
-      span.fa.fa-fw.fa-times
+    button.pull-right.btn.btn-xs.btn-link(data-ui-sref="queue.by.details.summary") Cancel
   .panel-body
     #workContainer
