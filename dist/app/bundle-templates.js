@@ -1,13 +1,4 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form.assignment.html',
-    '\n' +
-    '<div class="form-assignment">\n' +
-    '  <h1>Hello Form</h1>\n' +
-    '  <p>{{$ctrl.hello}}</p>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -38,12 +29,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/foo.html',
-    '\n' +
-    '<h1>lksjdflksjflksjf</h1>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
