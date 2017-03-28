@@ -1,0 +1,7 @@
+.checkbox.required label:first-child:after,
+.radio.required label:first-child:after,
+.form-group.required label:after,
+label.required:after {
+  content: '*';
+  color: red;
+}
