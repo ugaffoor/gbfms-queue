@@ -99,7 +99,7 @@
       .col-xs-12
         h5.item-header Discussion
         response-server(base="vm.discussionServer", watch-issue="vm.item.values['Discussion Id']")
-          issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true")
+          issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true", no-participants="true")
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
         button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
