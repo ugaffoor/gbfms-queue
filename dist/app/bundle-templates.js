@@ -142,6 +142,33 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/form.assignment.html',
     '\n' +
     '<div class="form-assignment"><span class="fa fa-fw fa-users"></span><span data-ng-if="!$ctrl.isAssigningTeam()" class="ellipsis">&nbsp;<a data-ng-if="$ctrl.canEdit()" href="" data-ng-click="$ctrl.startAssigningTeam()">{{$ctrl.assignedTeamName()}}</a><span data-ng-if="!$ctrl.canEdit()">{{$ctrl.assignedTeamName()}}</span></span>\n' +
@@ -323,15 +350,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.new.item.modal.html',
     '\n' +
-    '<div class="modal-header">\n' +
-    '  <div data-ng-if="vm.formLoaded" class="modal-title">{{vm.loadedForm.name()}}\n' +
-    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right">Close</button>\n' +
-    '  </div>\n' +
-    '  <div data-ng-if="!vm.formLoaded" class="modal-title">Choose an item\n' +
-    '    <button data-ng-click="vm.close()" class="btn btn-xs btn-default pull-right">Close</button>\n' +
-    '  </div>\n' +
+    '<div class="kd-modal-header">\n' +
+    '  <h4 data-ng-if="vm.formLoaded">{{vm.loadedForm.name()}}</h4>\n' +
+    '  <h4 data-ng-if="!vm.formLoaded">Choose an item</h4><i data-ng-click="vm.close()" class="fa fa-times pull-right"></i>\n' +
     '</div>\n' +
-    '<div class="modal-body">\n' +
+    '<div class="kd-modal-body">\n' +
     '  <div data-ng-if="!vm.formLoaded" class="list-group"><a href="" data-ng-repeat="form in vm.filteredForms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
     '      <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
     '      <p data-ng-if="form.description">{{form.description}}</p></a>\n' +
@@ -342,7 +365,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div id="formContainer"></div>\n' +
     '</div>\n' +
-    '<div class="modal-footer clearfix"></div>');
+    '<div class="kd-modal-footer clearfix"></div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -616,41 +639,14 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('core/authentication/login.modal.tpl.html',
     '\n' +
     '<form name="loginModalForm" data-ng-submit="vm.submit()" class="form-horizontal">\n' +
-    '  <div class="modal-content">\n' +
-    '    <div class="modal-header">\n' +
-    '      <h4 class="modal-title">Login</h4>\n' +
+    '  <div class="kd-modal-content">\n' +
+    '    <div class="kd-modal-header">\n' +
+    '      <h4>Login</h4>\n' +
     '    </div>\n' +
-    '    <div class="modal-body">\n' +
+    '    <div class="kd-modal-body">\n' +
     '      <div class="row">\n' +
     '        <div class="col-xs-offset-1 col-xs-10">\n' +
     '          <div ng-if="vm.hasError" class="alert alert-danger">{{vm.errorMsg}}</div>\n' +
@@ -665,7 +661,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <div class="modal-footer">\n' +
+    '    <div class="kd-modal-footer">\n' +
     '      <button type="submit" class="btn btn-default">Login</button>\n' +
     '    </div>\n' +
     '  </div>\n' +

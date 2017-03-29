@@ -1,0 +1,81 @@
+/* Styles go here */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2048;
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  margin-top: 70px; // Sticky header moves this down 50px;
+  padding: 0;
+  max-width: 1000px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  overflow: hidden;
+}
+
+/* Modal Header */
+.kd-modal-header {
+  padding: 1rem;
+  background-color: $gray;
+  color: $white;
+  font-size: 3rem;
+  line-height: 3rem;
+  h1,h2,h3,h4,h5,h6{
+    color: $white;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+  }
+  .fa {
+    font-size: 2rem;
+    line-height: 3rem;
+    cursor: pointer;
+  }
+}
+
+/* Modal Body */
+.kd-modal-body {
+  padding: 1rem;
+  max-height: 75vh;
+  overflow: auto;
+  .container{
+    width: auto;
+  }
+  table {
+    width: 100%;
+    th, td {
+      padding: 0.5em;
+    }
+    tbody tr {
+      cursor: pointer;
+      &:hover {
+        background-color: lighten($black, 75%);
+      }
+    }
+  }
+
+  hr {
+    border-color: #eee;
+  }
+}
+
+/* Modal Footer */
+.kd-modal-footer {
+  padding: 0.5rem 1rem;
+  background-color: $lightestgray;
+  color: $white;
+}
+
+@media (max-width : 768px) {
+  .kd-modal-content {
+    width: 90% !important;
+  }
+}

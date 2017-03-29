@@ -270,3 +270,69 @@ button[data-button-type=submit-page] {
 label.required:after {
   content: '*';
   color: red; }
+
+/* Styles go here */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2048;
+  background-color: rgba(0, 0, 0, 0.5); }
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  margin-top: 70px;
+  padding: 0;
+  max-width: 1000px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow: hidden; }
+
+/* Modal Header */
+.kd-modal-header {
+  padding: 1rem;
+  background-color: #7e8083;
+  color: #ffffff;
+  font-size: 3rem;
+  line-height: 3rem; }
+  .kd-modal-header h1, .kd-modal-header h2, .kd-modal-header h3, .kd-modal-header h4, .kd-modal-header h5, .kd-modal-header h6 {
+    color: #ffffff;
+    padding: 0;
+    margin: 0;
+    display: inline-block; }
+  .kd-modal-header .fa {
+    font-size: 2rem;
+    line-height: 3rem;
+    cursor: pointer; }
+
+/* Modal Body */
+.kd-modal-body {
+  padding: 1rem;
+  max-height: 75vh;
+  overflow: auto; }
+  .kd-modal-body .container {
+    width: auto; }
+  .kd-modal-body table {
+    width: 100%; }
+    .kd-modal-body table th, .kd-modal-body table td {
+      padding: 0.5em; }
+    .kd-modal-body table tbody tr {
+      cursor: pointer; }
+      .kd-modal-body table tbody tr:hover {
+        background-color: #bfbfbf; }
+  .kd-modal-body hr {
+    border-color: #eee; }
+
+/* Modal Footer */
+.kd-modal-footer {
+  padding: 0.5rem 1rem;
+  background-color: #F1F1F1;
+  color: #ffffff; }
+
+@media (max-width: 768px) {
+  .kd-modal-content {
+    width: 90% !important; } }
