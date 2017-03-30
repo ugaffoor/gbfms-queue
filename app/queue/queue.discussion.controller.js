@@ -6,11 +6,12 @@
     .controller('QueueDiscussionController', QueueDiscussionController);
 
   /* @ngInject */
-  function QueueDiscussionController(item, queueDiscussionServer, Toast, $http, $scope) {
+  function QueueDiscussionController(item, queueDiscussionServer, Bundle, Toast, $http, $scope) {
     var queue = $scope.queue;
     var vm = this;
     vm.item = item;
     vm.discussionServer = queueDiscussionServer;
+    vm.embedBase = Bundle.spaceLocation();
 
     activate();
 

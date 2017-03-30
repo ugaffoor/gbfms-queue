@@ -23,6 +23,7 @@
     vm.subtasks = subtasks;
     vm.showNotes = false;
     vm.discussionServer = queueDiscussionServer;
+    vm.embedBase = Bundle.spaceLocation();
 
     // METHODS
     vm.grabIt = grabIt;

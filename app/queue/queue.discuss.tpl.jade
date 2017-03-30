@@ -8,4 +8,4 @@
   .panel-body
     .row(data-ng-if="queue.hasDiscussion(vm.item)")
       .col-xs-12
-        response-issue-view(response-server="{{vm.discussionServer}}", current-issue-id="{{queue.discussionGuid(vm.item)}}", embed-padding="70")
+        response-issue-view(response-server="{{vm.discussionServer}}", current-issue-id="{{queue.discussionGuid(vm.item)}}", embed-base="vm.embedBase", embed-padding="70")

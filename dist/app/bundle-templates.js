@@ -301,7 +301,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div class="panel-body">\n' +
     '    <div data-ng-if="queue.hasDiscussion(vm.item)" class="row">\n' +
     '      <div class="col-xs-12">\n' +
-    '        <response-issue-view response-server="{{vm.discussionServer}}" current-issue-id="{{queue.discussionGuid(vm.item)}}" embed-padding="70"></response-issue-view>\n' +
+    '        <response-issue-view response-server="{{vm.discussionServer}}" current-issue-id="{{queue.discussionGuid(vm.item)}}" embed-base="vm.embedBase" embed-padding="70"></response-issue-view>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
@@ -518,7 +518,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div data-ng-if="queue.hasDiscussion(vm.item) &amp;&amp; !vm.isStartingDiscussion" class="row row-cards">\n' +
     '      <div class="col-xs-12">\n' +
     '        <h5 class="item-header">Discussion</h5>\n' +
-    '        <response-server base="vm.discussionServer" watch-issue="vm.item.values[\'Discussion Id\']">\n' +
+    '        <response-server base="vm.discussionServer" watch-issue="vm.item.values[\'Discussion Id\']" embed-base="vm.embedBase">\n' +
     '          <issue-summary summary-issue="$parent.response.issue" current-user="$parent.response.currentUser" no-title="true" no-participants="true"></issue-summary>\n' +
     '        </response-server>\n' +
     '      </div>\n' +
