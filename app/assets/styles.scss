@@ -25,7 +25,8 @@ body {
   margin-top: 3px;
   margin-bottom: 3px;
 }
-
+@import "scss/mixins";
+@import "scss/type";
 @import "scss/draggables";
 @import "scss/queue";
 @import "scss/buttons";
