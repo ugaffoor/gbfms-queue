@@ -102,12 +102,12 @@
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/queue/form.assignment.component.js"></script>
     <script src="${bundle.location}/dist/app/queue/assignment.service.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
     <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
     <script src="${bundle.location}/dist/app/core/status.label.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>

@@ -1,4 +1,33 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('core/kinetic.header.html',
+    '\n' +
+    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
+    '  <div class="container">\n' +
+    '    <div class="navbar-header">\n' +
+    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
+    '    </div>\n' +
+    '    <div id="navbar" class="navbar-collapse collapse">\n' +
+    '      <ul class="nav navbar-nav navbar-right">\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
+    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
+    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
+    '          <ul class="dropdown-menu">\n' +
+    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
+    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
+    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
+    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
+    '          </ul>\n' +
+    '        </li>\n' +
+    '        <li><a href="">{{header.currentUser.username}}\n' +
+    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</nav>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -56,35 +85,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('core/kinetic.header.html',
-    '\n' +
-    '<nav class="navbar navbar-default navbar-fixed-top">\n' +
-    '  <div class="container">\n' +
-    '    <div class="navbar-header">\n' +
-    '      <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="{{header.kappUrl(header.kapp)}}" class="navbar-brand"> <span class="fa fa-fa fa-home"></span>&nbsp;{{header.kapp.name}}</a>\n' +
-    '    </div>\n' +
-    '    <div id="navbar" class="navbar-collapse collapse">\n' +
-    '      <ul class="nav navbar-nav navbar-right">\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-folder-open-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-envelope-o"></span></a></li>\n' +
-    '        <li><a href=""><span class="fa fa-fw fa-bell-o"></span></a></li>\n' +
-    '        <li class="dropdown"><a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="hidden-xs fa fa-fw fa-ellipsis-h"></i><i class="visible-xs">Kapps</i></a>\n' +
-    '          <ul class="dropdown-menu">\n' +
-    '            <li data-ng-repeat="kapp in header.kapps"><a href="{{header.kappUrl(kapp)}}" class="kapp-select"><span data-ng-class="header.kappIcon(kapp)" class="fa fa-fw"></span><span class="kapp-name">{{kapp.name}}</span></a></li>\n' +
-    '            <li data-ng-if="header.isSpaceAdmin()" class="divider"></li>\n' +
-    '            <li data-ng-repeat="adminLink in header.adminLinks"><a data-ng-if="adminLink.visibility()" href="" data-ui-sref="{{adminLink.sref}}"><span class="fa fa-fw fa-wrench"></span><span>{{adminLink.title}}</span></a></li>\n' +
-    '            <li><a data-ng-if="header.isSpaceAdmin()" href="{{header.managementUrl()}}" target="_blank"><span class="fa fa-fw fa-dashboard"></span><span>Management Console</span></a></li>\n' +
-    '          </ul>\n' +
-    '        </li>\n' +
-    '        <li><a href="">{{header.currentUser.username}}\n' +
-    '            <gravatar email="{{header.currentUser.email}}"></gravatar></a></li>\n' +
-    '      </ul>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '</nav>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -350,11 +350,11 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('queue/queue.new.item.modal.html',
     '\n' +
-    '<div class="kd-modal-header">\n' +
+    '<div class="modal-header kd-modal-header">\n' +
     '  <h4 data-ng-if="vm.formLoaded">{{vm.loadedForm.name()}}</h4>\n' +
     '  <h4 data-ng-if="!vm.formLoaded">Choose an item</h4><i data-ng-click="vm.close()" class="fa fa-times pull-right"></i>\n' +
     '</div>\n' +
-    '<div class="kd-modal-body">\n' +
+    '<div class="modal-body kd-modal-body">\n' +
     '  <div data-ng-if="!vm.formLoaded" class="list-group"><a href="" data-ng-repeat="form in vm.filteredForms" data-ng-click="vm.loadForm(form)" class="list-group-item">\n' +
     '      <h4 class="list-group-item-heading">{{form.name}}</h4>\n' +
     '      <p data-ng-if="form.description">{{form.description}}</p></a>\n' +
@@ -365,7 +365,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div id="formContainer"></div>\n' +
     '</div>\n' +
-    '<div class="kd-modal-footer clearfix"></div>');
+    '<div class="modal-footer kd-modal-footer clearfix"></div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
