@@ -163,9 +163,6 @@ button, input[type='submit'], input[type='button'], .btn, .btn-primary, .btn-pri
   -webkit-transition: all 0.15s ease-out;
   transition: all 0.15s ease-out; }
 
-button[data-button-type=submit-page] {
-  float: right; }
-
 .btn, .btn-primary, .btn-primary-complement, .btn-secondary, .btn-secondary-complement, .btn-tertiary, .btn-tertiary-complement, .btn-link, .btn-success {
   display: inline-block;
   line-height: 2rem;
