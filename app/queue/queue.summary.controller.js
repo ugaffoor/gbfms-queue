@@ -50,10 +50,6 @@
     function activate() {}
 
     function startNewDiscussion() {
-      // Note: This is kind of brittle - if the state hierarchy changes be sure to make sure this gets changed too.
-      // We're taking the current location, finding /filter/NAME/TYPE/details and replacing NAME and TYPE.
-      var showUrl = '' + window.location.toString();
-      showUrl = showUrl.replace(/\/filter\/.+\/.+\/details/, '/filter/__show__/Open/details');
       vm.isStartingDiscussion = true;
 
       $http({
@@ -62,7 +58,7 @@
         data: {
           name: vm.item.label,
           description: vm.item.label,
-          tag_list: ['META:TYPE:Submission', 'META:ID:'+vm.item.id, 'META:LABEL:Open Task', 'META:URL:'+showUrl].join(',')
+          tag_list: ['META:TYPE:Queue Task', 'META:ID:'+vm.item.id].join(',')
         }
       }).then(
         function success(discussion) {
