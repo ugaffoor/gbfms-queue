@@ -7,8 +7,8 @@
 
   /* @ngInject */
   function ItemsService(Submission) {
-    var activeStatuses = ['Open', 'In Progress'];
-    var inactiveStatuses = ['Pending'];
+    var activeStatuses = [];
+    var inactiveStatuses = [];
 
     var service = {
       filter: filter,
@@ -21,7 +21,7 @@
     function filter(kappSlug, user, itemFilter, pageToken) {
       var searcher =  Submission.search(kappSlug);
 
-      if(itemFilter.filterOptions && (itemFilter.filterOptions.stateActive || itemFilter.filterOptions.stateInactive)) {
+      if(itemFilter.filterOptions && (itemFilter.filterOptions.stateActive || itemFilter.filterOptions.stateInactive) && (activeStatuses.length > 0 || inactiveStatuses.length > 0)) {
         searcher.or();
         if(itemFilter.filterOptions.stateActive) {
           _.each(activeStatuses, function(status) {
@@ -142,9 +142,11 @@
     }
 
     function setActiveStatuses(statuses) {
+      activeStatuses = statuses;
     }
 
     function setInactiveStatuses(statuses) {
+      inactiveStatuses = statuses;
     }
   }
 }());

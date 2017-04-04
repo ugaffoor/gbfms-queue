@@ -223,6 +223,33 @@
         },
         teams: function(AssignmentService) {
           return AssignmentService.getAllTeams();
+        },
+        activeStatuses: function(currentSpace, currentKapp, $q) {
+          var statuses = _.find(currentKapp.attributes, {name: 'Statuses - Active'});
+          if(_.isEmpty(statuses)) {
+            statuses = _.find(currentSpace.attributes, {name: 'Statuses - Active'});
+          }
+
+          if(_.isEmpty(statuses)) {
+            statuses = ['Open', 'In Progress'];
+          } else {
+            statuses = statuses.values;
+          }
+          return $q.resolve(statuses);
+
+        },
+        inactiveStatuses: function(currentSpace, currentKapp, $q) {
+          var statuses = _.find(currentKapp.attributes, {name: 'Statuses - Inactive'});
+          if(_.isEmpty(statuses)) {
+            statuses = _.find(currentSpace.attributes, {name: 'Statuses - Inactive'});
+          }
+
+          if(_.isEmpty(statuses)) {
+            statuses = ['Pending'];
+          } else {
+            statuses = statuses.values;
+          }
+          return $q.resolve(statuses);
         }
       },
 
@@ -255,11 +282,15 @@
               filter.filterOptions = _.merge({}, filter.defaultFilterOptions, urlFilterOptions);
               return filter;
             },
-            items: function(ItemsService, currentKapp, currentUser, filter, $q) {
+            items: function(ItemsService, currentKapp, currentUser, filter, activeStatuses, inactiveStatuses, $q) {
               // Handle the situation where we are showing an individual item.
               if(filter.name === '__show__') {
                 return $q.resolve([]);
               }
+
+              // We need to make sure that the active and inactive statuses are accurate before filtering.
+              ItemsService.setActiveStatuses(activeStatuses);
+              ItemsService.setInactiveStatuses(inactiveStatuses);
 
               return ItemsService.filter(currentKapp.slug, currentUser, filter);
             }
