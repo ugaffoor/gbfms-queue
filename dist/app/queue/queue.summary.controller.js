@@ -81,7 +81,7 @@
           );
         },
         function error() {
-          Toast.error('Failed to start Discussion Discussion. Contact your system administrator.');
+          Toast.error('Failed to start Discussion. Contact your system administrator.');
         }
       );
     }
