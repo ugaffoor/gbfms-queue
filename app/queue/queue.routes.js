@@ -236,18 +236,20 @@
 
     $stateProvider.state('queue.by', {
       url: '/filter/{filterName}',
+      resolve: {
+        filterName: function($stateParams, filters) {
+          var filterName = $stateParams.filterName;
+          if(filterName === '__default__') {
+            filterName = filters[0].name;
+          }
+          return filterName;
+        }
+      },
       views: {
         '': {
           controller: 'QueueListController as list',
           templateUrl: 'queue/queue.list.tpl.html',
           resolve: {
-            filterName: function($stateParams, filters) {
-              var filterName = $stateParams.filterName;
-              if(filterName === '__default__') {
-                filterName = filters[0].name;
-              }
-              return filterName;
-            },
             filter: function(filters, filterName, urlFilterOptions) {
               var filter = _.find(filters, {name: filterName});
               filter.filterOptions = _.merge({}, filter.defaultFilterOptions, urlFilterOptions);
@@ -307,23 +309,22 @@
           controller: 'QueueSummaryController as vm',
           templateUrl: 'queue/queue.summary.tpl.html',
           resolve: {
-            subtasks: function(item, forms, $q) {
+            subtasks: function(currentUser, item, filterName, forms, $q) {
+              var activeTeam = item.values['Assigned Team'];
+
               // Reduce the list of potential forms to just ones that are of a type 'Subtask' and active.
-              var subtasks = _.filter(forms, {
-                status: 'Active',
-                type: 'Subtask'
+              var subtasks = _.filter(forms, function(form) {
+                return form.status === 'Active' && (form.type === 'Subtask' || form.type === 'Task');
               });
 
-              // Check to see if this item has been configured to specify subtasks. If it is listing permitted
-              // subtasks we will need to take the master list of subtasks and filter it down to the ones that
-              // are allowed on this item.
-              var permittedSubtasksAttribute = _.find(item.form.attributes, {name: 'Permitted Subtasks'});
-              if(typeof permittedSubtasksAttribute !== 'undefined') {
-                var permittedSubtasks = permittedSubtasksAttribute.values;
-                subtasks = _.filter(subtasks, function(subtask) {
-                  return permittedSubtasks.indexOf(subtask.slug) > -1;
-                });
-              }
+              return _.filter(subtasks, function(form) {
+                if(form.type === 'Subtask') {
+                  return true;
+                }
+                var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
+                return angular.isDefined(owningTeam) ? owningTeam.values.indexOf(activeTeam) > -1 : false;
+              });
+
               return $q.resolve(subtasks);
             },
             notes: function(item) {
