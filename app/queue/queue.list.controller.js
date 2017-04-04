@@ -31,6 +31,7 @@
 
     var queue = $scope.queue;
     queue.filterName = filterName;
+    queue.recordCount = items.length;
     queue.setActiveFilter(filter);
 
     activate();

@@ -588,7 +588,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="form-group">\n' +
     '      <div class="checkbox">\n' +
     '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.assignmentType.mine" data-ng-change="queue.changeAssignmentMine()"/>Mine\n' +
+    '          <input type="checkbox" data-ng-model="queue.assignmentType.mine" data-ng-change="queue.changeAssignmentMine()" data-ng-disabled="queue.filterName === \'Mine\'"/>Mine\n' +
     '        </label>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -602,7 +602,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="form-group">\n' +
     '      <div class="checkbox">\n' +
     '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.assignmentType.none" data-ng-change="queue.changeAssignmentNone()"/>Unassigned\n' +
+    '          <input type="checkbox" data-ng-model="queue.assignmentType.none" data-ng-change="queue.changeAssignmentNone()" data-ng-disabled="queue.filterName === \'Available\'"/>Unassigned\n' +
     '        </label>\n' +
     '      </div>\n' +
     '    </div><br/><br/><strong>State:</strong>\n' +
@@ -626,7 +626,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '          <input type="checkbox" data-ng-model="queue.closedToday" data-ng-change="queue.changeClosedToday()"/>Closed Today\n' +
     '        </label>\n' +
     '      </div>\n' +
-    '    </div>\n' +
+    '    </div><em>{{queue.recordCount}} Records.</em>\n' +
     '    <hr/>\n' +
     '    <button type="button" data-ng-click="queue.newItemModal()" class="btn btn-block btn-tertiary">New</button>\n' +
     '  </div>\n' +

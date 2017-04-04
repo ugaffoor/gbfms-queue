@@ -13,6 +13,7 @@
     queue.filters = filters;
     queue.queueName = queueName;
     queue.filterName = '';
+    queue.recordCount = 0;
     queue.activeFilter = {};
     queue.loading = false;
     queue.hideListOnXS = true;

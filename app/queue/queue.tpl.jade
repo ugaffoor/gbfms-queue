@@ -28,7 +28,7 @@
     .form-group
       .checkbox
         label
-          input(type="checkbox",data-ng-model="queue.assignmentType.mine",data-ng-change="queue.changeAssignmentMine()")
+          input(type="checkbox",data-ng-model="queue.assignmentType.mine",data-ng-change="queue.changeAssignmentMine()",data-ng-disabled="queue.filterName === 'Mine'")
           | Mine
     .form-group
       .checkbox
@@ -38,7 +38,7 @@
     .form-group
       .checkbox
         label
-          input(type="checkbox",data-ng-model="queue.assignmentType.none",data-ng-change="queue.changeAssignmentNone()")
+          input(type="checkbox",data-ng-model="queue.assignmentType.none",data-ng-change="queue.changeAssignmentNone()",data-ng-disabled="queue.filterName === 'Available'")
           | Unassigned
     br
     br
@@ -58,6 +58,7 @@
         label
           input(type="checkbox",data-ng-model="queue.closedToday",data-ng-change="queue.changeClosedToday()")
           | Closed Today
+    em {{queue.recordCount}} Records.
     hr
     button.btn.btn-block.btn-tertiary(type="button",data-ng-click="queue.newItemModal()") New
   .col-xs-12.col-sm-10
