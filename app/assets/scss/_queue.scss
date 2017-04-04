@@ -8,7 +8,7 @@ body{
 
 .btn {
   background-color: $tertiary;
-  border-width: 0;
+  border-color: transparent;
   &:hover {
     text-decoration: none;
   }
@@ -17,7 +17,7 @@ body{
   margin-top: 1em;
 }
 .list-group .list-group-item{
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   margin: 0 0 .5rem 0;
   border-left: 2px solid transparent;
 }
@@ -71,16 +71,16 @@ select, select.form-control{
   background-color: $white;
   box-shadow: 0 1px 2px rgba($primary,0.14);
   > .panel-heading{
-    background-color: #f0f3f5;
+    background-color: $secondary;
     border-color: rgba($lightgray, 0.5);
-    color: $primary;
+    color: $white;
     > .panel-title{
         > a,
         > small,
         > .small,
         > small > a,
         > .small > a{
-          color: $gray;
+          color: $white;
         }
     }
   }
