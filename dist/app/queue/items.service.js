@@ -74,12 +74,10 @@
       }
 
       if(itemFilter.startDate instanceof Date) {
-        console.log('start date')
         searcher.startDate(itemFilter.startDate);
       }
 
       if(itemFilter.endDate instanceof Date) {
-        console.log('end date')
         searcher.endDate(itemFilter.endDate);
       }
 
@@ -91,6 +89,14 @@
 
       if(itemFilter.filterOptions && !_.isEmpty(itemFilter.filterOptions.sortDir)) {
         sortDir = itemFilter.filterOptions.sortDir.toUpperCase();
+      }
+
+      if(itemFilter.filterOptions.closedToday) {
+        searcher.coreState('Closed');
+        var today = new Date();
+        var yesterday = new Date(new Date().setDate(today.getDate()-1));
+        searcher.startDate(yesterday);
+        searcher.endDate(today);
       }
 
       return searcher
