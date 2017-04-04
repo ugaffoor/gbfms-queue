@@ -283,13 +283,19 @@
             return queue.filterName;
           },
           formsForTeam: function() {
-            var activeTeam = queue.filterName;
+            var activeTeams = [queue.filterName];
+            if(['Available', 'Mine', 'All'].indexOf(queue.filterName) > -1 ) {
+              activeTeams = _.map(currentUser.memberships, function(membership) {
+                return membership.team.name;
+              });
+            }
+
             var workItemForms = _.filter(forms, function(form) {
-              return form.type === 'Work Item';
+              return form.type === 'Task' && form.status === 'Active';
             });
             return _.filter(workItemForms, function(form) {
               var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
-              return angular.isDefined(owningTeam) ? owningTeam.values.indexOf(activeTeam) !== -1 : false;
+              return angular.isDefined(owningTeam) ? _.intersection(owningTeam.values, activeTeams).length > 0 : false;
             });
           }
         }
