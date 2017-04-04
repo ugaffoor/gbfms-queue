@@ -95,6 +95,10 @@
       .col-xs-12
         h5.item-header Resolution
         .well.well-details {{queue.friendlyCompleted(vm.item)}}
+    .row(data-ng-if="queue.hasPendingReason(vm.item) && details.isOpen()")
+      .col-xs-12
+        h5.item-header Pending Reason
+        .well.well-details {{queue.friendlyPendingReason(vm.item)}}
     .row.row-cards(data-ng-if="queue.hasDiscussion(vm.item) && !vm.isStartingDiscussion")
       .col-xs-12
         h5.item-header Discussion

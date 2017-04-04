@@ -29,6 +29,8 @@
     queue.friendlyDueDate = friendlyDueDate;
     queue.friendlyDetails = friendlyDetails;
     queue.friendlyCompleted = friendlyCompleted;
+    queue.friendlyPendingReason = friendlyPendingReason;
+    queue.hasPendingReason = hasPendingReason;
     queue.hasCompleted = hasCompleted;
     queue.hasDetails = hasDetails;
     queue.hasDiscussion = hasDiscussion;
@@ -207,10 +209,17 @@
       return canDiscuss(item) ? !_.isEmpty(item.values['Discussion Id']) : false;
     }
 
+    function friendlyPendingReason(item) {
+      return item.values['Pending Reason'] || '';
+    }
+
     function friendlyCompleted(item) {
       return item.values[queueCompletedValue] || '';
     }
 
+    function hasPendingReason(item) {
+      return !_.isEmpty(item.values['Pending Reason']);
+    }
     function hasCompleted(item) {
       return !_.isEmpty(item.values[queueCompletedValue]);
     }

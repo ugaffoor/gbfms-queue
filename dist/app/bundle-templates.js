@@ -494,6 +494,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <div class="well well-details">{{queue.friendlyCompleted(vm.item)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
+    '    <div data-ng-if="queue.hasPendingReason(vm.item) &amp;&amp; details.isOpen()" class="row">\n' +
+    '      <div class="col-xs-12">\n' +
+    '        <h5 class="item-header">Pending Reason</h5>\n' +
+    '        <div class="well well-details">{{queue.friendlyPendingReason(vm.item)}}</div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
     '    <div data-ng-if="queue.hasDiscussion(vm.item) &amp;&amp; !vm.isStartingDiscussion" class="row row-cards">\n' +
     '      <div class="col-xs-12">\n' +
     '        <h5 class="item-header">Discussion</h5>\n' +
