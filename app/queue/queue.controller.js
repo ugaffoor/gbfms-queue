@@ -5,7 +5,7 @@
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, currentUser, forms, teams, teamsKapp, filters, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state, $uibModal) {
+  function QueueController(currentKapp, currentUser, forms, teams, filters, urlFilterOptions, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state, $uibModal) {
     var STATE_MATCH_DETAILS = /queue\.by\./;
     var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
@@ -13,13 +13,7 @@
     queue.filters = filters;
     queue.queueName = queueName;
     queue.filterName = '';
-    queue.FILTER_TYPES = [
-      'Open',
-      'Due Today',
-      'Past Due',
-      'Recent Hour',
-      'Recent Day'
-    ];
+    queue.activeFilter = {};
     queue.loading = false;
     queue.hideListOnXS = true;
     queue.hideFiltersOnXS = true;
@@ -38,16 +32,12 @@
     queue.hasDiscussion = hasDiscussion;
     queue.canDiscuss = canDiscuss;
     queue.discussionGuid = discussionGuid;
-    queue.hasTeamsKapp = hasTeamsKapp;
-    queue.getTeamLink = getTeamLink;
-    queue.getUserLink = getUserLink;
     queue.friendlySummary = friendlySummary;
     queue.friendlyStatus = friendlyStatus;
     queue.isOverdue = isOverdue;
     queue.imagePath = imagePath;
     queue.filterChangeCount = filterChangeCount;
     queue.isChildState = isChildState;
-    queue.isFilterActive = isFilterActive;
     queue.isSelectedFilter = isSelectedFilter;
     queue.filterIsSelectable = filterIsSelectable;
 
@@ -58,8 +48,62 @@
     queue.showFilters = showFilters;
     queue.showDetails = showDetails;
 
-    queue.populateStats = populateStats;
     queue.newItemModal = newItemModal;
+
+    queue.sortBy = 'updated';
+    queue.sortDir = 'desc';
+    queue.assignmentType = {
+      mine: false,
+      none: false,
+      others: false
+    };
+    queue.stateActive = false;
+    queue.stateInactive = false;
+    queue.closedToday = false;
+
+    queue.setActiveFilter = function(filter) {
+      queue.sortBy = filter.filterOptions.sortBy;
+      queue.sortDir = filter.filterOptions.sortDir;
+      queue.assignmentType = {
+        mine: filter.filterOptions.assignmentMine,
+        none: filter.filterOptions.assignmentNone,
+        others: filter.filterOptions.assignmentOthers
+      };
+      queue.stateActive = filter.filterOptions.stateActive;
+      queue.stateInactive = filter.filterOptions.stateInactive;
+      queue.closedToday = filter.filterOptions.closedToday;
+    }
+    queue.changeSortBy = function() {
+      $state.go('.', {sortBy: queue.sortBy}, {reload:true});
+    };
+
+    queue.changeSortDir = function() {
+      $state.go('.', {sortDir: queue.sortDir}, {reload:true});
+    };
+
+    queue.changeAssignmentMine = function() {
+      $state.go('.', {assignmentMine: queue.assignmentType.mine}, {reload:true});
+    };
+
+    queue.changeAssignmentNone = function() {
+      $state.go('.', {assignmentNone: queue.assignmentType.none}, {reload:true});
+    };
+
+    queue.changeAssignmentOthers = function() {
+      $state.go('.', {assignmentOthers: queue.assignmentType.others}, {reload:true});
+    };
+
+    queue.changeStateActive = function() {
+      $state.go('.', {stateActive: queue.stateActive}, {reload:true});
+    };
+
+    queue.changeStateInactive = function() {
+      $state.go('.', {stateInactive: queue.stateInactive}, {reload:true});
+    };
+
+    queue.changeClosedToday = function() {
+      $state.go('.', {closedToday: queue.closedToday}, {reload:true});
+    };
 
     activate();
 
@@ -68,7 +112,31 @@
     }
 
     function changeFilter() {
-      $state.go('queue.by', {filterName:queue.filterName, filterType: 'Open'}, {reload:true});
+      var params = {filterName:queue.filterName};
+      if(queue.filterName === 'Mine') {
+        params.assignmentMine = true;
+        params.assignmentOthers = false;
+        params.assignmentNone = false;
+        params.stateActive = true;
+        params.stateInactive = false;
+        params.closedToday = false;
+      } else if(queue.filterName === 'Available') {
+        params.assignmentMine = false;
+        params.assignmentOthers = false;
+        params.assignmentNone = true;
+        params.stateActive = true;
+        params.stateInactive = false;
+        params.closedToday = false;
+      } else {
+        // Handle the normal 'teams' situation.
+        params.assignmentMine = true;
+        params.assignmentOthers = false;
+        params.assignmentNone = true;
+        params.stateActive = true;
+        params.stateInactive = false;
+        params.closedToday = false;
+      }
+      $state.go('queue.by', params, {reload:true});
     }
 
     function filterIsSelectable() {
@@ -90,10 +158,6 @@
       matcher = matcher || STATE_MATCH_DETAILS;
       var currentState = $state.current.name;
       return currentState.match(matcher) !== null;
-    }
-
-    function isFilterActive(filterType) {
-      return (isChildState(STATE_MATCH_LIST) && queue.filterType === filterType);
     }
 
     function shouldShowFilters() {
@@ -129,11 +193,6 @@
       return !_.isEmpty(item.values[queueDetailsValue]);
     }
 
-    function hasTeamsKapp() {
-      return !_.isEmpty(teamsKapp);
-    }
-
-
     function canDiscuss(item) {
       return Object.keys(item.values).indexOf('Discussion Id') !== -1;
     }
@@ -144,16 +203,6 @@
 
     function hasDiscussion(item) {
       return canDiscuss(item) ? !_.isEmpty(item.values['Discussion Id']) : false;
-    }
-
-    function getTeamLink(team) {
-      team = team || queue.filterType;
-      var teamHash = md5.createHash(team);
-      return Bundle.spaceLocation() + '/' + teamsKapp + '?page=team&team=' + teamHash;
-    }
-
-    function getUserLink(username) {
-      return Bundle.spaceLocation() + '/' + teamsKapp + '?page=user&username=' + username;
     }
 
     function friendlyCompleted(item) {
@@ -217,66 +266,6 @@
 
     function filterChangeCount(index) {
       return 42;
-    }
-
-    function populateStats() {
-      queue.stats = {
-        mine: 0,
-        unassigned: 0,
-        pending: 0,
-        inProgress: 0,
-        pastDue: 0,
-        dueToday: 0,
-        totalOpen: queue.openItems.length,
-        teamMembers: 0,
-        activeMembers: 0
-      };
-
-      _.each(queue.openItems, function(item) {
-        // Check for a Due Date.
-        var dueDate = moment(item.values['Due Date']);
-        var today = moment();
-        if(dueDate.isValid()) {
-          if(dueDate.isSame(today.startOf('day'), 'd')) {
-            queue.stats.dueToday++;
-          } else if(dueDate.isBefore(today.startOf('day'))) {
-            queue.stats.pastDue++;
-          }
-        }
-
-        // Check if it is mine.
-        if(item.values['Assigned Individual'] === currentUser.username) {
-          queue.stats.mine++;
-        }
-
-        // Check if it is unassigned.
-        if(_.isEmpty(item.values['Assigned Individual'])) {
-          queue.stats.unassigned++;
-        }
-
-        if(item.values['Status'] === 'Pending') {
-          queue.stats.pending++;
-        }
-
-        if(item.values['Status'] === 'In Progress') {
-          queue.stats.inProgress++;
-        }
-      });
-
-      if(shouldShowTeams()) {
-        TeamModel.build().one(md5.createHash(queue.filterName)).get({include:'memberships,memberships.user'}).then(function(team) {
-          queue.stats.teamMembers = team.memberships.length;
-        });
-
-        var recentItems = _.filter(queue.openItems, function(item) {
-          return moment().diff(item.updatedAt, 'minutes') <= 30;
-        });
-        var recentMembers = _.map(recentItems, function(item) {
-          return item.updatedBy;
-        });
-        var members = _.uniq(recentMembers);
-        queue.stats.activeMembers = members.length;
-      }
     }
 
     function newItemModal() {

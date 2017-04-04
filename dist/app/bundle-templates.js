@@ -118,7 +118,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <!--div.navbar-collapse.collapse#navbar\n' +
     '    ul.nav.navbar-nav\n' +
     '      li(data-ng-class="{\'active\': layout.isParentActive(\'queue\')}")\n' +
-    '        a(data-ui-sref="queue.by({filterName: \'__default__\', filterType: \'Open\'})") Queue\n' +
+    '        a(data-ui-sref="queue.by({filterName: \'__default__\'})") Queue\n' +
     '      li(data-ng-class="{\'active\': layout.isParentActive(\'catalog\')}")\n' +
     '        a(data-ui-sref="catalog") Catalog\n' +
     '      li(data-ng-if="layout.isSpaceAdmin()",data-ng-class="{\'active\': layout.isParentActive(\'setup\')}")\n' +
@@ -235,7 +235,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div data-ng-if="!isDiscussion()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
     '    <h5>{{queueItem.form.name}} ({{queueItem.handle}})&nbsp;\n' +
-    '      <!--small.pull-right(data-ng-if="!isSummary()") ({{queue.friendlyStatus(queueItem)}})-->\n' +
     '      <status-label data-ng-if="!isSummary()" data-status="queue.friendlyStatus(queueItem)" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '    <div class="row">\n' +
@@ -243,48 +242,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <p>{{queueItem.label}}</p>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <!--.row\n' +
-    '    .col-xs-12\n' +
-    '      span.fa.fa-fw.fa-calendar\n' +
-    '      | &nbsp;\n' +
-    '      span(data-time-ago="queueItem.createdAt",time-ago-prefix="Created")\n' +
-    '      .row(data-ng-if="!isSummary()")\n' +
-    '    .col-xs-12\n' +
-    '      span.fa.fa-fw.fa-clock-o\n' +
-    '      | &nbsp;\n' +
-    '      span(data-time-ago="queue.friendlyDueDate(queueItem)",time-ago-prefix="Due",data-ng-class="{\'text-danger\': queue.isOverdue(queue.friendlyDueDate(queueItem))}")\n' +
-    '    -->\n' +
-    '    <!--.row(data-ng-if="!isSummary() && !isListView()")\n' +
-    '    .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")\n' +
-    '      .ellipsis\n' +
-    '        span.fa.fa-fw.fa-users\n' +
-    '        | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}\n' +
-    '    -->\n' +
     '    <div class="row">\n' +
     '      <div data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} &gt; {{queue.friendlyAssignedName(queueItem)}}" class="col-xs-12">\n' +
     '        <div class="ellipsis"><span class="fa fa-fw fa-users"></span>&nbsp;{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}</div>\n' +
     '      </div>\n' +
     '    </div>\n' +
-    '    <!--.row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")\n' +
-    '    .col-xs-12(data-uib-tooltip="{{queue.friendlyAssignedTeam(queueItem)}} > {{queue.friendlyAssignedName(queueItem)}}")\n' +
-    '      .ellipsis\n' +
-    '        span.fa.fa-fw.fa-users\n' +
-    '        | &nbsp;{{queue.friendlyAssignedTeam(queueItem)}}\n' +
-    '    -->\n' +
-    '    <!--.row.visible-md.visible-lg(data-ng-if="!isSummary() && isListView()")\n' +
-    '    .col-xs-12\n' +
-    '      .ellipsis\n' +
-    '        span.fa.fa-fw.fa-user\n' +
-    '        | &nbsp;{{queue.friendlyAssignedName(queueItem)}}\n' +
-    '    -->\n' +
-    '    <!--.row(data-ng-if="isSummary()")\n' +
-    '    .col-xs-12\n' +
-    '      .ellipsis\n' +
-    '        span.fa.fa-fw.fa-user\n' +
-    '        | &nbsp;{{queue.friendlyAssignedName(queueItem)}}\n' +
-    '    -->\n' +
     '    <div data-ng-if="!isSummary()" class="row">\n' +
-    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span></div>\n' +
+    '      <div class="col-xs-12"><span class="fa fa-fw fa-calendar"></span>&nbsp;<span data-ng-if="dateDisplay !== \'due\' &amp;&amp; dateDisplay !== \'created\'" data-time-ago="queueItem.updatedAt" time-ago-prefix="Updated"></span><span data-ng-if="dateDisplay === \'created\'" data-time-ago="queueItem.createdAt" time-ago-prefix="Created"></span><span data-ng-if="dateDisplay === \'due\'" data-time-ago="queueItem.values[\'Due Date\']" time-ago-prefix="Due"></span></div>\n' +
     '    </div>\n' +
     '    <div data-ng-if="queue.hasCompleted(queueItem) &amp;&amp; !isListView() &amp;&amp; !details.isOpen()" class="row">\n' +
     '      <div class="col-xs-12">\n' +
@@ -340,7 +304,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\'" data-ng-class="{\'hidden-xs\': !queue.shouldShowList(), \'hidden-sm\': !queue.shouldShowList() }" fixed-height="" fh-bottom-pad="70" class="col-sm-12 col-md-4">\n' +
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
-    '        <queue-card data-queue-item="item" list-view="true"></queue-card></a>\n' +
+    '        <queue-card data-queue-item="item" list-view="true" date-display="{{list.sortBy}}"></queue-card></a>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
     '        <ul class="pager queue-pager">\n' +
     '          <li><a data-ng-if="list.prevPageTokens.length &gt; 0" data-ng-click="list.prevPage()">Previous</a></li>\n' +
@@ -605,7 +569,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="row">\n' +
     '  <div data-ng-class="{\'hidden-xs\': !queue.shouldShowFilters()}" fixed-height="" fh-bottom-pad="70" class="col-sm-2 col-xs-12">\n' +
     '    <button type="button" data-ng-click="queue.showList()" class="btn btn-primary btn-xs visible-xs"><span class="fa fa-mail-forward"></span></button>\n' +
-    '    <div class="form-group"><strong>Team:</strong>\n' +
+    '    <div class="form-group"><strong>Filter:</strong>\n' +
     '      <button data-ng-click="queue.refresh()" class="btn btn-xs btn-link pull-right"><span class="fa fa-fw fa-refresh"></span></button><br/>\n' +
     '      <select data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control">\n' +
     '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose Team</option>\n' +
@@ -613,30 +577,62 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <option data-ng-repeat="filter in queue.filters | filter:{visible: true}" ng-selected="queue.isSelectedFilter(filter)" value="{{filter.name}}">{{filter.name}}</option>\n' +
     '      </select>\n' +
     '    </div>\n' +
-    '    <ul data-ng-if="queue.filterName &amp;&amp; queue.filterName !== \'__show__\'" class="nav nav-stacked">\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Open\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Open\'})">Open&nbsp;<span class="pull-right badge">{{queue.stats.totalOpen}}</span></a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'In Progress\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'In Progress\'})">In Progress&nbsp;<span class="pull-right badge">{{queue.stats.inProgress}}</span></a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Pending\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Pending\'})">Pending&nbsp;<span class="pull-right badge">{{queue.stats.pending}}</span></a></li>\n' +
-    '      <hr class="filter-rule"/>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Mine\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Mine\'})">Mine&nbsp;<span class="pull-right badge">{{queue.stats.mine}}</span></a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Unassigned\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Unassigned\'})">Unassigned&nbsp;<span class="pull-right badge">{{queue.stats.unassigned}}</span></a></li>\n' +
-    '      <hr class="filter-rule"/>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Past Due\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Past Due\'})">Past Due&nbsp;<span class="pull-right badge">{{queue.stats.pastDue}}</span></a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Due Today\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Due Today\'})">Due Today&nbsp;<span class="pull-right badge">{{queue.stats.dueToday}}</span></a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Recent Hour\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Hour\'})" data-ui-sref-opts="{reload:true}">Recent Hour</a></li>\n' +
-    '      <li data-ng-class="{\'active\': queue.isFilterActive(\'Recent Day\')}"><a href="" data-ui-sref="queue.by({filterName: queue.filterName, filterType: \'Recent Day\'})" data-ui-sref-opts="{reload:true}">Recent Day</a></li>\n' +
-    '    </ul>\n' +
-    '    <div data-ng-if="queue.shouldShowTeams()" class="teams-container">\n' +
-    '      <hr/>\n' +
-    '      <h5 data-ng-if="!queue.hasTeamsKapp()">{{queue.filterName}} Team</h5>\n' +
-    '      <h5 data-ng-if="queue.hasTeamsKapp()"><a href="{{queue.getTeamLink(queue.filterName)}}" target="_blank">{{queue.filterName}} Team</a></h5>\n' +
-    '      <ul class="list-unstyled team-memberships">\n' +
-    '        <li>Team Members&nbsp;<span class="pull-right badge">{{queue.stats.teamMembers}}</span></li>\n' +
-    '        <li>Active Members&nbsp;<span class="pull-right badge">{{queue.stats.activeMembers}}</span></li>\n' +
-    '      </ul>\n' +
+    '    <div class="form-group"><strong>Sort:</strong><br/>\n' +
+    '      <select data-ng-model="queue.sortBy" data-ng-change="queue.changeSortBy()" class="form-control">\n' +
+    '        <option value="created">Created</option>\n' +
+    '        <option value="due">Due</option>\n' +
+    '        <option value="updated">Updated</option>\n' +
+    '      </select><br/>\n' +
+    '      <select data-ng-model="queue.sortDir" data-ng-change="queue.changeSortDir()" class="form-control">\n' +
+    '        <option value="desc">Descending</option>\n' +
+    '        <option value="asc">Ascending</option>\n' +
+    '        <pre>{{queue.assignmentType}}</pre>\n' +
+    '      </select>\n' +
+    '    </div><strong>Assignment:</strong>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.assignmentType.mine" data-ng-change="queue.changeAssignmentMine()"/>Mine\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.assignmentType.others" data-ng-change="queue.changeAssignmentOthers()"/>Assigned\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.assignmentType.none" data-ng-change="queue.changeAssignmentNone()"/>Unassigned\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '    </div><br/><br/><strong>State:</strong>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.stateActive" data-ng-change="queue.changeStateActive()"/>Active\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.stateInactive" data-ng-change="queue.changeStateInactive()"/>Inactive\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="form-group">\n' +
+    '      <div class="checkbox">\n' +
+    '        <label>\n' +
+    '          <input type="checkbox" data-ng-model="queue.closedToday" data-ng-change="queue.changeClosedToday()"/>Closed Today\n' +
+    '        </label>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '    <hr/>\n' +
-    '    <button type="button" data-ng-if="queue.shouldShowTeams()" data-ng-click="queue.newItemModal()" class="btn btn-block btn-tertiary">New</button>\n' +
+    '    <button type="button" data-ng-click="queue.newItemModal()" class="btn btn-block btn-tertiary">New</button>\n' +
     '  </div>\n' +
     '  <div class="col-xs-12 col-sm-10">\n' +
     '    <div data-ui-view=""></div>\n' +

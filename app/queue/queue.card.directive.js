@@ -24,6 +24,7 @@
       scope.isSummary = isSummary;
       scope.isListView = isListView;
       scope.isDiscussion = isDiscussion;
+      scope.dateDisplay = angular.isDefined(attributes.dateDisplay) ? attributes.dateDisplay : 'updated';
 
       scope.shouldTeamLink = function() {
         return scope.queue.hasTeamsKapp() && scope.queue.friendlyAssignedTeam(scope.queueItem) !== 'Unassigned';

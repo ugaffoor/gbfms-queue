@@ -32,9 +32,9 @@
             K.reset();
             Toast.success('Started new work item.');
             if(assignedIndividual === currentUser.username) {
-              $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+              $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam});
             } else {
-              $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+              $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam});
             }
           }, 1000);
         }

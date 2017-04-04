@@ -7,8 +7,13 @@
 
   /* @ngInject */
   function ItemsService(Submission) {
+    var activeStatuses = ['Open', 'In Progress'];
+    var inactiveStatuses = ['Pending'];
+
     var service = {
-      filter: filter
+      filter: filter,
+      setActiveStatuses: setActiveStatuses,
+      setInactiveStatuses: setInactiveStatuses
     };
 
     return service;
@@ -16,15 +21,24 @@
     function filter(kappSlug, user, itemFilter, pageToken) {
       var searcher =  Submission.search(kappSlug);
 
-      _.each(itemFilter.qualifications, function(qualification) {
-        if(qualification.value === '${openStatuses}') {
-          var openStatuses = ['Open', 'In Progress', 'Pending'];
-          searcher.or();
-          _.each(openStatuses, function(status) {
-            searcher.eq(qualification.field, status);
+      if(itemFilter.filterOptions && (itemFilter.filterOptions.stateActive || itemFilter.filterOptions.stateInactive)) {
+        searcher.or();
+        if(itemFilter.filterOptions.stateActive) {
+          _.each(activeStatuses, function(status) {
+            searcher.eq('values[Status]', status)
           });
-          searcher.end();
-        } else if(qualification.value === '${myGroups}') {
+        }
+
+        if(itemFilter.filterOptions.stateInactive) {
+          _.each(inactiveStatuses, function(status) {
+            searcher.eq('values[Status]', status);
+          });
+        }
+        searcher.end();
+      }
+
+      _.each(itemFilter.qualifications, function(qualification) {
+        if(qualification.value === '${myGroups}') {
           var groups = _.map(user.memberships, function(membership) {
             return membership.team.name;
           });
@@ -46,8 +60,6 @@
 
           if(_.startsWith(lval, 'values')) {
             searcher.eq(lval, rval);
-          } else if(lval === 'coreState') {
-            searcher.coreState(rval);
           } else if(lval === 'type') {
             searcher.type(rval);
           }
@@ -70,12 +82,63 @@
         searcher.endDate(itemFilter.endDate);
       }
 
+      var sortBy = 'updatedAt';
+      var sortDir = 'DESC';
+      if(itemFilter.filterOptions && itemFilter.filterOptions.sortBy === 'created') {
+        sortBy = 'createdAt';
+      }
+
+      if(itemFilter.filterOptions && !_.isEmpty(itemFilter.filterOptions.sortDir)) {
+        sortDir = itemFilter.filterOptions.sortDir.toUpperCase();
+      }
+
       return searcher
-        .sortBy('updatedAt')
-        .sortDirection('DESC')
+        .sortBy(sortBy)
+        .sortDirection(sortDir)
         .limit(1000)
         .includes(['values,details,form,form.attributes'])
-        .execute();
+        .execute().then(
+          function(items) {
+            // Filter out items based on assignment flags.
+            items = _.filter(items, function(item) {
+              // If any of these is true.
+              var assignedToNone = itemFilter.filterOptions &&
+                                   itemFilter.filterOptions.assignmentNone &&
+                                   _.isEmpty(item.values['Assigned Individual']);
+              var assignedToMe   = itemFilter.filterOptions &&
+                                   itemFilter.filterOptions.assignmentMine &&
+                                   item.values['Assigned Individual'] === user.username;
+              var assignedToOther = itemFilter.filterOptions &&
+                                    itemFilter.filterOptions.assignmentOthers &&
+                                    !_.isEmpty(item.values['Assigned Individual']) &&
+                                    item.values['Assigned Individual'] !== user.username;
+
+              return assignedToNone || assignedToMe || assignedToOther;
+            });
+
+            // Sort by due date, if applicable.
+            if(itemFilter.filterOptions && itemFilter.filterOptions.sortBy === 'due') {
+              items.sort(function(a, b) {
+                var dateA = a.values['Due Date'] === null ? moment.unix(0) : moment(a.values['Due Date']);
+                var dateB = b.values['Due Date'] === null ? moment.unix(0) : moment(b.values['Due Date']);
+                if(dateA.isSame(dateB)) {
+                  return 0;
+                } else if(dateA.isAfter(dateB)) {
+                  return itemFilter.filterOptions.sortDir === 'desc' ? -1 : 1;
+                } else {
+                  return itemFilter.filterOptions.sortDir === 'desc' ? 1 : -1;
+                }
+              });
+            }
+            return items;
+          }
+        );
+    }
+
+    function setActiveStatuses(statuses) {
+    }
+
+    function setInactiveStatuses(statuses) {
     }
   }
 }());
