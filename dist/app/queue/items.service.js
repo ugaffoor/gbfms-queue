@@ -40,9 +40,18 @@
 
       _.each(itemFilter.qualifications, function(qualification) {
         if(qualification.value === '${myGroups}') {
-          var groups = _.map(user.memberships, function(membership) {
-            return membership.team.name;
-          });
+          var groups = _.map(
+            _.filter(user.memberships, function(membership) {
+              var assignable = _.find(membership.team.attributes, {name: 'Assignable'});
+              if(assignable && ["TRUE", "YES"].indexOf(assignable.values[0].toUpperCase()) !== -1) {
+                return true;
+              }
+              return false;
+            }),
+            function(membership) {
+              return membership.team.name;
+            }
+          );
 
           if(groups.length > 0) {
             searcher.or();
