@@ -296,13 +296,13 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '</div>\n' +
     '<div class="row">\n' +
-    '  <div data-ng-if="list.items.length &lt; 1 &amp;&amp; queue.filterName !== \'__show__\'" class="row">\n' +
+    '  <div data-ng-if="list.items.length &lt; 1 &amp;&amp; (queue.filterName !== \'__show__\' &amp;&amp; !list.isChildState())" class="row">\n' +
     '    <div class="col-xs-12 center-items">\n' +
     '      <div><img data-ng-src="{{queue.imagePath(\'happy-wally.png\')}}"/></div>\n' +
     '      <div><strong>An empty queue is a happy queue.</strong></div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\'" data-ng-class="{\'hidden-xs\': !queue.shouldShowList(), \'hidden-sm\': !queue.shouldShowList() }" fixed-height="" fh-bottom-pad="70" class="col-sm-12 col-md-4">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\' || list.isChildState()" data-ng-class="{\'hidden-xs\': !queue.shouldShowList(), \'hidden-sm\': !queue.shouldShowList() }" fixed-height="" fh-bottom-pad="70" class="col-sm-12 col-md-4">\n' +
     '    <div class="list-group queue-list"><a data-ng-if="!list.loading" data-ng-repeat="item in list.items" data-ng-click="list.selectItem(item)" data-ng-class="{\'active-item\':list.isActiveItem(item)}" class="list-group-item queue-item">\n' +
     '        <queue-card data-queue-item="item" list-view="true" date-display="{{list.sortBy}}"></queue-card></a>\n' +
     '      <div data-ng-if="list.hasMorePages()" class="list-group-item">\n' +
@@ -313,7 +313,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '      </div>\n' +
     '    </div>\n' +
     '  </div>\n' +
-    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\'" class="col-sm-12 col-md-8">\n' +
+    '  <div data-ng-if="list.items.length &gt; 0 || queue.filterName === \'__show__\' || list.isChildState()" class="col-sm-12 col-md-8">\n' +
     '    <div data-ui-view="" data-ng-class="{\'hidden-xs\': queue.shouldShowList(), \'hidden-sm\': queue.shouldShowList() }">\n' +
     '      <div class="row">\n' +
     '        <div class="col-xs-12 center-items">\n' +
