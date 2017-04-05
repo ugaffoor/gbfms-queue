@@ -25,6 +25,11 @@ body {
   margin-top: 3px;
   margin-bottom: 3px;
 }
+
+.hidden-block {
+  visibility: hidden;
+}
+
 @import "scss/mixins";
 @import "scss/type";
 @import "scss/draggables";

@@ -590,49 +590,53 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '        <option value="asc">Ascending</option>\n' +
     '        <pre>{{queue.assignmentType}}</pre>\n' +
     '      </select>\n' +
-    '    </div><strong>Assignment:</strong>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.assignmentType.mine" data-ng-change="queue.changeAssignmentMine()" data-ng-disabled="queue.filterName === \'Mine\'"/>Mine\n' +
-    '        </label>\n' +
-    '      </div>\n' +
     '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.assignmentType.others" data-ng-change="queue.changeAssignmentOthers()"/>Assigned\n' +
-    '        </label>\n' +
+    '    <div><strong>State:</strong>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.stateActive" data-ng-change="queue.changeStateActive()"/>Active\n' +
+    '          </label>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.assignmentType.none" data-ng-change="queue.changeAssignmentNone()" data-ng-disabled="queue.filterName === \'Available\'"/>Unassigned\n' +
-    '        </label>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.stateInactive" data-ng-change="queue.changeStateInactive()"/>Inactive\n' +
+    '          </label>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '    </div><br/><br/><strong>State:</strong>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.stateActive" data-ng-change="queue.changeStateActive()"/>Active\n' +
-    '        </label>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.closedToday" data-ng-change="queue.changeClosedToday()"/>Closed Today\n' +
+    '          </label>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.stateInactive" data-ng-change="queue.changeStateInactive()"/>Inactive\n' +
-    '        </label>\n' +
+    '    </div><br/>\n' +
+    '    <div data-ng-class="{\'hidden-block\': queue.filterName === \'Mine\' || queue.filterName === \'Available\'}"><strong>Assignment:</strong>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.assignmentType.mine" data-ng-change="queue.changeAssignmentMine()" data-ng-disabled="queue.filterName === \'Mine\'"/>Mine\n' +
+    '          </label>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '      <div class="checkbox">\n' +
-    '        <label>\n' +
-    '          <input type="checkbox" data-ng-model="queue.closedToday" data-ng-change="queue.changeClosedToday()"/>Closed Today\n' +
-    '        </label>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.assignmentType.others" data-ng-change="queue.changeAssignmentOthers()"/>Assigned\n' +
+    '          </label>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '    </div><em>{{queue.recordCount}} Records.</em>\n' +
+    '      <div class="form-group">\n' +
+    '        <div class="checkbox">\n' +
+    '          <label>\n' +
+    '            <input type="checkbox" data-ng-model="queue.assignmentType.none" data-ng-change="queue.changeAssignmentNone()" data-ng-disabled="queue.filterName === \'Available\'"/>Unassigned\n' +
+    '          </label>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div><br/><em>{{queue.recordCount}} {{(queue.recordCount === 0 || queue.recordCount > 1) ? \'Records\' : \'Record\' }}</em>\n' +
     '    <hr/>\n' +
     '    <button type="button" data-ng-click="queue.newItemModal()" class="btn btn-block btn-tertiary">New</button>\n' +
     '  </div>\n' +
