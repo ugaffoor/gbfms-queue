@@ -104,7 +104,12 @@
             {
               name: 'Available',
               visible: true,
-              qualifications: [],
+              qualifications: [
+                {
+                  field: 'values[Assigned Team]',
+                  value: '${myGroups}'
+                }
+              ],
               defaultFilterOptions: {
                 sortBy: 'updated',
                 sortDir: 'desc',
