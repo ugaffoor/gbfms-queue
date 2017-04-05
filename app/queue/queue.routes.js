@@ -353,12 +353,8 @@
                 var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
                 var hasOwningTeam = angular.isDefined(owningTeam);
                 // If Subtask and no owning team, then yes.
-                if(form.type === 'Subtask' && !hasOwningTeam) {
+                if(!hasOwningTeam) {
                   return true;
-                }
-                // If Task and no owning team, no.
-                if(form.type === 'Task' && !hasOwningTeam) {
-                  return false;
                 }
                 // If Task or Subtask and owning team, only if it's contained.
                 return owningTeam.values.indexOf(activeTeam) > -1;
