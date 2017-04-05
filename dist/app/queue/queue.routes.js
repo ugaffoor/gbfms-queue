@@ -351,11 +351,18 @@
               });
 
               return _.filter(subtasks, function(form) {
-                if(form.type === 'Subtask') {
+                var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
+                var hasOwningTeam = angular.isDefined(owningTeam);
+                // If Subtask and no owning team, then yes.
+                if(form.type === 'Subtask' && !hasOwningTeam) {
                   return true;
                 }
-                var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
-                return angular.isDefined(owningTeam) ? owningTeam.values.indexOf(activeTeam) > -1 : false;
+                // If Task and no owning team, no.
+                if(form.type === 'Task' && !hasOwningTeam) {
+                  return false;
+                }
+                // If Task or Subtask and owning team, only if it's contained.
+                return owningTeam.values.indexOf(activeTeam) > -1;
               });
 
               return $q.resolve(subtasks);
