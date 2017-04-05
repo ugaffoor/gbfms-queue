@@ -130,6 +130,13 @@
         params.stateActive = true;
         params.stateInactive = false;
         params.closedToday = false;
+      } else if(queue.filterName === 'All') {
+        params.assignmentMine = false;
+        params.assignmentOthers = false;
+        params.assignmentNone = false;
+        params.stateActive = false;
+        params.stateInactive = false;
+        params.closedToday = false;
       } else {
         // Handle the normal 'teams' situation.
         params.assignmentMine = true;

@@ -118,8 +118,11 @@
                                     itemFilter.filterOptions.assignmentOthers &&
                                     !_.isEmpty(item.values['Assigned Individual']) &&
                                     item.values['Assigned Individual'] !== user.username;
-
-              return assignedToNone || assignedToMe || assignedToOther;
+              var noneChecked = itemFilter.filterOptions &&
+                                !itemFilter.filterOptions.assignmentNone &&
+                                !itemFilter.filterOptions.assignmentMine &&
+                                !itemFilter.filterOptions.assignmentOthers;
+              return assignedToNone || assignedToMe || assignedToOther || noneChecked;
             });
 
             // Sort by due date, if applicable.

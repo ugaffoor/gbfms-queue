@@ -162,6 +162,7 @@
             return membership.team.name;
           });
 
+          // TODO: sort teams alphabetically, omit order.
           _.each(teams, function(team) {
             var teamFilter = {
               name: team,
@@ -198,10 +199,10 @@
               defaultFilterOptions: {
                 sortBy: 'updated',
                 sortDir: 'desc',
-                assignmentMine: true,
+                assignmentMine: false,
                 assignmentOthers: false,
                 assignmentNone: false,
-                stateActive: true,
+                stateActive: false,
                 stateInactive: false,
                 closedToday: false
               },
