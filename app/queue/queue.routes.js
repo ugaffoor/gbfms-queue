@@ -354,7 +354,7 @@
                 return form.status === 'Active' && (form.type === 'Subtask' || form.type === 'Task');
               });
 
-              return _.filter(subtasks, function(form) {
+              subtasks = _.filter(subtasks, function(form) {
                 var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
                 var hasOwningTeam = angular.isDefined(owningTeam);
                 // If Subtask and no owning team, then yes.
