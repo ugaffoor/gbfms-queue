@@ -21,12 +21,10 @@
     };
 
     vm.loadForm = function(form) {
-      console.log(vm.activeTeam)
       var formPath = Bundle.kappLocation() + '/' + form.slug;
       if(['Available', 'Mine', 'All'].indexOf(vm.activeTeam) === -1) {
         formPath += '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
       }
-      console.log(formPath);
       var K = $window.K;
 
       var responseHandler = function(data, actions) {
