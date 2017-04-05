@@ -312,7 +312,11 @@
             });
             return _.filter(workItemForms, function(form) {
               var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
-              return angular.isDefined(owningTeam) ? _.intersection(owningTeam.values, activeTeams).length > 0 : false;
+              var hasOwningTeam = angular.isDefined(owningTeam);
+              if(!hasOwningTeam) {
+                return true;
+              }
+              return _.intersection(owningTeam.values, activeTeams).length > 0;
             });
           }
         }
