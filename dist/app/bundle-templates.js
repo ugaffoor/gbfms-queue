@@ -574,8 +574,8 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    <div class="form-group"><strong>Filter:</strong>\n' +
     '      <button data-ng-click="queue.refresh()" class="btn btn-xs btn-link pull-right"><span class="fa fa-fw fa-refresh"></span></button><br/>\n' +
     '      <select data-ng-model="queue.filterName" data-ng-change="queue.changeFilter()" class="form-control">\n' +
-    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose Team</option>\n' +
-    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'__show__\'" value="__show__">Choose Team</option>\n' +
+    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'\'" value="">Choose a Filter</option>\n' +
+    '        <option data-ng-if="!queue.filterIsSelectable() &amp;&amp; queue.filterName === \'__show__\'" value="__show__">Choose a Filter</option>\n' +
     '        <option data-ng-repeat="filter in queue.filters | filter:{visible: true}" ng-selected="queue.isSelectedFilter(filter)" value="{{filter.name}}">{{filter.name}}</option>\n' +
     '      </select>\n' +
     '    </div>\n' +

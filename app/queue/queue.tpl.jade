@@ -9,8 +9,8 @@
 
       br
       select.form-control(data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
-        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose Team
-        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === '__show__'",value="__show__") Choose Team
+        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose a Filter
+        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === '__show__'",value="__show__") Choose a Filter
         option(data-ng-repeat="filter in queue.filters | filter:{visible: true}",ng-selected="queue.isSelectedFilter(filter)",value="{{filter.name}}") {{filter.name}}
     .form-group
       strong Sort:
