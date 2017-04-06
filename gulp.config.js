@@ -32,7 +32,9 @@ module.exports = {
   ],
 
   FONTS_SRC: [
-    './thirdparty/font-awesome/fonts/*.{ttf,woff,woff2,eof,svg}'
+    './thirdparty/font-awesome/fonts/*.{ttf,woff,woff2,eof,svg}',
+    './app/assets/fonts/montserrat-v10-latin/*.{ttf,woff,woff2,eof,svg}',
+    './app/assets/fonts/source-sans-pro-v9-latin/*.{ttf,woff,woff2,eof,svg}'
   ],
 
   APPLICATION_SRC: [
