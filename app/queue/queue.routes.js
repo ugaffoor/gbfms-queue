@@ -100,28 +100,29 @@
           return urlFilterOptions;
         },
         filters: function(kappConfigResolver, currentUser) {
-          var filters = [
-            {
-              name: 'Available',
-              visible: true,
-              qualifications: [
-                {
-                  field: 'values[Assigned Team]',
-                  value: '${myGroups}'
-                }
-              ],
-              defaultFilterOptions: {
-                sortBy: 'updated',
-                sortDir: 'desc',
-                assignmentMine: false,
-                assignmentOthers: false,
-                assignmentNone: true,
-                stateActive: true,
-                stateInactive: false,
-                closedToday: false
-              },
-              filterOptions: {}
+          var availableFilter = {
+            name: 'Available',
+            visible: true,
+            qualifications: [
+              {
+                field: 'values[Assigned Team]',
+                value: '${myGroups}'
+              }
+            ],
+            defaultFilterOptions: {
+              sortBy: 'updated',
+              sortDir: 'desc',
+              assignmentMine: false,
+              assignmentOthers: false,
+              assignmentNone: true,
+              stateActive: true,
+              stateInactive: false,
+              closedToday: false
             },
+            filterOptions: {}
+          };
+
+          var filters = [
             {
               name: 'Mine',
               visible: true,
@@ -145,6 +146,7 @@
             }
           ];
 
+
           var teamOrder = 0;
           var validMemberships = _.filter(currentUser.memberships, function(membership) {
             // Find the Assignable attribute.
@@ -165,6 +167,10 @@
           var teams = _.map(validMemberships, function(membership) {
             return membership.team.name;
           });
+
+          if(teams.length < 1) {
+            filters.unshift(availableFilter);
+          }
 
           // TODO: sort teams alphabetically, omit order.
           _.each(teams, function(team) {
