@@ -168,7 +168,7 @@
             return membership.team.name;
           });
 
-          if(teams.length < 1) {
+          if(teams.length > 0) {
             filters.unshift(availableFilter);
           }
 
