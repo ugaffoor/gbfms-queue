@@ -48,7 +48,7 @@
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
     <c:if test="${not empty discussionServerUrl}">
-      <script src="${discussionServerUrl}/assets/response_bundle.js"></script>
+      <script src="${headerLocation}/js/response_bundle.js"></script>
       <script>
        bundle = bundle || {};
        bundle.config = bundle.config || {};
