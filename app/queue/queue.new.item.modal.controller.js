@@ -22,7 +22,7 @@
 
     vm.loadForm = function(form) {
       var formPath = Bundle.kappLocation() + '/' + form.slug;
-      if(['Available', 'Mine', 'All'].indexOf(vm.activeTeam) === -1) {
+      if(['Available', 'Mine', 'All', '__show__'].indexOf(vm.activeTeam) === -1) {
         formPath += '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
       }
       var K = $window.K;

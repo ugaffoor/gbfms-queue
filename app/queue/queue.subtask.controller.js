@@ -28,6 +28,10 @@
       }
 
       var itemPath = Bundle.kappLocation() + '/' + subtask.slug;
+      if(!_.isEmpty(vm.item.values['Assigned Team'])) {
+        itemPath += '?values[Assigned%20Team]='+encodeURIComponent(vm.item.values['Assigned Team']);
+      }
+      console.log(itemPath);
 
       K.reset();
       K.load({

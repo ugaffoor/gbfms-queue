@@ -3,7 +3,7 @@
     .module('kd.bundle.angular')
     .component('formAssignment', {
       templateUrl: 'queue/form.assignment.html',
-      controller: ["md5", "$window", "$http", "$timeout", "$document", function(md5, $window, $http, $timeout, $document) {
+      controller: ["md5", "$window", "$http", "$timeout", "$document", "$element", function(md5, $window, $http, $timeout, $document, $element) {
         'ngInject';
 
         // Note: Get rid of this when moving to ES6 and replace promise functions with
@@ -15,7 +15,14 @@
         this.assigningMember = false;
         this.allTeams = [];
         this.membersForTeam = [];
-        this.K = $window.K;
+
+        // Build up our 'K' object by getting the underlying form object.
+        // Fetch the nearest parent form.
+        var form = $($element).closest('[data-form]');
+        // Fetch the form hash.
+        var formHash = form.attr('id');
+        // Set K to be the form select method.
+        this.K = $window.Kinetic.forms[formHash].select;
 
         this.isAssigningTeam = function() {
           return this.assigningTeam;
