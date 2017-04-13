@@ -81,7 +81,7 @@
             return;
           }
 
-          var teamName = $window.K('field[Assigned Team]').value();
+          var teamName = this.K('field[Assigned Team]').value();
 
           if(_.isEmpty(teamName)) {
             this.startAssigningTeam();
