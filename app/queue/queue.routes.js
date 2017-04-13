@@ -168,6 +168,10 @@
             return membership.team.name;
           });
 
+          teams = teams.sort(function(teamA, teamB) {
+            return teamA.localeCompare(teamB);
+          });
+
           if(teams.length > 0) {
             filters.unshift(availableFilter);
           }
@@ -177,7 +181,6 @@
             var teamFilter = {
               name: team,
               visible: true,
-              order: teamOrder,
               qualifications: [
                 {
                   field: 'values[Assigned Team]',
@@ -197,7 +200,6 @@
               filterOptions: {}
             };
             filters.push(teamFilter);
-            teamOrder++;
           });
 
           if(currentUser.spaceAdmin) {
@@ -234,7 +236,13 @@
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});
         },
         teams: function(AssignmentService) {
-          return AssignmentService.getAllTeams();
+          return AssignmentService.getAllTeams().then(
+            function(teams) {
+              return teams.sort(function(teamA, teamB) {
+                return teamA.name.localeCompare(teamB.name);
+              });
+            }
+          );
         },
         activeStatuses: function(currentSpace, currentKapp, $q) {
           var statuses = _.find(currentKapp.attributes, {name: 'Statuses - Active'});
