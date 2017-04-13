@@ -122,12 +122,14 @@
         this.selectTeam = function(team) {
           this.K('field[Assigned Team]').value(team.team);
           this.K('field[Assigned Individual]').value('');
+          this.K('field[Assigned Individual Display Name]').value('');
 
           this.assigningTeam = false;
         };
 
         this.selectMember = function(member) {
           this.K('field[Assigned Individual]').value(member.username);
+          this.K('field[Assigned Individual Display Name]').value(member.displayName);
           this.assigningMember = false;
         };
 
@@ -155,8 +157,13 @@
         this.assignedIndividualName = function() {
           var name = '';
           if(this.hasValidForm()) {
-            var field = this.K('field[Assigned Individual]');
-            name = field ? field.value() : '';
+            var username = this.K('field[Assigned Individual]');
+            var displayName = this.K('field[Assigned Individual Display Name]');
+            if(displayName && !_.isEmpty(displayName.value())) {
+              name = displayName.value();
+            } else {
+              name = username ? username.value() : '';
+            }
           }
           return _.isEmpty(name) ? 'Unassigned' : name;
         };
