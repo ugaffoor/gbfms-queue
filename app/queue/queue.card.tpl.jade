@@ -5,7 +5,12 @@ div
   div(data-ng-if="!isDiscussion()",data-ui-sref="queue.by.details.summary({itemId: queueItem.id})")
     h5
       strong {{queueItem.form.name}} ({{queueItem.handle}})&nbsp;
-      status-label.pull-right(data-ng-if="!isSummary()",data-status="queue.friendlyStatus(queueItem)")
+      status-label.pull-right(
+        data-ng-if="!isSummary()",
+        data-status="queue.friendlyStatus(queueItem)",
+        data-active-statuses="queue.activeStatuses",
+        data-inactive-statuses="queue.inactiveStatuses",
+        data-cancelled-statuses="queue.cancelledStatuses")
     .row
       .col-xs-12
         p {{queueItem.label}}

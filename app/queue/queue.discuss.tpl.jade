@@ -4,7 +4,11 @@
       a(data-ui-sref="queue.by.details.summary")
         span.fa.fa-fw.fa-arrow-left
       | &nbsp;{{vm.item.label}}
-      status-label.pull-right(data-status="queue.friendlyStatus(vm.item)")
+      status-label.pull-right(
+        data-status="queue.friendlyStatus(vm.item)",
+        data-active-statuses="queue.activeStatuses",
+        data-inactive-statuses="queue.inactiveStatuses",
+        data-cancelled-statuses="queue.cancelledStatuses")
   .panel-body
     .row(data-ng-if="queue.hasDiscussion(vm.item)")
       .col-xs-12

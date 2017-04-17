@@ -4,10 +4,18 @@
       button.btn.btn-primary.btn-xs(href="",data-ng-click="queue.showList()")
         span.fa.fa-fw.fa-reply
       | &nbsp;{{vm.item.form.name}} ({{vm.item.handle}}) 
-      status-label.pull-right(data-status="queue.friendlyStatus(vm.item)")
+      status-label.pull-right(
+        data-status="queue.friendlyStatus(vm.item)",
+        data-active-statuses="queue.activeStatuses",
+        data-inactive-statuses="queue.inactiveStatuses",
+        data-cancelled-statuses="queue.cancelledStatuses")
     h5.panel-title.hidden-sm.hidden-xs 
       | &nbsp;{{vm.item.form.name}} ({{vm.item.handle}}) 
-      status-label.pull-right(data-status="queue.friendlyStatus(vm.item)")
+      status-label.pull-right(
+        data-status="queue.friendlyStatus(vm.item)",
+        data-active-statuses="queue.activeStatuses",
+        data-inactive-statuses="queue.inactiveStatuses",
+        data-cancelled-statuses="queue.cancelledStatuses")
   .panel-body
     .row
       .col-xs-12

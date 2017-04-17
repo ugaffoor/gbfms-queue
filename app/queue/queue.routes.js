@@ -7,6 +7,20 @@
 
   /* @ngInject */
   function routes($stateProvider) {
+    function filterStatuses(kappAttributes, spaceAttributes, name, defaultValues) {
+      var statuses = _.find(kappAttributes, {name: name});
+      if(_.isEmpty(statuses)) {
+        statuses = _.find(spaceAttributes, {name: name});
+      }
+
+      if(_.isEmpty(statuses)) {
+        statuses = defaultValues;
+      } else {
+        statuses = statuses.values;
+      }
+      return statuses;
+    }
+
     $stateProvider.state('queue', {
       parent: 'protected',
       url: '/queue?assignment&state&sortBy&sortDir&assignmentMine&assignmentNone&assignmentOthers&stateActive&stateInactive&closedToday',
@@ -245,32 +259,15 @@
           );
         },
         activeStatuses: function(currentSpace, currentKapp, $q) {
-          var statuses = _.find(currentKapp.attributes, {name: 'Statuses - Active'});
-          if(_.isEmpty(statuses)) {
-            statuses = _.find(currentSpace.attributes, {name: 'Statuses - Active'});
-          }
-
-          if(_.isEmpty(statuses)) {
-            statuses = ['Open', 'In Progress'];
-          } else {
-            statuses = statuses.values;
-          }
-          return $q.resolve(statuses);
-
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Active', ['Open', 'In Progress']));
         },
         inactiveStatuses: function(currentSpace, currentKapp, $q) {
-          var statuses = _.find(currentKapp.attributes, {name: 'Statuses - Inactive'});
-          if(_.isEmpty(statuses)) {
-            statuses = _.find(currentSpace.attributes, {name: 'Statuses - Inactive'});
-          }
-
-          if(_.isEmpty(statuses)) {
-            statuses = ['Pending'];
-          } else {
-            statuses = statuses.values;
-          }
-          return $q.resolve(statuses);
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Inactive', ['Pending']));
+        },
+        cancelledStatuses: function(currentSpace, currentKapp, $q) {
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Cancelled', ['Cancelled']));
         }
+
       },
 
       views: {

@@ -1,12 +1,12 @@
 ( function() {
   'use strict';
-  QueueController.$inject = ["currentKapp", "currentUser", "forms", "teams", "filters", "urlFilterOptions", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state", "$uibModal"];
+  QueueController.$inject = ["currentKapp", "currentUser", "forms", "teams", "filters", "urlFilterOptions", "queueName", "queueDetailsValue", "queueCompletedValue", "queueSummaryValue", "activeStatuses", "inactiveStatuses", "cancelledStatuses", "AssignmentService", "Bundle", "TeamModel", "md5", "$interval", "$rootScope", "$scope", "$state", "$uibModal"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueController', QueueController);
 
   /* @ngInject */
-  function QueueController(currentKapp, currentUser, forms, teams, filters, urlFilterOptions, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state, $uibModal) {
+  function QueueController(currentKapp, currentUser, forms, teams, filters, urlFilterOptions, queueName, queueDetailsValue, queueCompletedValue, queueSummaryValue, activeStatuses, inactiveStatuses, cancelledStatuses, AssignmentService, Bundle, TeamModel, md5, $interval, $rootScope, $scope, $state, $uibModal) {
     var STATE_MATCH_DETAILS = /queue\.by\./;
     var STATE_MATCH_LIST = /queue\.by/;
     var queue = this;
@@ -20,6 +20,9 @@
     queue.hideListOnXS = true;
     queue.hideFiltersOnXS = true;
     queue.xsView = 'details';
+    queue.activeStatuses = activeStatuses;
+    queue.inactiveStatuses = inactiveStatuses;
+    queue.cancelledStatuses = cancelledStatuses;
 
     queue.refresh = refresh;
     queue.changeFilter = changeFilter;

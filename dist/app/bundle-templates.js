@@ -9,7 +9,15 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
-    '');
+    '\n' +
+    '<div class="panel panel-primary">\n' +
+    '  <div class="panel-heading">\n' +
+    '    <h4 class="panel-title"><a href="" data-ui-sref="catalog.form({formSlug: form.slug})" class="btn btn-sm btn-primary">View</a>&nbsp;{{form.name}}</h4>\n' +
+    '  </div>\n' +
+    '  <div class="panel-body">\n' +
+    '    <p>{{form.description || \'This is a \' + form.type + \' form.\'}}</p>\n' +
+    '  </div>\n' +
+    '</div>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -227,7 +235,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  </div>\n' +
     '  <div data-ng-if="!isDiscussion()" data-ui-sref="queue.by.details.summary({itemId: queueItem.id})">\n' +
     '    <h5><strong>{{queueItem.form.name}} ({{queueItem.handle}})&nbsp;</strong>\n' +
-    '      <status-label data-ng-if="!isSummary()" data-status="queue.friendlyStatus(queueItem)" class="pull-right"></status-label>\n' +
+    '      <status-label data-ng-if="!isSummary()" data-status="queue.friendlyStatus(queueItem)" data-active-statuses="queue.activeStatuses" data-inactive-statuses="queue.inactiveStatuses" data-cancelled-statuses="queue.cancelledStatuses" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '    <div class="row">\n' +
     '      <div class="col-xs-12">\n' +
@@ -266,7 +274,7 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="panel panel-primary">\n' +
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title"><a data-ui-sref="queue.by.details.summary"><span class="fa fa-fw fa-arrow-left"></span></a>&nbsp;{{vm.item.label}}\n' +
-    '      <status-label data-status="queue.friendlyStatus(vm.item)" class="pull-right"></status-label>\n' +
+    '      <status-label data-status="queue.friendlyStatus(vm.item)" data-active-statuses="queue.activeStatuses" data-inactive-statuses="queue.inactiveStatuses" data-cancelled-statuses="queue.cancelledStatuses" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +
@@ -410,12 +418,12 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '  <div class="panel-heading">\n' +
     '    <h5 class="panel-title visible-sm visible-xs">\n' +
     '      <button href="" data-ng-click="queue.showList()" class="btn btn-primary btn-xs"><span class="fa fa-fw fa-reply"></span></button>&nbsp;{{vm.item.form.name}} ({{vm.item.handle}}) \n' +
-    '      <status-label data-status="queue.friendlyStatus(vm.item)" class="pull-right"></status-label>\n' +
+    '      <status-label data-status="queue.friendlyStatus(vm.item)" data-active-statuses="queue.activeStatuses" data-inactive-statuses="queue.inactiveStatuses" data-cancelled-statuses="queue.cancelledStatuses" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '    <h5 class="panel-title hidden-sm hidden-xs">\n' +
     '       \n' +
     '      &nbsp;{{vm.item.form.name}} ({{vm.item.handle}}) \n' +
-    '      <status-label data-status="queue.friendlyStatus(vm.item)" class="pull-right"></status-label>\n' +
+    '      <status-label data-status="queue.friendlyStatus(vm.item)" data-active-statuses="queue.activeStatuses" data-inactive-statuses="queue.inactiveStatuses" data-cancelled-statuses="queue.cancelledStatuses" class="pull-right"></status-label>\n' +
     '    </h5>\n' +
     '  </div>\n' +
     '  <div class="panel-body">\n' +

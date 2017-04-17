@@ -15,23 +15,30 @@
       transclude: true,
       restrict: 'E',
       scope: {
-        status: '='
+        status: '=',
+        activeStatuses: '=',
+        inactiveStatuses: '=',
+        cancelledStatuses: '='
       },
       template: '<span class="label" data-ng-class="getClass()")>{{status}}</span>'
     };
     return directive;
 
     function link(scope) {
+      function hasStatus(statuses, status) {
+        return _.includes(statuses, status);
+      }
+
       scope.getClass = function() {
-        var statuses = {
-          // Forms
-          'Open' : 'label-success',
-          'In Progress' : 'label-success',
-          'Pending' : 'label-warning',
-          'Complete' : 'label-default',
-          'Cancelled' : 'label-danger'
-        };
-        return statuses[scope.status];
+        if(hasStatus(scope.activeStatuses, scope.status)) {
+          return 'label-success';
+        } else if(hasStatus(scope.inactiveStatuses, scope.status)) {
+          return 'label-warning';
+        } else if(hasStatus(scope.cancelledStatuses, scope.status)) {
+          return 'label-danger';
+        } else {
+          return 'label-default';
+        }
       };
     }
   }
