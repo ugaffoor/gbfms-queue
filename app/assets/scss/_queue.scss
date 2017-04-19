@@ -104,6 +104,10 @@ select, select.form-control{
 
 .queue-item {
   cursor: pointer;
+  h5{
+    font-size: 16px;
+    margin-top: 0;
+  }
 }
 
 .no-data {

@@ -1,5 +1,5 @@
 body {
-  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif; }
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif; }
 
 .app-container {
   padding-top: 1em; }
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
   h1 > small, h2 > small, h3 > small, h4 > small, h5 > small, h6 > small {
     line-height: inherit; }
   h1 > .label, h1 .base-font, h2 > .label, h2 .base-font, h3 > .label, h3 .base-font, h4 > .label, h4 .base-font, h5 > .label, h5 .base-font, h6 > .label, h6 .base-font {
-    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif; }
+    font-family: "Source Sans Pro", Helvetica, Arial, sans-serif; }
 
 h6 {
   font-size: 1.6rem;
@@ -326,6 +326,9 @@ select, select.form-control {
 
 .queue-item {
   cursor: pointer; }
+  .queue-item h5 {
+    font-size: 16px;
+    margin-top: 0; }
 
 .no-data {
   padding: 1em; }
@@ -364,7 +367,7 @@ button, input[type='submit'], input[type='button'], .btn, .btn-primary, .btn-pri
 
 .btn, .btn-primary, .btn-primary-complement, .btn-secondary, .btn-secondary-complement, .btn-tertiary, .btn-tertiary-complement, .btn-default, section.page form button[data-element-type="button"][data-button-type="submit-page"], section.page form button[data-element-type="button"][data-button-type="custom"], section.page form button[data-element-type="button"][data-button-type="previous-page"], .btn-link, section.page form button[data-element-type="button"][data-button-type="custom"].btn-link, .btn-subtle, section.page form button[data-element-type="button"][data-button-type="custom"].btn-subtle, section.page form button[data-element-type="button"][data-button-type="save"], section.page form .fileinput-button {
   display: inline-block;
-  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   font-size: 1.333rem;
   line-height: 2rem;
   border-radius: 0.4rem;

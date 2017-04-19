@@ -1,7 +1,7 @@
 @import "scss/variables";
 // Pad the top of the body so that the navbar doesn't overlap it.
 body {
-  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+  font-family: $font-family-base;
 }
 
 .app-container {
