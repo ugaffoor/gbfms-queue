@@ -1,13 +1,4 @@
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form.assignment.html',
-    '\n' +
-    '<div class="form-assignment">\n' +
-    '  <h1>Hello Form</h1>\n' +
-    '  <p>{{$ctrl.hello}}</p>\n' +
-    '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('catalog/catalog.card.tpl.html',
     '\n' +
     '<div class="panel panel-primary">\n' +
@@ -38,12 +29,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '    </div>\n' +
     '  </div>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('catalog/foo.html',
-    '\n' +
-    '<h1>lksjdflksjflksjf</h1>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
@@ -103,6 +88,33 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.protected.tpl.html',
+    '\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
+  $templateCache.put('layout/layout.public.tpl.html',
+    '\n' +
+    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
+    '.container\n' +
+    '   .navbar-header\n' +
+    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
+    '         span.sr-only Toggle navigation\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '         span.icon-bar\n' +
+    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
+    '   div.navbar-collapse.collapse#navbar\n' +
+    '-->\n' +
+    '<main>\n' +
+    '  <div data-ui-view="" class="container"></div>\n' +
+    '</main>');
+}]);
+
+angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
   $templateCache.put('errors/error.layout.tpl.html',
     '\n' +
     '<nav class="navbar navbar-default navbar-fixed-top">\n' +
@@ -154,33 +166,6 @@ angular.module('kd.bundle.angular').run(['$templateCache', function($templateCac
     '<div class="alert alert-warning"> \n' +
     '  <h5>There was a problem connecting to the Request CE system. Please contact your space administrator.</h5>\n' +
     '</div>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.protected.tpl.html',
-    '\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
-}]);
-
-angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
-  $templateCache.put('layout/layout.public.tpl.html',
-    '\n' +
-    '<!--nav.navbar.navbar-default.navbar-fixed-top\n' +
-    '.container\n' +
-    '   .navbar-header\n' +
-    '      button(type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed")\n' +
-    '         span.sr-only Toggle navigation\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '         span.icon-bar\n' +
-    '      a.navbar-brand(data-ui-sref="loggingIn",data-ui-sref-opts="{reload:true}") {{layout.kappName}}\n' +
-    '   div.navbar-collapse.collapse#navbar\n' +
-    '-->\n' +
-    '<main>\n' +
-    '  <div data-ui-view="" class="container"></div>\n' +
-    '</main>');
 }]);
 
 angular.module('kd.bundle.angular').run(['$templateCache', function($templateCache) {
