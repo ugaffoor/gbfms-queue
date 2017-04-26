@@ -7,7 +7,7 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'static'),
     publicPath: '/'
   },
 
@@ -67,11 +67,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      comments: false
-    }),
-    // do not emit compiled assets that include errors
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -82,6 +77,10 @@ module.exports = {
     // Apply ng-annotate to Angular components, etc.
     new NgAnnotatePlugin({
       add: true
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      comments: false
     })
   ]
 };
