@@ -1,9 +1,8 @@
-(function() {
-  'use strict';
+import angular from 'angular';
+import moment from 'moment';
+import _ from 'lodash';
 
-  angular
-    .module('kd.bundle.angular')
-    .constant('toastr', toastr)
-    .constant('moment', moment)
-    .constant('_', _);
-})();
+angular
+  .module('kd.bundle.angular')
+  .constant('moment', moment)
+  .constant('_', _);

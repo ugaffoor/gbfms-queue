@@ -1,7 +1,5 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular.module('kd.bundle.angular.layout', [
-    'kd.bundle.angular.common'
-  ]);
-})();
+angular.module('kd.bundle.angular.layout', [
+  'kd.bundle.angular.common'
+]);

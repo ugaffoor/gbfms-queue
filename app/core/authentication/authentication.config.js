@@ -1,13 +1,10 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular
-    .module('kd.core.authentication')
-    .config(config);
+angular
+  .module('kd.core.authentication')
+  .config(config);
 
-  /* @ngInject */
-  function config($httpProvider) {
-    $httpProvider.defaults.withCredentials = true;
-  }
-
-})();
+/* @ngInject */
+function config($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+}

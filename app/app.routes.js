@@ -1,10 +1,8 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular.module('kd.bundle.angular').config(routes);
+angular.module('kd.bundle.angular').config(routes);
 
-  /* @ngInject */
-  function routes($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/queue/filter/__default__');
-  }
-})();
+/* @ngInject */
+function routes($urlRouterProvider) {
+  $urlRouterProvider.otherwise('/queue/filter/__default__');
+}

@@ -1,58 +1,54 @@
-(function() {
-  'use strict';
+import angular from 'angular';
+import moment from 'moment';
+import _ from 'lodash';
 
-  // If Response is not enabled, then include this directive, since the names collide right now.
-  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.discussion)) {
-    angular
-      .module('kd.core')
-      .directive('timeAgo', timeAgo);
-  }
+// If Response is not enabled, then include this directive, since the names collide right now.
+if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.discussion)) {
+  angular
+    .module('kd.core')
+    .directive('timeAgo', TimeAgo);
+}
 
-  /* @ngInject */
-  function timeAgo(moment, $interval) {
-    // Usage:
-    // <span data-time-ago='submission.submittedAt'></span>
-    var directive = {
-      link: link,
-      replace: false,
-      restrict: 'EA',
-      scope: {
-        timeAgo: '='
+function TimeAgo($interval)  {
+  'ngInject';
+
+  return {
+    restrict: 'EA',
+    replace: true,
+    template: '<span uib-tooltip="{{tooltipText}}" tooltip-append-to-body="true">{{timeAgoText}}</span>',
+    scope: {
+      timeAgo: '='
+    },
+    link: link
+  };
+
+  function link(scope, element, attributes) {
+    var applyTimeAgo = function() {
+      var prefixText = '';
+      if(!_.isEmpty(attributes.timeAgoPrefix)) {
+        prefixText = attributes.timeAgoPrefix;
+      }
+
+      if(angular.isUndefined(scope.timeAgo) || scope.timeAgo === null) {
+        scope.timeAgoText = 'N/A';
+        scope.tooltipText = 'N/A';
+      } else {
+        var m = moment(scope.timeAgo);
+        scope.tooltipText = prefixText + ' ' + m.format('MMMM Do YYYY, h:mm:ss A');
+        scope.timeAgoText = prefixText + ' ' + m.fromNow();
       }
     };
-    return directive;
 
-    // The link function sets the text of the element to the '2 days ago' format and sets up the
-    // bootstrap tooltip that shows the actual date/time string.
-    function link(scope, element, attributes) {
-      var applyTimeAgo = function() {
-        var prefixText = 'Due';
-        if(!_.isEmpty(attributes.timeAgoPrefix)) {
-          prefixText = attributes.timeAgoPrefix;
-        }
+    // Register an interval to update the moment time-ago display, so that the counter increments as expected.
+    var interval = $interval(applyTimeAgo, 10000);
 
-        if(typeof scope.timeAgo === 'undefined' || scope.timeAgo === null) {
-          element.text('N/A');
-        } else {
-          var m = moment(scope.timeAgo);
-          element.text(prefixText + ' ' + m.fromNow());
-          element.attr('title', prefixText + ' ' + m.format('MMMM Do YYYY, h:mm:ss A'));
-          element.attr('data-toggle', 'tooltip');
-          $(element).tooltip();
-        }
-      };
+    // Register a watch that will apply the moment time-ago display whenever the underlying date/time is changed.
+    scope.$watch('timeAgo', applyTimeAgo);
 
-      // Register an interval to update the moment time-ago display, so that the counter increments as expected.
-      var interval = $interval(applyTimeAgo, 10000);
+    // When the directive is destroyed make sure that we clean up the interval.
+    scope.$on('$destroy', function() {
+      $interval.cancel(interval);
+    });
 
-      // Register a watch that will apply the moment time-ago display whenever the underlying date/time is changed.
-      scope.$watch('timeAgo', applyTimeAgo);
-
-      // When the directive is destroyed make sure that we clean up the interval.
-      scope.$on('$destroy', function() {
-        $interval.cancel(interval);
-      });
-
-    }
   }
-})();
+};

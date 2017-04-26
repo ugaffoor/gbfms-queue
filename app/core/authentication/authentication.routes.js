@@ -1,23 +1,21 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular
-    .module('kd.core.authentication')
-    .config(routes);
+angular
+  .module('kd.core.authentication')
+  .config(routes);
 
-  /* @ngInject */
-  function routes($stateProvider) {
-    $stateProvider.state('login', {
-      parent: 'public',
-      url: '/login',
+/* @ngInject */
+function routes($stateProvider) {
+  $stateProvider.state('login', {
+    parent: 'public',
+    url: '/login',
 
-      views: {
-        '': {
-          controller: 'LoginController as vm',
-          templateUrl: 'core/authentication/login.tpl.html'
-        }
+    views: {
+      '': {
+        controller: 'LoginController as vm',
+        templateUrl: 'core/authentication/login.tpl.html'
       }
+    }
 
-    })
-  }
-})();
+  })
+}

@@ -1,19 +1,17 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular
-    .module('kd.bundle.angular.layout')
-    .controller('LayoutPublicController', LayoutPublicController);
+angular
+  .module('kd.bundle.angular.layout')
+  .controller('LayoutPublicController', LayoutPublicController);
 
-  /* @ngInject */
-  function LayoutPublicController($state, kappSlug, kappName) {
-    var layout = this;
-    layout.isParentActive = isParentActive;
-    layout.kappSlug = kappSlug;
-    layout.kappName = kappName;
+/* @ngInject */
+function LayoutPublicController($state, kappSlug, kappName) {
+  var layout = this;
+  layout.isParentActive = isParentActive;
+  layout.kappSlug = kappSlug;
+  layout.kappName = kappName;
 
-    function isParentActive(parentState) {
-      return _.startsWith($state.$current.name, parentState);
-    }
+  function isParentActive(parentState) {
+    return _.startsWith($state.$current.name, parentState);
   }
-})();
+}

@@ -1,21 +1,19 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular
-    .module('kd.core.models')
-    .factory('Form', FormModel);
+angular
+  .module('kd.core.models')
+  .factory('Form', FormModel);
 
-  /* @ngInject */
-  function FormModel($log, CoreSlugAPI) {
-    $log.info('{Model} Defining "Form" model.');
-    var factory = {
-      build: build
-    };
-    return factory;
+/* @ngInject */
+function FormModel($log, CoreSlugAPI) {
+  $log.info('{Model} Defining "Form" model.');
+  var factory = {
+    build: build
+  };
+  return factory;
 
-    function build(kappSlug) {
-      return CoreSlugAPI
-        .service('forms', CoreSlugAPI.one('kapps', kappSlug));
-    }
+  function build(kappSlug) {
+    return CoreSlugAPI
+      .service('forms', CoreSlugAPI.one('kapps', kappSlug));
   }
-})();
+}

@@ -1,27 +1,25 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular
-    .module('kd.core.models')
-    .factory('SpaceModel', SpaceModel);
+angular
+  .module('kd.core.models')
+  .factory('SpaceModel', SpaceModel);
 
-  /* @ngInject */
-  function SpaceModel($log, CoreSlugAPI) {
-    $log.info('{Model} Defining "Space" model.');
+/* @ngInject */
+function SpaceModel($log, CoreSlugAPI) {
+  $log.info('{Model} Defining "Space" model.');
 
-    var factory = {
-      build: build,
-      current: current
-    };
-    return factory;
+  var factory = {
+    build: build,
+    current: current
+  };
+  return factory;
 
-    function build() {
-      return CoreSlugAPI.service('space');
-    }
-
-    function current() {
-      return build().one('');
-    }
-
+  function build() {
+    return CoreSlugAPI.service('space');
   }
-})();
+
+  function current() {
+    return build().one('');
+  }
+
+}

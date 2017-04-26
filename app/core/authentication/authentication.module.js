@@ -1,7 +1,5 @@
-(function() {
-  'use strict';
+import angular from 'angular';
 
-  angular.module('kd.core.authentication', [
-    'kd.bundle.angular.common'
-  ]);
-})();
+angular.module('kd.core.authentication', [
+  'kd.bundle.angular.common'
+]);

@@ -1,4 +1,6 @@
 @import "scss/variables";
+@import '~font-awesome/scss/font-awesome.scss';
+
 // Pad the top of the body so that the navbar doesn't overlap it.
 body {
   font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
@@ -16,6 +18,12 @@ body {
   margin: 0px;
 }
 
+.discuss-panel {
+  margin-bottom: 0px;
+  .panel-body {
+    padding-bottom: 0px;
+  }
+}
 
 .kapp-name {
   padding-left: 4px;
