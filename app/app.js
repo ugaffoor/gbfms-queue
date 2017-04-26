@@ -22,6 +22,7 @@ if(bundle && bundle.config && bundle.config.queue && bundle.config.queue.discuss
   modules.push('kd.response');
 }
 angular.module('kd.bundle.angular', modules).run(function($rootScope, $state) {
+  'ngInject';
   $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
     if(error.status != 401) {
       $state.go('error.system');
