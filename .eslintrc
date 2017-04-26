@@ -2,7 +2,6 @@
   "ecmaFeatures": {
     "modules": true
   },
-  "extends": "plugin:angular/johnpapa",
   "env": {
     "browser": true,
     "node": true
