@@ -108,6 +108,8 @@ module.exports = {
       '/': {
         target: 'https://kinops.io',
         secure: false,
+        autoRewrite: true,
+        protocolRewrite: 'http',
         headers: { 'X-From-Webpack-Proxy' : 'X-From-Webpack-Proxy' }
       }
     }
