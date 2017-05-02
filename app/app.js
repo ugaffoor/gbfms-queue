@@ -29,13 +29,9 @@ angular.module('kd.bundle.angular', modules).run(function($rootScope, $state) {
     }
     console.log('failed to change state', arguments);
   });
-//
-//  $rootScope.$on('$stateChangeSuccess', function() {
-//    console.log('i did to change state')
-//  })
-//
-//  $rootScope.$on('$stateNotFound', function() {
-//    console.log('i did not to change state')
-//  })
+
+  // Find cloaked things and uncloak them.
+  const cloaks = document.querySelectorAll('.kd-cloak');
+  cloaks.forEach(cloak => cloak.classList.remove('kd-cloak'));
 });
 

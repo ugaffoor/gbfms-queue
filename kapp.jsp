@@ -36,6 +36,12 @@
     <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
 
     <app:headContent/>
+
+    <style>
+      .kd-cloak {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <!-- Need these to make the shared space header footer work. -->
@@ -44,11 +50,15 @@
     <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script -->
 
     <!-- Import the shared header and footer around the div where the Queue app will render. -->
-    <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8" />
+    <div class="kd-cloak">
+      <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8" />
+    </div>
     <div id='root'>
       <div class="app-container" data-comment="top level view" data-ui-view=""></div>
     </div>
-    <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8" />
+    <div class="kd-cloak">
+      <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8" />
+    </div> 
 
     <!-- If the Discussion Server has been configured, load its code and initialize the configuration -->
     <c:if test="${not empty discussionServerUrl}">
