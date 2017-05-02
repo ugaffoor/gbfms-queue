@@ -25,8 +25,8 @@
         span.fa.fa-fw.fa-calendar
         | &nbsp;
         span(data-time-ago="vm.item.createdAt",time-ago-prefix="Created")
-        a.label.label-default.pull-right(data-ng-if="vm.showQueueIcon()",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") Parent Task
-        a.label.label-default.pull-right(data-ng-if="vm.showRequestIcon()",href="{{vm.originLink()}}",target="_blank") Originating Request
+        a.label.label-default.tour-q-parent-task.pull-right(data-ng-if="vm.showQueueIcon()",data-ui-sref="queue.by.details.summary({itemId: vm.item.parent.id})") Parent Task
+        a.label.label-default.tour-q-orig-req.pull-right(data-ng-if="vm.showRequestIcon()",href="{{vm.originLink()}}",target="_blank") Originating Request
     .row
       .col-xs-12
         span.fa.fa-fw.fa-calendar
@@ -39,7 +39,7 @@
         span(data-time-ago="queue.friendlyDueDate(vm.item)",data-ng-class="{'text-danger': queue.isOverdue(queue.friendlyDueDate(vm.item))}",data-time-ago-prefix="Due")
     .row
       .col-xs-12
-        span.fa.fa-fw.fa-users
+        span.fa.fa-fw.fa-users.tour-q-assignment
         span.ellipsis(data-ng-if="!vm.isAssigningTeam")
           | &nbsp;
           a(data-ng-if="details.isOpen(vm.item)",href="",data-ng-click="vm.startTeamAssignment()") {{queue.friendlyAssignedTeam(vm.item)}}
@@ -114,20 +114,20 @@
           issue-summary(summary-issue="$parent.response.issue", current-user="$parent.response.currentUser", no-title="true", no-participants="true")
     .row(data-ng-if="!details.isMine() && details.isOpen()")
       .col-xs-6(data-ng-if="queue.canDiscuss(vm.item)")
-        button.btn.btn-primary.btn-block(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
-        button.btn.btn-primary.btn-block(type="button",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
+        button.btn.btn-primary.btn-block.tour-q-join-it(type="button",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+        button.btn.btn-primary.btn-block.tour-q-discuss-it(type="button",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
       div(data-ng-class="{'col-xs-6': queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item)}")
-        button.btn.btn-primary.btn-block(data-ng-click="vm.grabIt($event)") Grab It
+        button.btn.btn-primary.btn-block.tour-q-grab-it(data-ng-click="vm.grabIt($event)") Grab It
     .row
       .col-xs-12
         div(data-ui-view="")
     .row(data-ng-if="details.isMine() && details.isOpen()" style="margin-top:1rem;")
 
       div(data-ng-if="queue.canDiscuss(vm.item)",data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen()), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen())}")
-        button.btn.btn-tertiary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
-        button.btn.btn-tertiary.btn-block(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
+        button.btn.btn-tertiary.btn-block.tour-q-join-it(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="queue.hasDiscussion(vm.item)",data-ui-sref="queue.by.details.discuss") Join It
+        button.btn.btn-tertiary.btn-block.tour-q-discuss-it(type="button",data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ng-if="!queue.hasDiscussion(vm.item)",data-ng-click="vm.startNewDiscussion()") Discuss It
       div(data-ng-class="{'col-xs-5': (details.canHaveSubtasks() && details.isOpen() && queue.canDiscuss(vm.item)), 'col-xs-6': (!details.canHaveSubtasks() || !details.isOpen()) && queue.canDiscuss(vm.item), 'col-xs-12': !queue.canDiscuss(vm.item) && (!details.canHaveSubtasks() || !details.isOpen()), 'col-xs-10': details.canHaveSubtasks() && details.isOpen() && !queue.canDiscuss(vm.item)}")
-        button.btn.btn-tertiary.btn-block(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
+        button.btn.btn-tertiary.btn-block.tour-q-work-it(data-ng-disabled="vm.inSubtask() || vm.inWorkOrReview()",data-ui-sref="queue.by.details.summary.work")
           div(data-ng-if="details.isMine() && details.isOpen()") Work It
       .col-xs-2(data-ng-if="details.isOpen() && details.canHaveSubtasks()")
         div(uib-dropdown="")
