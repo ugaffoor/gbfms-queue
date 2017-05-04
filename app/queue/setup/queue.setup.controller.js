@@ -16,7 +16,7 @@
       { name: 'Queue Summary Value', allowsMutliple: false },
       { name: 'Queue Group Base', allowsMutliple: false },
       { name: 'Queue Setup Visible', allowsMultiple: false },
-      { name: 'Response Server Url', allowsMultiple: false }
+      { name: 'Discussion Server Url', allowsMultiple: false }
     ];
 
     vm.currentKapp = currentKapp;
@@ -433,10 +433,10 @@
         vm.queueGroupBase = { name: 'Queue Group Base', values: []};
         vm.currentKapp.attributes.push(vm.queueGroupBase);
       }
-      // vm.queueResponseServer = _.find(vm.currentKapp.attributes, {name: 'Response Server Url'});
-      // if(_.isEmpty(vm.queueResponseServer)) {
-      //   vm.queueResponseServer = { name: 'Response Server Url', values: []};
-      //   vm.currentKapp.attributes.push(vm.queueResponseServer);
+      // vm.queueDiscussionServer = _.find(vm.currentKapp.attributes, {name: 'Discussion Server Url'});
+      // if(_.isEmpty(vm.queueDiscussionServer)) {
+      //   vm.queueDiscussionServer = { name: 'Discussion Server Url', values: []};
+      //   vm.currentKapp.attributes.push(vm.queueDiscussionServer);
       // }
       vm.descriptionAttribute = _.find(vm.currentKapp.attributes, {name: 'Description'});
       if(_.isEmpty(vm.descriptionAttribute)) {

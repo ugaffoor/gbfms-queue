@@ -6,7 +6,7 @@
     .controller('QueueSummaryController', QueueSummaryController);
 
   /* @ngInject */
-  function QueueSummaryController(item, subtasks, notes, relatedItems, queueResponseServer, AssignmentService, Bundle, Toast, $scope, $state, $timeout, $http) {
+  function QueueSummaryController(item, subtasks, notes, relatedItems, queueDiscussionServer, AssignmentService, Bundle, Toast, $scope, $state, $timeout, $http) {
     var vm = this;
     var layout = $scope.layout;
     var details = $scope.details;
@@ -22,7 +22,8 @@
     vm.membersForTeam = [];
     vm.subtasks = subtasks;
     vm.showNotes = false;
-    vm.responseServer = queueResponseServer;
+    vm.discussionServer = queueDiscussionServer;
+    vm.embedBase = Bundle.spaceLocation();
 
     // METHODS
     vm.grabIt = grabIt;
@@ -49,23 +50,19 @@
     function activate() {}
 
     function startNewDiscussion() {
-      // Note: This is kind of brittle - if the state hierarchy changes be sure to make sure this gets changed too.
-      // We're taking the current location, finding /filter/NAME/TYPE/details and replacing NAME and TYPE.
-      var showUrl = '' + window.location.toString();
-      showUrl = showUrl.replace(/\/filter\/.+\/.+\/details/, '/filter/__show__/Open/details');
       vm.isStartingDiscussion = true;
 
       $http({
-        url: queueResponseServer + '/api/v1/issues',
+        url: queueDiscussionServer + '/api/v1/issues',
         method: 'POST',
         data: {
           name: vm.item.label,
           description: vm.item.label,
-          tag_list: ['META:TYPE:Submission', 'META:ID:'+vm.item.id, 'META:LABEL:Open Task', 'META:URL:'+showUrl].join(',')
+          tag_list: ['META:TYPE:Queue Task', 'META:ID:'+vm.item.id].join(',')
         }
       }).then(
-        function success(response) {
-          vm.item.values['Response GUID'] = response.data.guid;
+        function success(discussion) {
+          vm.item.values['Discussion Id'] = discussion.data.guid;
           var originalCoreState = vm.item.coreState;
           delete vm.item.currentPage;
           delete vm.item.coreState;
@@ -83,7 +80,7 @@
           );
         },
         function error() {
-          Toast.error('Failed to start Response Discussion. Contact your system administrator.');
+          Toast.error('Failed to start Discussion. Contact your system administrator.');
         }
       );
     }
@@ -156,7 +153,6 @@
             var teamName = AssignmentService.withoutRoot(team.name);
             return { label: teamName, team: teamName };
           });
-          vm.allTeams.unshift({label: 'Unassign', team: ''});
 
           // Focus on the team selector.
           $timeout(function() {

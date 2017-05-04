@@ -21,7 +21,10 @@
     };
 
     vm.loadForm = function(form) {
-      var formPath = Bundle.kappLocation() + '/' + form.slug + '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
+      var formPath = Bundle.kappLocation() + '/' + form.slug;
+      if(['Available', 'Mine', 'All', '__show__'].indexOf(vm.activeTeam) === -1) {
+        formPath += '?values[Assigned%20Team]='+encodeURIComponent(vm.activeTeam);
+      }
       var K = $window.K;
 
       var responseHandler = function(data, actions) {
@@ -31,9 +34,9 @@
         $timeout(function() {
           Toast.success('Started new work item.');
           if(assignedIndividual === currentUser.username) {
-            $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+            $state.go('queue.by.details.summary.work', {itemId: itemId, filterName: vm.activeTeam});
           } else {
-            $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam, filterType: 'Open'});
+            $state.go('queue.by.details.summary', {itemId: itemId, filterName: vm.activeTeam});
           }
           actions.close();
           $uibModalInstance.dismiss();

@@ -2,7 +2,7 @@
   'use strict';
 
   // If Response is not enabled, then include this directive, since the names collide right now.
-  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.response)) {
+  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.discussion)) {
     angular
       .module('kd.core')
       .directive('timeAgo', timeAgo);

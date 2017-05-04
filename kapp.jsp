@@ -51,12 +51,12 @@
 
     <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8"/>
 
-    <c:if test="${not empty responseServerUrl}">
-      <script src="${responseServerUrl}/assets/response_bundle.js"></script>
+    <c:if test="${not empty discussionServerUrl}">
+      <script src="${headerLocation}/js/response_bundle.js"></script>
       <script>
        bundle = bundle || {};
        bundle.config = bundle.config || {};
-       bundle.config.queue = { response: true }
+       bundle.config.queue = { discussion: true }
       </script>
     </c:if>
 
@@ -84,6 +84,10 @@
     <script src="${bundle.location}/dist/app/core/authentication/authentication.run.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/authentication/authentication.config.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
+    <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.module.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.work.controller.js"></script>
     <script src="${bundle.location}/dist/app/queue/queue.summary.controller.js"></script>
@@ -102,13 +106,8 @@
     <script src="${bundle.location}/dist/app/app.js"></script>
     <script src="${bundle.location}/dist/app/queue/form.assignment.component.js"></script>
     <script src="${bundle.location}/dist/app/queue/assignment.service.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.module.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.routes.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.public.controller.js"></script>
-    <script src="${bundle.location}/dist/app/layout/layout.controller.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
-    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/core/time.ago.js"></script>
+    <script src="${bundle.location}/dist/app/core/status.label.js"></script>
     <script src="${bundle.location}/dist/app/core/slugifier.js"></script>
     <script src="${bundle.location}/dist/app/core/md5.js"></script>
     <script src="${bundle.location}/dist/app/core/kinetic.header.js"></script>
@@ -117,6 +116,8 @@
     <script src="${bundle.location}/dist/app/core/core.api.js"></script>
     <script src="${bundle.location}/dist/app/core/config.store.js"></script>
     <script src="${bundle.location}/dist/app/core/bundle.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.module.js"></script>
+    <script src="${bundle.location}/dist/app/errors/errors.routes.js"></script>
     <script src="${bundle.location}/dist/app/common/common.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/catalog.module.js"></script>
     <script src="${bundle.location}/dist/app/catalog/form.controller.js"></script>

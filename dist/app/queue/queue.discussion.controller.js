@@ -1,17 +1,18 @@
 (function() {
   'use strict';
 
-  QueueDiscussionController.$inject = ["item", "queueResponseServer", "Toast", "$http", "$scope"];
+  QueueDiscussionController.$inject = ["item", "queueDiscussionServer", "Bundle", "Toast", "$http", "$scope"];
   angular
     .module('kd.bundle.angular.queue')
     .controller('QueueDiscussionController', QueueDiscussionController);
 
   /* @ngInject */
-  function QueueDiscussionController(item, queueResponseServer, Toast, $http, $scope) {
+  function QueueDiscussionController(item, queueDiscussionServer, Bundle, Toast, $http, $scope) {
     var queue = $scope.queue;
     var vm = this;
     vm.item = item;
-    vm.responseServer = queueResponseServer;
+    vm.discussionServer = queueDiscussionServer;
+    vm.embedBase = Bundle.spaceLocation();
 
     activate();
 

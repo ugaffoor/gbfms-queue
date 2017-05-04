@@ -6,7 +6,7 @@
 
   /* @ngInject */
   function QueueListController(
-    currentKapp, currentUser, filter, filterName, filterType, items, openItems,
+    currentKapp, currentUser, filter, filterName, items,
       ItemsService,
       $scope, $state, $stateParams) {
     var list = this;
@@ -14,6 +14,7 @@
 
     list.currentKapp = currentKapp;
     list.loading = false;
+    list.sortBy = filter.filterOptions.sortBy;
     list.items = items;
     list.activeItem;
     list.nextPageToken = items.nextPageToken;
@@ -30,14 +31,13 @@
 
     var queue = $scope.queue;
     queue.filterName = filterName;
-    queue.filterType = filterType;
-    queue.openItems = openItems;
+    queue.recordCount = items.length;
+    queue.setActiveFilter(filter);
 
     activate();
 
     function activate() {
       queue.showList();
-      queue.populateStats();
       list.activeItem = null;
     }
 

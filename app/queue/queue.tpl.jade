@@ -3,49 +3,66 @@
     button.btn.btn-primary.btn-xs.visible-xs(type="button",data-ng-click="queue.showList()")
       span.fa.fa-mail-forward
     .form-group
-      strong Team:
+      strong Filter:
       button.btn.btn-xs.btn-link.pull-right(data-ng-click="queue.refresh()")
         span.fa.fa-fw.fa-refresh
 
       br
       select.form-control(data-ng-model="queue.filterName",data-ng-change="queue.changeFilter()")
-        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose Team
-        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === '__show__'",value="__show__") Choose Team
+        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === ''",value="") Choose a Filter
+        option(data-ng-if="!queue.filterIsSelectable() && queue.filterName === '__show__'",value="__show__") Choose a Filter
         option(data-ng-repeat="filter in queue.filters | filter:{visible: true}",ng-selected="queue.isSelectedFilter(filter)",value="{{filter.name}}") {{filter.name}}
-    ul.nav.nav-stacked(data-ng-if="queue.filterName")
-      li(data-ng-class="{'active': queue.isFilterActive('Open')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Open'})") Open&nbsp;
-          span.pull-right.badge {{queue.stats.totalOpen}}
-      li(data-ng-class="{'active': queue.isFilterActive('Mine')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Mine'})") Mine&nbsp;
-          span.pull-right.badge {{queue.stats.mine}}
-      li(data-ng-class="{'active': queue.isFilterActive('Unassigned')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Unassigned'})") Unassigned&nbsp;
-          span.pull-right.badge {{queue.stats.unassigned}}
-      li(data-ng-class="{'active': queue.isFilterActive('Past Due')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Past Due'})") Past Due&nbsp;
-          span.pull-right.badge {{queue.stats.pastDue}}
-      li(data-ng-class="{'active': queue.isFilterActive('Due Today')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Due Today'})") Due Today&nbsp;
-          span.pull-right.badge {{queue.stats.dueToday}}
-      li(data-ng-class="{'active': queue.isFilterActive('Recent Hour')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Hour'})", data-ui-sref-opts="{reload:true}") Recent Hour
-      li(data-ng-class="{'active': queue.isFilterActive('Recent Day')}")
-        a(href="",data-ui-sref="queue.by({filterName: queue.filterName, filterType: 'Recent Day'})", data-ui-sref-opts="{reload:true}") Recent Day
-    .teams-container(data-ng-if="queue.shouldShowTeams()")
-      hr
-      h5(data-ng-if="!queue.hasTeamsKapp()") {{queue.filterName}} Team
-      h5(data-ng-if="queue.hasTeamsKapp()")
-        a(href="{{queue.getTeamLink(queue.filterName)}}",target="_blank") {{queue.filterName}} Team
-
-      ul.list-unstyled.team-memberships
-        li
-          | Team Members&nbsp;
-          span.pull-right.badge {{queue.stats.teamMembers}}
-        li
-          | Active Members&nbsp;
-          span.pull-right.badge {{queue.stats.activeMembers}}
+    .filter-options(data-ng-class="{'hidden-block': queue.filterName === '__show__'}")
+      .form-group
+        strong Sort:
+        br
+        select.form-control(data-ng-model="queue.sortBy",data-ng-change="queue.changeSortBy()")
+          option(value="created") Created
+          option(value="due") Due
+          option(value="updated") Updated
+        br
+        select.form-control(data-ng-model="queue.sortDir",data-ng-change="queue.changeSortDir()")
+          option(value="desc") Descending
+          option(value="asc") Ascending
+          pre {{queue.assignmentType}}
+      div
+        strong State:
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.stateActive",data-ng-change="queue.changeStateActive()")
+              | Active
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.stateInactive",data-ng-change="queue.changeStateInactive()")
+              | Inactive
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.closedToday",data-ng-change="queue.changeClosedToday()")
+              | Closed Today
+      br
+      div(data-ng-class="{'hidden-block': queue.filterName === 'Mine' || queue.filterName === 'Available'}")
+        strong Assignment:
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.assignmentType.mine",data-ng-change="queue.changeAssignmentMine()",data-ng-disabled="queue.filterName === 'Mine'")
+              | Mine
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.assignmentType.others",data-ng-change="queue.changeAssignmentOthers()")
+              | Assigned
+        .form-group
+          .checkbox
+            label
+              input(type="checkbox",data-ng-model="queue.assignmentType.none",data-ng-change="queue.changeAssignmentNone()",data-ng-disabled="queue.filterName === 'Available'")
+              | Unassigned
+      br
+      em {{queue.recordCount}} {{(queue.recordCount === 0 || queue.recordCount > 1) ? 'Records' : 'Record' }}
     hr
-    button.btn.btn-block.btn-tertiary(type="button",data-ng-if="queue.shouldShowTeams()",data-ng-click="queue.newItemModal()") New
+    button.btn.btn-block.btn-tertiary(type="button",data-ng-click="queue.newItemModal()") New
   .col-xs-12.col-sm-10
     div(data-ui-view="")

@@ -1,13 +1,10 @@
-.modal-header
-  .modal-title(data-ng-if="vm.formLoaded")
+.modal-header.kd-modal-header
+  h4(data-ng-if="vm.formLoaded")
     | {{vm.loadedForm.name()}}
-    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()")
-      span.fa.fa-fw.fa-times
-  .modal-title(data-ng-if="!vm.formLoaded")
+  h4(data-ng-if="!vm.formLoaded")
     | Choose an item
-    button.btn.btn-xs.btn-default.pull-right(data-ng-click="vm.close()")
-      span.fa.fa-fw.fa-times
-.modal-body
+  i.fa.fa-times.pull-right(data-ng-click="vm.close()")
+.modal-body.kd-modal-body
   .list-group(data-ng-if="!vm.formLoaded")
     a.list-group-item(href="",data-ng-repeat="form in vm.filteredForms",data-ng-click="vm.loadForm(form)")
       h4.list-group-item-heading {{form.name}}
@@ -17,4 +14,4 @@
       p The currently selected team does not have any work items available.
 
   #formContainer
-.modal-footer.clearfix
+.modal-footer.kd-modal-footer.clearfix

@@ -1,7 +1,7 @@
 @import "scss/variables";
 // Pad the top of the body so that the navbar doesn't overlap it.
 body {
-  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+  font-family: $font-family-base;
 }
 
 .app-container {
@@ -21,6 +21,19 @@ body {
   padding-left: 4px;
 }
 
+.filter-rule {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.hidden-block {
+  visibility: hidden;
+}
+
+@import "scss/mixins";
+@import "scss/type";
 @import "scss/draggables";
 @import "scss/queue";
 @import "scss/buttons";
+@import "scss/forms";
+@import "scss/modals";

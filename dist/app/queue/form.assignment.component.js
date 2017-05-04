@@ -3,7 +3,7 @@
     .module('kd.bundle.angular')
     .component('formAssignment', {
       templateUrl: 'queue/form.assignment.html',
-      controller: ["md5", "$window", "$http", "$timeout", "$document", function(md5, $window, $http, $timeout, $document) {
+      controller: ["md5", "$window", "$http", "$timeout", "$document", "$element", function(md5, $window, $http, $timeout, $document, $element) {
         'ngInject';
 
         // Note: Get rid of this when moving to ES6 and replace promise functions with
@@ -15,7 +15,14 @@
         this.assigningMember = false;
         this.allTeams = [];
         this.membersForTeam = [];
-        this.K = $window.K;
+
+        // Build up our 'K' object by getting the underlying form object.
+        // Fetch the nearest parent form.
+        var form = $($element).closest('[data-form]');
+        // Fetch the form hash.
+        var formHash = form.attr('id');
+        // Set K to be the form select method.
+        this.K = $window.Kinetic.forms[formHash].select;
 
         this.isAssigningTeam = function() {
           return this.assigningTeam;
@@ -61,7 +68,6 @@
               self.allTeams = _.map(validTeams, function(team) {
                 return { label: team.name, team: team.name };
               });
-              self.allTeams.unshift({label: 'Unassign', team: ''});
 
               $timeout(function() {
                 document.getElementById('form-team-selector').focus();
@@ -75,7 +81,7 @@
             return;
           }
 
-          var teamName = $window.K('field[Assigned Team]').value();
+          var teamName = this.K('field[Assigned Team]').value();
 
           if(_.isEmpty(teamName)) {
             this.startAssigningTeam();
@@ -116,12 +122,14 @@
         this.selectTeam = function(team) {
           this.K('field[Assigned Team]').value(team.team);
           this.K('field[Assigned Individual]').value('');
+          this.K('field[Assigned Individual Display Name]').value('');
 
           this.assigningTeam = false;
         };
 
         this.selectMember = function(member) {
           this.K('field[Assigned Individual]').value(member.username);
+          this.K('field[Assigned Individual Display Name]').value(member.displayName);
           this.assigningMember = false;
         };
 
@@ -149,8 +157,13 @@
         this.assignedIndividualName = function() {
           var name = '';
           if(this.hasValidForm()) {
-            var field = this.K('field[Assigned Individual]');
-            name = field ? field.value() : '';
+            var username = this.K('field[Assigned Individual]');
+            var displayName = this.K('field[Assigned Individual Display Name]');
+            if(displayName && !_.isEmpty(displayName.value())) {
+              name = displayName.value();
+            } else {
+              name = username ? username.value() : '';
+            }
           }
           return _.isEmpty(name) ? 'Unassigned' : name;
         };

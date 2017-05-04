@@ -4,23 +4,23 @@
     button.btn.btn-primary.btn-xs(type="button",data-ng-click="queue.showFilters()")
       span.fa.fa-reply
 .row
-  .row(data-ng-if="list.items.length < 1 && queue.filterName !== '__show__'")
+  .row(data-ng-if="list.items.length < 1 && (queue.filterName !== '__show__' && !list.isChildState())")
     .col-xs-12.center-items
       div
         img(data-ng-src="{{queue.imagePath('happy-wally.png')}}")
       div
         strong An empty queue is a happy queue.
-  .col-sm-12.col-md-4(data-ng-if="list.items.length > 0 || queue.filterName === '__show__'",data-ng-class="{'hidden-xs': !queue.shouldShowList(), 'hidden-sm': !queue.shouldShowList() }",fixed-height="",fh-bottom-pad="70")
+  .col-sm-12.col-md-4(data-ng-if="list.items.length > 0 || queue.filterName === '__show__' || list.isChildState()",data-ng-class="{'hidden-xs': !queue.shouldShowList(), 'hidden-sm': !queue.shouldShowList() }",fixed-height="",fh-bottom-pad="70")
     .list-group.queue-list
       a.list-group-item.queue-item(data-ng-if="!list.loading",data-ng-repeat="item in list.items",data-ng-click="list.selectItem(item)",data-ng-class="{'active-item':list.isActiveItem(item)}")
-        queue-card(data-queue-item="item",list-view="true")
+        queue-card(data-queue-item="item",list-view="true",date-display="{{list.sortBy}}")
       .list-group-item(data-ng-if="list.hasMorePages()")
         ul.pager.queue-pager
           li
             a(data-ng-if="list.prevPageTokens.length > 0",data-ng-click="list.prevPage()") Previous
           li
             a(data-ng-if="list.nextPageToken",data-ng-click="list.nextPage()") Next
-  .col-sm-12.col-md-8(data-ng-if="list.items.length > 0 || queue.filterName === '__show__'")
+  .col-sm-12.col-md-8(data-ng-if="list.items.length > 0 || queue.filterName === '__show__' || list.isChildState()")
     div(data-ui-view="",data-ng-class="{'hidden-xs': queue.shouldShowList(), 'hidden-sm': queue.shouldShowList() }")
       .row
         .col-xs-12.center-items

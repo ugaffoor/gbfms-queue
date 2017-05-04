@@ -5,6 +5,6 @@
 
   /* @ngInject */
   function routes($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/queue/filter/__default__/Open');
+    $urlRouterProvider.otherwise('/queue/filter/__default__');
   }
 })();

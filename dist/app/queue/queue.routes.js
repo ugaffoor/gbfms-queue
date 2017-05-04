@@ -8,9 +8,23 @@
 
   /* @ngInject */
   function routes($stateProvider) {
+    function filterStatuses(kappAttributes, spaceAttributes, name, defaultValues) {
+      var statuses = _.find(kappAttributes, {name: name});
+      if(_.isEmpty(statuses)) {
+        statuses = _.find(spaceAttributes, {name: name});
+      }
+
+      if(_.isEmpty(statuses)) {
+        statuses = defaultValues;
+      } else {
+        statuses = statuses.values;
+      }
+      return statuses;
+    }
+
     $stateProvider.state('queue', {
       parent: 'protected',
-      url: '/queue',
+      url: '/queue?assignment&state&sortBy&sortDir&assignmentMine&assignmentNone&assignmentOthers&stateActive&stateInactive&closedToday',
 
       resolve: {
         titleBrand: ["spaceConfigResolver", function(spaceConfigResolver) {
@@ -53,38 +67,100 @@
           AssignmentService.setAssignmentBase(groupBaseValue);
           return groupBaseValue;
         }],
-        queueResponseServer: ["spaceConfigResolver", function(spaceConfigResolver) {
-          var queueResponseServer = spaceConfigResolver('Response Server Url', false);
-          if(angular.isUndefined(queueResponseServer)) {
+        queueDiscussionServer: ["spaceConfigResolver", function(spaceConfigResolver) {
+          var queueDiscussionServer = spaceConfigResolver('Discussion Server Url', false);
+          if(angular.isUndefined(queueDiscussionServer)) {
             return '';
           }
-          return queueResponseServer.values[0];
+          return queueDiscussionServer.values[0];
         }],
         adminKapp: ["spaceConfigResolver", "AssignmentService", function(spaceConfigResolver, AssignmentService) {
           var adminKapp = spaceConfigResolver('Admin Kapp Slug');
           AssignmentService.setAdminKapp(adminKapp.values[0]);
           return adminKapp.values[0];
         }],
-        teamsKapp: ["spaceConfigResolver", function(spaceConfigResolver) {
-          var teamsKapp = spaceConfigResolver('Teams Kapp Slug', false);
-          if(angular.isUndefined(teamsKapp)) {
-            return '';
+        urlFilterOptions: ["$stateParams", function($stateParams) {
+          var urlFilterOptions = {};
+          if(angular.isDefined($stateParams.sortBy)) {
+            urlFilterOptions.sortBy = $stateParams.sortBy;
           }
-          return teamsKapp.values[0];
+
+          if(angular.isDefined($stateParams.sortDir)) {
+            urlFilterOptions.sortDir = $stateParams.sortDir;
+          }
+
+          if(angular.isDefined($stateParams.assignmentMine)) {
+            urlFilterOptions.assignmentMine = $stateParams.assignmentMine === 'true' || false;
+          }
+
+          if(angular.isDefined($stateParams.assignmentOthers)) {
+            urlFilterOptions.assignmentOthers = $stateParams.assignmentOthers  === 'true' || false;
+          }
+
+          if(angular.isDefined($stateParams.assignmentNone)) {
+            urlFilterOptions.assignmentNone = $stateParams.assignmentNone === 'true' || false;
+          }
+
+          if(angular.isDefined($stateParams.stateActive)) {
+            urlFilterOptions.stateActive = $stateParams.stateActive === 'true' || false;
+          }
+
+          if(angular.isDefined($stateParams.stateInactive)) {
+            urlFilterOptions.stateInactive = $stateParams.stateInactive === 'true' || false;
+          }
+
+          if(angular.isDefined($stateParams.closedToday)) {
+            urlFilterOptions.closedToday = $stateParams.closedToday === 'true' || false;
+          }
+          return urlFilterOptions;
         }],
         filters: ["kappConfigResolver", "currentUser", function(kappConfigResolver, currentUser) {
+          var availableFilter = {
+            name: 'Available',
+            visible: true,
+            qualifications: [
+              {
+                field: 'values[Assigned Team]',
+                value: '${myGroups}'
+              }
+            ],
+            defaultFilterOptions: {
+              sortBy: 'updated',
+              sortDir: 'desc',
+              assignmentMine: false,
+              assignmentOthers: false,
+              assignmentNone: true,
+              stateActive: true,
+              stateInactive: false,
+              closedToday: false
+            },
+            filterOptions: {}
+          };
+
           var filters = [
             {
               name: 'Mine',
+              visible: true,
               qualifications: [
                 {
                   field: 'values[Assigned Individual]',
                   value: '${me}'
                 }
               ],
-              visible: true
+              defaultFilterOptions: {
+                sortBy: 'updated',
+                sortDir: 'desc',
+                assignmentMine: true,
+                assignmentOthers: false,
+                assignmentNone: false,
+                stateActive: true,
+                stateInactive: false,
+                closedToday: false
+              },
+              filterOptions: {}
             }
           ];
+
 
           var teamOrder = 0;
           var validMemberships = _.filter(currentUser.memberships, function(membership) {
@@ -107,28 +183,57 @@
             return membership.team.name;
           });
 
+          teams = teams.sort(function(teamA, teamB) {
+            return teamA.localeCompare(teamB);
+          });
+
+          if(teams.length > 0) {
+            filters.unshift(availableFilter);
+          }
+
+          // TODO: sort teams alphabetically, omit order.
           _.each(teams, function(team) {
             var teamFilter = {
               name: team,
-              order: teamOrder,
+              visible: true,
               qualifications: [
                 {
                   field: 'values[Assigned Team]',
                   value: team
                 }
               ],
-              visible: true
+              defaultFilterOptions: {
+                sortBy: 'updated',
+                sortDir: 'desc',
+                assignmentMine: true,
+                assignmentOthers: false,
+                assignmentNone: false,
+                stateActive: true,
+                stateInactive: false,
+                closedToday: false
+              },
+              filterOptions: {}
             };
             filters.push(teamFilter);
-            teamOrder++;
           });
 
           if(currentUser.spaceAdmin) {
             filters.push({
               name: 'All',
+              visible: true,
               order: filters.length,
               qualifications: [],
-              visible: true
+              defaultFilterOptions: {
+                sortBy: 'updated',
+                sortDir: 'desc',
+                assignmentMine: false,
+                assignmentOthers: false,
+                assignmentNone: false,
+                stateActive: false,
+                stateInactive: false,
+                closedToday: false
+              },
+              filterOptions: {}
             });
           }
 
@@ -146,8 +251,24 @@
           return Form.build(currentKapp.slug).getList({include:'details,attributes'});
         }],
         teams: ["AssignmentService", function(AssignmentService) {
-          return AssignmentService.getAllTeams();
+          return AssignmentService.getAllTeams().then(
+            function(teams) {
+              return teams.sort(function(teamA, teamB) {
+                return teamA.name.localeCompare(teamB.name);
+              });
+            }
+          );
+        }],
+        activeStatuses: ["currentSpace", "currentKapp", "$q", function(currentSpace, currentKapp, $q) {
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Active', ['Open', 'In Progress']));
+        }],
+        inactiveStatuses: ["currentSpace", "currentKapp", "$q", function(currentSpace, currentKapp, $q) {
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Inactive', ['Pending']));
+        }],
+        cancelledStatuses: ["currentSpace", "currentKapp", "$q", function(currentSpace, currentKapp, $q) {
+          return $q.resolve(filterStatuses(currentKapp.attributes, currentSpace.attributes, 'Statuses - Cancelled', ['Cancelled']));
         }]
+
       },
 
       views: {
@@ -159,100 +280,37 @@
     });
 
     $stateProvider.state('queue.by', {
-      url: '/filter/{filterName}/{filterType}',
+      url: '/filter/{filterName}',
+      resolve: {
+        filterName: ["$stateParams", "filters", function($stateParams, filters) {
+          var filterName = $stateParams.filterName;
+          if(filterName === '__default__') {
+            filterName = filters[0].name;
+          }
+          return filterName;
+        }]
+      },
       views: {
         '': {
           controller: 'QueueListController as list',
           templateUrl: 'queue/queue.list.tpl.html',
           resolve: {
-            filterName: ["$stateParams", "filters", function($stateParams, filters) {
-              var filterName = $stateParams.filterName;
-              if(filterName === '__default__') {
-                filterName = filters[0].name;
-              }
-              return filterName;
+            filter: ["filters", "filterName", "urlFilterOptions", function(filters, filterName, urlFilterOptions) {
+              var filter = _.find(filters, {name: filterName});
+              filter.filterOptions = _.merge({}, filter.defaultFilterOptions, urlFilterOptions);
+              return filter;
             }],
-            filterType: ["$stateParams", "filters", function($stateParams, filters) {
-              return $stateParams.filterType;
-            }],
-            filter: ["filters", "filterName", function(filters, filterName) {
-              return _.find(filters, {name: filterName});
-            }],
-            openItems: ["Submission", "ItemsService", "currentKapp", "currentUser", "filter", "$q", function(Submission, ItemsService, currentKapp, currentUser, filter, $q) {
+            items: ["ItemsService", "currentKapp", "currentUser", "filter", "activeStatuses", "inactiveStatuses", "$q", function(ItemsService, currentKapp, currentUser, filter, activeStatuses, inactiveStatuses, $q) {
+              // Handle the situation where we are showing an individual item.
               if(filter.name === '__show__') {
                 return $q.resolve([]);
               }
-              var openQualification = {
-                field: 'values[Status]',
-                value: '${openStatuses}'
-              };
-              var effectiveFilter = _.cloneDeep(filter);
-              effectiveFilter.qualifications.push(openQualification);
 
-              return ItemsService.filter(currentKapp.slug, currentUser, effectiveFilter);
-            }],
-            items: ["$q", "Submission", "ItemsService", "currentKapp", "currentUser", "filter", "filterType", "openItems", function($q, Submission, ItemsService, currentKapp, currentUser, filter, filterType, openItems) {
-              var startDate = new Date();
-              var endDate = new Date();
+              // We need to make sure that the active and inactive statuses are accurate before filtering.
+              ItemsService.setActiveStatuses(activeStatuses);
+              ItemsService.setInactiveStatuses(inactiveStatuses);
 
-              // If the filter type is 'Open' we already calculate the open items and retrieved them.
-              if(filterType === 'Open') {
-                return $q.resolve(openItems);
-              }
-
-              // If the filter type is 'Mine' then filter down to just the ones assigned to the current user.
-              if(filterType === 'Mine') {
-                return $q.resolve(
-                  _.filter(openItems, function(item) {
-                    return item.values['Assigned Individual'] === currentUser.username;
-                  })
-                );
-              }
-
-              // If the filter type is 'Unassigned' then filte down to just the ones where the assigned individual is empty.
-              if(filterType === 'Unassigned') {
-                return $q.resolve(
-                  _.filter(openItems, function(item) {
-                    return _.isEmpty(item.values['Assigned Individual']);
-                  })
-                );
-              }
-
-              var today = moment();
-              if(filterType === 'Past Due') {
-                return $q.resolve(
-                  _.filter(openItems, function(item) {
-                    var dueDate = moment(item.values['Due Date']);
-                    if(!dueDate.isValid()) return false;
-
-                    return dueDate.isBefore(today.startOf('day'));
-                  })
-                );
-              }
-
-              if(filterType === 'Due Today') {
-                return $q.resolve(
-                  _.filter(openItems, function(item) {
-                    var dueDate = moment(item.values['Due Date']);
-                    if(!dueDate.isValid()) return false;
-                    return dueDate.isSame(today.startOf('day'), 'd');
-                  })
-                );
-              }
-
-              // If it is not open then assume it is time-boxed.
-              if(filterType === 'Recent Hour') {
-                startDate.setHours(startDate.getHours() - 2);
-              } else {
-                startDate.setHours(startDate.getHours() - 24);
-              }
-
-              var effectiveFilter = _.cloneDeep(filter);
-              effectiveFilter.startDate = startDate;
-              effectiveFilter.endDate = endDate;
-
-              // TODO use the filterType here.
-              return ItemsService.filter(currentKapp.slug, currentUser, effectiveFilter);
+              return ItemsService.filter(currentKapp.slug, currentUser, filter);
             }]
           }
         }
@@ -300,23 +358,25 @@
           controller: 'QueueSummaryController as vm',
           templateUrl: 'queue/queue.summary.tpl.html',
           resolve: {
-            subtasks: ["item", "forms", "$q", function(item, forms, $q) {
+            subtasks: ["currentUser", "item", "filterName", "forms", "$q", function(currentUser, item, filterName, forms, $q) {
+              var activeTeam = item.values['Assigned Team'];
+
               // Reduce the list of potential forms to just ones that are of a type 'Subtask' and active.
-              var subtasks = _.filter(forms, {
-                status: 'Active',
-                type: 'Subtask'
+              var subtasks = _.filter(forms, function(form) {
+                return form.status === 'Active' && (form.type === 'Subtask' || form.type === 'Task');
               });
 
-              // Check to see if this item has been configured to specify subtasks. If it is listing permitted
-              // subtasks we will need to take the master list of subtasks and filter it down to the ones that
-              // are allowed on this item.
-              var permittedSubtasksAttribute = _.find(item.form.attributes, {name: 'Permitted Subtasks'});
-              if(typeof permittedSubtasksAttribute !== 'undefined') {
-                var permittedSubtasks = permittedSubtasksAttribute.values;
-                subtasks = _.filter(subtasks, function(subtask) {
-                  return permittedSubtasks.indexOf(subtask.slug) > -1;
-                });
-              }
+              subtasks = _.filter(subtasks, function(form) {
+                var owningTeam = _.find(form.attributes, {name: 'Owning Team'});
+                var hasOwningTeam = angular.isDefined(owningTeam);
+                // If Subtask and no owning team, then yes.
+                if(!hasOwningTeam) {
+                  return true;
+                }
+                // If Task or Subtask and owning team, only if it's contained.
+                return owningTeam.values.indexOf(activeTeam) > -1;
+              });
+
               return $q.resolve(subtasks);
             }],
             notes: ["item", function(item) {

@@ -3,7 +3,7 @@
 
   // If Response is not enabled, then include this directive, since the names collide right now.
   timeAgo.$inject = ["moment", "$interval"];
-  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.response)) {
+  if(!(bundle && bundle.config && bundle.config.queue && bundle.config.queue.discussion)) {
     angular
       .module('kd.core')
       .directive('timeAgo', timeAgo);

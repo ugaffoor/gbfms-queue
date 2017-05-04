@@ -1,11 +1,15 @@
 .panel.panel-primary
   .panel-heading
     h5.panel-title
-      button.btn.btn-primary.btn-xs(type="button",data-ui-sref="queue.by.details.summary")
-        span.fa.fa-fw.fa-reply
+      a(data-ui-sref="queue.by.details.summary")
+        span.fa.fa-fw.fa-arrow-left
       | &nbsp;{{vm.item.label}}
-      small.pull-right ({{queue.friendlyStatus(vm.item)}})
+      status-label.pull-right(
+        data-status="queue.friendlyStatus(vm.item)",
+        data-active-statuses="queue.activeStatuses",
+        data-inactive-statuses="queue.inactiveStatuses",
+        data-cancelled-statuses="queue.cancelledStatuses")
   .panel-body
     .row(data-ng-if="queue.hasDiscussion(vm.item)")
       .col-xs-12
-        response-issue-view(response-server="{{vm.responseServer}}", current-issue-id="{{queue.responseGuid(vm.item)}}", embed-padding="70")
+        response-issue-view(response-server="{{vm.discussionServer}}", current-issue-id="{{queue.discussionGuid(vm.item)}}", embed-base="vm.embedBase", embed-padding="70")
