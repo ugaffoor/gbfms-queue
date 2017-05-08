@@ -1,4 +1,5 @@
 import angular from 'angular';
+import filterQualificationModalTpl from './filter.qualification.modal.tpl.jade';
 
 angular
   .module('kd.bundle.angular.queue.setup')
@@ -65,7 +66,7 @@ function QueueSetupController(currentKapp, kapps, AttributeDefinition, SpaceMode
 
     editFilter: function(filter) {
       var instance = $uibModal.open({
-        templateUrl: 'queue/setup/filter.qualification.modal.tpl.html',
+        templateUrl: filterQualificationModalTpl,
         controller: 'FilterQualificationController as vm',
         size: 'lg',
         resolve: {
