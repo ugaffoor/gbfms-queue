@@ -35,6 +35,8 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
 
+    <c:import url="${librariesPath}/partials/libraries.jsp" charEncoding="UTF-8" />
+
     <app:headContent/>
 
     <style>

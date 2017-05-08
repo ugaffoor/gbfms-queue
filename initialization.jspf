@@ -31,6 +31,15 @@
 <%  
    String contextPath = Text.replace(bundle.getSpaceLocation(), "/" + space.getSlug(), "");
 
+   String librariesPath = kapp != null ? kapp.getBundlePath() : space.getBundlePath();
+   if (kapp != null && kapp.hasAttribute("Libraries Bundle Path")) {
+       librariesPath = kapp.getAttributeValue("Libraries Bundle Path");
+   }
+   else if (space.hasAttribute("Libraries Bundle Path")) {
+       librariesPath = space.getAttributeValue("Libraries Bundle Path");
+   }
+   request.setAttribute("librariesPath", librariesPath);
+
    String headerBundlePath = kapp != null ? kapp.getBundlePath() : space.getBundlePath();
    if (kapp != null && kapp.hasAttribute("Header Bundle Path")){
        headerBundlePath = kapp.getAttributeValue("Header Bundle Path");
