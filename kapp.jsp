@@ -46,11 +46,6 @@
     </style>
   </head>
   <body>
-    <!-- Need these to make the shared space header footer work. -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> -->
-    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script -->
-
     <!-- Import the shared header and footer around the div where the Queue app will render. -->
     <div class="kd-cloak">
       <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8" />
