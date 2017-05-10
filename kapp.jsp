@@ -35,9 +35,14 @@
     <meta content='no' name='msapplication-tap-highlight'>
     <link rel="shortcut icon" href="${bundle.location}/images/favicon.ico" type="image/x-icon"/>
 
-    <c:import url="${librariesPath}/partials/libraries.jsp" charEncoding="UTF-8" />
-
+    <!-- Load the Application Head Content -->
     <app:headContent/>
+
+    <!-- Load the Queue code bundle. -->
+    <script src="${bundlePath}/static/bundle.js"></script>
+
+    <!-- Load the shared libraries JSP. -->
+    <c:import url="${librariesPath}/partials/libraries.jsp" charEncoding="UTF-8" />
 
     <style>
       .kd-cloak {
@@ -46,11 +51,6 @@
     </style>
   </head>
   <body>
-    <!-- Need these to make the shared space header footer work. -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> -->
-    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script -->
-
     <!-- Import the shared header and footer around the div where the Queue app will render. -->
     <div class="kd-cloak">
       <c:import url="${headerPath}/partials/header.jsp" charEncoding="UTF-8" />
@@ -71,8 +71,5 @@
         bundle.config.queue = { discussion: true }
       </script>
     </c:if>
-
-    <!-- Load the Queue code bundle. -->
-    <script src="${bundlePath}/static/bundle.js"></script>
   </body>
 </html>
