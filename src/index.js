@@ -69,6 +69,8 @@ import '../app/queue/setup/queue.setup.controller';
 import '../app/queue/setup/filter.qualification.controller';
 
 const root = document.getElementById('root');
-angular.bootstrap(document.getElementById('root'), ['kd.bundle.angular'], {
-  strictDi: true
+angular.element(document).ready(function() {
+  angular.bootstrap(document.getElementById('root'), ['kd.bundle.angular'], {
+    strictDi: true
+  });
 });
