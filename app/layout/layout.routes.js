@@ -1,4 +1,6 @@
 import angular from 'angular';
+import _ from 'lodash';
+
 import layoutPublic from './layout.public.tpl.jade';
 import layoutProtected from './layout.protected.tpl.jade';
 

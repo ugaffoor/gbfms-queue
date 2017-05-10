@@ -1,5 +1,6 @@
 import angular from 'angular';
 import _ from 'lodash';
+
 import newItemModalTpl from './queue.new.item.modal.jade';
 
 angular

@@ -1,4 +1,5 @@
 import angular from 'angular';
+import _ from 'lodash';
 
 import queueTpl from './queue.tpl.jade';
 import queueList from './queue.list.tpl.jade';

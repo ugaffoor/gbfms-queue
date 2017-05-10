@@ -1,5 +1,6 @@
 import angular from 'angular'
 import $ from 'jquery';
+import _ from 'lodash';
 
 angular
   .module('kd.core')

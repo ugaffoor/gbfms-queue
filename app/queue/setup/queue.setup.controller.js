@@ -1,4 +1,6 @@
 import angular from 'angular';
+import _ from 'lodash';
+
 import filterQualificationModalTpl from './filter.qualification.modal.tpl.jade';
 
 angular

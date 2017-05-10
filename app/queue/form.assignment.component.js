@@ -1,4 +1,6 @@
 import angular from 'angular';
+import _ from 'lodash';
+
 import formAssignmentTpl from './form.assignment.jade';
 
 angular

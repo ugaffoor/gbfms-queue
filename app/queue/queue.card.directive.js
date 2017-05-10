@@ -1,4 +1,6 @@
 import angular from 'angular';
+import _ from 'lodash';
+
 import queueCardTpl from './queue.card.tpl.jade';
 
 angular
