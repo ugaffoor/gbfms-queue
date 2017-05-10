@@ -1,4 +1,5 @@
 import angular from 'angular';
+import queueSetupTpl from './queue.setup.tpl.jade';
 
 angular
   .module('kd.bundle.angular.queue.setup')
@@ -12,7 +13,7 @@ function routes($stateProvider) {
 
     views: {
       '': {
-        templateUrl: 'queue/setup/queue.setup.tpl.html',
+        templateUrl: queueSetupTpl,
         controller: 'QueueSetupController as vm'
       }
     }
