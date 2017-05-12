@@ -110,8 +110,9 @@ function AssignmentService(TeamModel, Submission, md5, $q) {
         // Check to see if the user we're assigning had an association
         // with the currently assigned team.
         if(typeof membership !== 'undefined') {
-          item.values['Assigned Individual'] = membership.username;
-          item.values['Assigned Individual Display Name'] = membership.displayName;
+          var update = { values: {} };
+          update.values['Assigned Individual'] = membership.username;
+          update.values['Assigned Individual Display Name'] = membership.displayName;
 
           // We get currentPage in a different format than the server and we
           // don't actually care about sending it since we don't want to change
@@ -122,7 +123,7 @@ function AssignmentService(TeamModel, Submission, md5, $q) {
           delete item.coreState;
 
           // Save the submission with the new assignment information.
-          item.put().then(
+          item.customPUT(update).then(
             function() {
               deferred.resolve('Successfully grabbed item.');
             },
