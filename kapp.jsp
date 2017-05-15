@@ -38,6 +38,16 @@
     <!-- Load the Application Head Content -->
     <app:headContent/>
 
+    <!-- If the Discussion Server has been configured, load its code and initialize the configuration -->
+    <c:if test="${not empty discussionServerUrl}">
+      <script src="${headerLocation}/js/response_bundle.js"></script>
+      <script>
+        bundle = bundle || {};
+        bundle.config = bundle.config || {};
+        bundle.config.queue = { discussion: true }
+      </script>
+    </c:if>
+
     <!-- Load the Queue code bundle. -->
     <script src="${bundlePath}/static/bundle.js"></script>
 
@@ -62,14 +72,6 @@
       <c:import url="${footerPath}/partials/footer.jsp" charEncoding="UTF-8" />
     </div> 
 
-    <!-- If the Discussion Server has been configured, load its code and initialize the configuration -->
-    <c:if test="${not empty discussionServerUrl}">
-      <script src="${headerLocation}/js/response_bundle.js"></script>
-      <script>
-        bundle = bundle || {};
-        bundle.config = bundle.config || {};
-        bundle.config.queue = { discussion: true }
-      </script>
-    </c:if>
+
   </body>
 </html>
