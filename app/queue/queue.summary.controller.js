@@ -62,15 +62,13 @@ function QueueSummaryController(item, subtasks, notes, relatedItems, queueDiscus
       }
     }).then(
       function success(discussion) {
-        vm.item.values['Discussion Id'] = discussion.data.guid;
+        var update = { values: {} };
         var originalCoreState = vm.item.coreState;
-        delete vm.item.currentPage;
-        delete vm.item.coreState;
+        update.values['Discussion Id'] = discussion.data.guid;
 
         // Save.
-        vm.item.put().then(
+        vm.item.customPUT(update).then(
           function success() {
-            vm.item.coreState = originalCoreState;
             Toast.success('Started new discussion!');
             $state.go('queue.by.details.discuss');
           },
@@ -113,13 +111,12 @@ function QueueSummaryController(item, subtasks, notes, relatedItems, queueDiscus
 
 
   function memberSelected(member) {
+    var update = { values: {} };
     vm.isLoading = true;
-    delete vm.item.currentPage;
-    delete vm.item.coreState;
-    vm.item.values['Assigned Individual'] = member.username;
-    vm.item.values['Assigned Individual Display Name'] = member.displayName;
+    update.values['Assigned Individual'] = member.username;
+    update.values['Assigned Individual Display Name'] = member.displayName;
 
-    vm.item.put().then(
+    vm.item.customPUT(update).then(
       function success() {
         Toast.success('Changed assigned individual!');
         vm.isLoading = false;
@@ -169,15 +166,14 @@ function QueueSummaryController(item, subtasks, notes, relatedItems, queueDiscus
   }
 
   function teamSelected(team) {
+    var update = { values: {} };
     vm.isLoading = true;
 
-    delete vm.item.currentPage;
-    delete vm.item.coreState;
-    vm.item.values['Assigned Team'] = AssignmentService.withRoot(team.team);
-    vm.item.values['Assigned Individual'] = '';
-    vm.item.values['Assigned Individual Display Name'] = '';
+    update.values['Assigned Team'] = AssignmentService.withRoot(team.team);
+    update.values['Assigned Individual'] = '';
+    update.values['Assigned Individual Display Name'] = '';
 
-    vm.item.put().then(
+    vm.item.customPUT(update).then(
       function success() {
         Toast.success('Changed assigned team!');
         vm.isLoading = false;

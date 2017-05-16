@@ -70,7 +70,5 @@ import '../app/queue/setup/filter.qualification.controller';
 
 const root = document.getElementById('root');
 angular.element(document).ready(function() {
-  angular.bootstrap(document.getElementById('root'), ['kd.bundle.angular'], {
-    strictDi: true
-  });
+  angular.bootstrap(document.getElementById('root'), ['kd.bundle.angular']);
 });

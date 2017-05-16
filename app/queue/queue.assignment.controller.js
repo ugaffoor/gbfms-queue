@@ -128,20 +128,16 @@ function QueueAssignmentController(item, $state, $scope, AssignmentService, Toas
   }
 
   function save() {
+    var update = { values: {} };
     vm.state.assigningMembers = false;
     vm.state.assigningGroups = false;
     vm.state.showMembersButton = false;
     queue.loading = true;
 
-    delete item.currentPage;
 
-    console.log('lkjfsafdsafasd ', vm.groups)
+    update.values['Assigned Group'] = AssignmentService.withRoot(item.values['Assigned Group']);
 
-    console.log('fixing assigned group', item.values['Assigned Group']);
-    item.values['Assigned Group'] = AssignmentService.withRoot(item.values['Assigned Group']);
-    console.log('fixing assigned group', item.values['Assigned Group']);
-
-    item.put().then(
+    item.customPUT(update).then(
       function() {
         vm.groupsToAssign = [];
         vm.membersToAssign = [];
