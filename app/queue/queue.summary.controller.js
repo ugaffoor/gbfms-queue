@@ -70,7 +70,7 @@ function QueueSummaryController(item, subtasks, notes, relatedItems, queueDiscus
         vm.item.customPUT(update).then(
           function success() {
             Toast.success('Started new discussion!');
-            $state.go('queue.by.details.discuss');
+            $state.go('queue.by.details.discuss', {}, {reload: true});
           },
           function error() {
             Toast.error('Failed to update item with discussion.');
