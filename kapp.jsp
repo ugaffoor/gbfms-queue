@@ -40,7 +40,11 @@
 
     <!-- Load the shared libraries JSP. -->
     <c:import url="${librariesPath}/partials/libraries.jsp" charEncoding="UTF-8" />
-
+    <script>
+      window.sharedJQ = $;
+      window.sharedUnderscore = _;
+    </script>
+    
     <!-- If the Discussion Server has been configured, load its code and initialize the configuration -->
     <c:if test="${not empty discussionServerUrl}">
       <script src="${headerLocation}/js/response_bundle.js"></script>
@@ -52,13 +56,11 @@
     </c:if>
 
     <!-- Load the Queue code bundle. -->
-    <script>
-      window.sharedJQ = $;
-    </script>
     <script src="${bundlePath}/static/bundle.js"></script>
     <script>
       window.$ = window.sharedJQ;
       window.jQuery = window.sharedJQ;
+      window._ = window.sharedUnderscore;
     </script>
 
 
