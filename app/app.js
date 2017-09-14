@@ -32,6 +32,8 @@ angular.module('kd.bundle.angular', modules).run(function($rootScope, $state) {
 
   // Find cloaked things and uncloak them.
   const cloaks = document.querySelectorAll('.kd-cloak');
-  cloaks.forEach(cloak => cloak.classList.remove('kd-cloak'));
+  for (let index=0; index < cloaks.length; index++) {
+    cloaks[index].classList.remove('kd-cloak')
+  }
 });
 
